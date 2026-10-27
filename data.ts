@@ -1,0 +1,11 @@
+export type Collection={slug:string;name:string;creator:string;category:string;description:string;members:string;accent:string;featured?:boolean};
+export const collections:Collection[]=[
+{slug:"emerald-syndicate",name:"Emerald Syndicate",creator:"PLUCO Studio",category:"Digital Art",description:"A study in permanence, status and digital belonging.",members:"Demo · 4.2K members",accent:"from-[#78EBC1]/45 via-[#143D31] to-[#080a09]",featured:true},
+{slug:"neon-archives",name:"Neon Archives",creator:"Nia Vale",category:"Photography",description:"Fragments of imagined cities preserved onchain.",members:"Demo · 2.8K members",accent:"from-[#245646] via-[#111] to-[#78EBC1]/20"},
+{slug:"phantom-atelier",name:"Phantom Atelier",creator:"Morrow House",category:"Fashion",description:"Digital couture for identity beyond the physical.",members:"Demo · 1.9K members",accent:"from-[#d7cfbf]/25 via-[#143D31] to-black"},
+{slug:"sonic-relics",name:"Sonic Relics",creator:"Ayo Frequency",category:"Music",description:"Limited sound artifacts and intimate member sessions.",members:"Demo · 3.1K members",accent:"from-[#78EBC1]/30 via-black to-[#245646]"},
+{slug:"arcadian-pass",name:"Arcadian Pass",creator:"Arcadian Guild",category:"Membership",description:"A cultural membership built around access and participation.",members:"Demo · 5.0K members",accent:"from-[#173328] via-[#599b82]/30 to-black"},
+{slug:"monoliths",name:"Monoliths",creator:"K. Obsidian",category:"Generative",description:"Algorithmic monuments shaped by rarity and restraint.",members:"Demo · 1.4K members",accent:"from-[#919994]/20 via-[#0c1915] to-black"}
+];
+export const creators=[{name:"Nia Vale",role:"Visual artist · Photography",works:"2 collections",accent:"from-[#78EBC1]/35 to-[#101010]"},{name:"Ayo Frequency",role:"Sound artist · Music",works:"3 collections",accent:"from-[#245646] to-black"},{name:"Morrow House",role:"Digital studio · Fashion",works:"1 collection",accent:"from-[#d7cfbf]/25 to-[#143D31]"}];
+export const communities=[{name:"The Emerald Room",meta:"Demo community",copy:"Private conversations, studio notes and holder-only gatherings."},{name:"Archive Walkers",meta:"Demo community",copy:"A collective exploring digital memory and imagined cities."},{name:"Atelier Circle",meta:"Demo community",copy:"Fashion, identity and collaborative collector experiences."}];

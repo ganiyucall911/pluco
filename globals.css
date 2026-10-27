@@ -1,0 +1,6 @@
+@import "tailwindcss";
+:root{--obsidian:#050505;--carbon:#111111;--emerald:#143D31;--forest:#245646;--jade:#78EBC1;--ivory:#F5F4F2;--mist:#9EA6A2;--line:rgba(120,235,193,.11)}
+*{box-sizing:border-box} html{scroll-behavior:smooth;background:var(--obsidian)} body{margin:0;background:var(--obsidian);color:var(--ivory);font-family:var(--font-body),Arial,sans-serif;overflow-x:hidden} h1,h2,h3{font-family:var(--font-heading),Arial,sans-serif;letter-spacing:-.045em} a{text-decoration:none;color:inherit} button,input{font:inherit} ::selection{background:var(--jade);color:var(--obsidian)}
+.grid-noise{background-image:linear-gradient(rgba(120,235,193,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(120,235,193,.028) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to bottom,black,transparent)}
+.art-shine:after{content:"";position:absolute;inset:-45%;background:linear-gradient(110deg,transparent 38%,rgba(255,255,255,.13) 48%,transparent 58%);transform:translateX(-35%) rotate(8deg);transition:transform .9s ease}.group:hover .art-shine:after{transform:translateX(35%) rotate(8deg)}
+.focus-ring:focus-visible{outline:2px solid var(--jade);outline-offset:4px}

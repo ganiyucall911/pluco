@@ -1,0 +1,1 @@
+export const fadeUp={hidden:{opacity:0,y:26},show:{opacity:1,y:0,transition:{duration:.65,ease:[.2,.8,.2,1]}}}; export const stagger={hidden:{},show:{transition:{staggerChildren:.09}}};

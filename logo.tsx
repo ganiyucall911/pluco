@@ -1,0 +1,1 @@
+import Link from "next/link"; export function Logo(){return <Link href="/" aria-label="PLUCO home" className="focus-ring flex items-center gap-3 rounded-full"><span className="grid h-9 w-9 place-items-center rounded-full border border-[#78EBC1]/25 bg-[#143D31] font-serif text-xl text-[#78EBC1]">P</span><span className="font-semibold tracking-[.28em]">PLUCO</span></Link>}

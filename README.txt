@@ -1,0 +1,1 @@
+Replace pluco-logo.svg with the supplied official PLUCO wordmark while preserving the filename.

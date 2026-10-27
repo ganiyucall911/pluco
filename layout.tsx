@@ -1,0 +1,4 @@
+import type {Metadata} from "next"; import {Inter,Space_Grotesk} from "next/font/google"; import "./globals.css"; import {Navbar} from "@/components/navbar"; import {Footer} from "@/components/footer"; import {MotionProvider} from "@/components/motion-provider";
+const body=Inter({subsets:["latin"],variable:"--font-body"}); const heading=Space_Grotesk({subsets:["latin"],variable:"--font-heading"});
+export const metadata:Metadata={title:{default:"PLUCO | The NFT Ownership Network",template:"%s | PLUCO"},description:"A premium NFT ownership ecosystem for creators, collectors and communities."};
+export default function Layout({children}:{children:React.ReactNode}){return <html lang="en" className={`${body.variable} ${heading.variable}`}><body><MotionProvider><Navbar/>{children}<Footer/></MotionProvider></body></html>}
