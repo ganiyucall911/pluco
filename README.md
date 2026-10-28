@@ -49,13 +49,19 @@ public/       # static assets
 
 ## Continuous integration
 
-Every push to `main` and every pull request runs the **Build check** workflow (`.github/workflows/build.yml`): `npm ci` then `npm run build`.
+Every push to `main` and every pull request runs the **Build check** workflow (`.github/workflows/build.yml`): `npm ci`, `npm audit --audit-level=high`, then `npm run build`. The `build` job is a required status check on `main`, with strict mode (the branch must be up to date first) and administrators included.
+
+`/dashboard` shows the latest run with a badge that re-polls the Actions API every 30 seconds, plus a manual refresh.
 
 ## Contributing
 
 1. Create a branch from `main`.
 2. Run `npm run build` locally before opening a pull request.
 3. Open a pull request; the build check must pass before merging.
+
+## Dependency notes
+
+Next.js is pinned to `16.4.3`: earlier releases bundle a PostCSS version with known XSS and source-map path traversal advisories. `npm audit` must stay free of high-severity findings; see [docs/REMEDIATION.md](docs/REMEDIATION.md).
 
 ## License
 
