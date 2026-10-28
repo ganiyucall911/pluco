@@ -1,72 +1,62 @@
 # PLUCO — The NFT Ownership Network
 
-NFT-first, editorial Next.js website with demo Collections, Creators, Community, Marketplace, Explore, Brand, About, Contact, Legal and Connect experiences.
+[![Build check](https://github.com/ganiyucall911/pluco/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/ganiyucall911/pluco/actions/workflows/build.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-## Structure
+An NFT-first, editorial website built with Next.js 15, React 19, Tailwind CSS 4 and Framer Motion. It ships demo Collections, Creators, Community, Marketplace, Explore, Brand, About, Contact, Legal and Connect pages. All content is demo data from `lib/data.ts`; there is no wallet or blockchain connection.
 
-```
-pluco/
-├── app/
-│   ├── layout.tsx
-│   ├── page.tsx              # Home
-│   ├── globals.css
-│   ├── not-found.tsx
-│   ├── collections/
-│   │   ├── page.tsx
-│   │   └── [slug]/page.tsx
-│   ├── creators/page.tsx
-│   ├── marketplace/page.tsx
-│   ├── community/page.tsx
-│   ├── explore/page.tsx
-│   ├── about/page.tsx
-│   ├── connect/page.tsx
-│   ├── brand/page.tsx
-│   ├── contact/page.tsx
-│   └── legal/page.tsx
-├── components/
-│   ├── navbar.tsx
-│   ├── footer.tsx
-│   ├── logo.tsx
-│   ├── hero.tsx
-│   ├── page-hero.tsx
-│   ├── button.tsx
-│   ├── art.tsx
-│   ├── collection-card.tsx
-│   ├── section-title.tsx
-│   ├── reveal.tsx
-│   └── motion-provider.tsx
-├── lib/
-│   ├── data.ts
-│   ├── motion.ts
-│   └── cn.ts
-├── public/
-│   └── brand/
-│       └── pluco-logo.svg
-├── package.json
-├── tsconfig.json
-├── next.config.ts
-└── postcss.config.mjs
+## Requirements
+
+- Node.js 20 or newer (tested with Node 20 in CI and Node 22 locally)
+- npm 10 or newer
+
+## Install from a fresh clone
+
+```sh
+git clone https://github.com/ganiyucall911/pluco.git
+cd pluco
+npm ci            # installs exact versions from package-lock.json (~15s)
+npm run dev       # http://localhost:3000 with hot reload
 ```
 
-Imports resolve through the `@/*` alias mapped to the project root in `tsconfig.json`
-(`@/components/...`, `@/lib/...`).
+### Production build
 
-## Run
-
-```bash
-npm install
-npm run dev
+```sh
+npm run build     # builds and prerenders every page as static HTML
+npm start         # serves the build on http://localhost:3000
 ```
 
-## Build
+Verified on a fresh clone: `npm ci` finished without errors, `npm run build` prerendered all routes (including 6 collection pages), and `npm start` served `/`, `/collections` and `/marketplace` with HTTP 200 and unknown paths with 404.
 
-```bash
-npm run build
+## Scripts
+
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Start the dev server |
+| `npm run build` | Create a production build |
+| `npm start` | Serve the production build |
+| `npm run lint` | Run Next.js lint |
+
+## Project structure
+
+```
+app/          # routes: home, collections/[slug], creators, marketplace, community,
+              # explore, about, connect, brand, contact, legal, not-found
+components/   # navbar, footer, hero, cards, motion helpers
+lib/          # demo data and motion presets
+public/       # static assets
 ```
 
-## Important
+## Continuous integration
 
-- All collection, creator, activity and marketplace content is clearly demo content.
-- No fake wallet success states, chain endpoints, sales, or verified network metrics are implemented.
-- Replace `/public/brand/pluco-logo.svg` with the supplied official artwork while preserving the file path.
-- Connect a recognized wallet library only after adding a valid project ID and supported chain configuration.
+Every push to `main` and every pull request runs the **Build check** workflow (`.github/workflows/build.yml`): `npm ci` then `npm run build`.
+
+## Contributing
+
+1. Create a branch from `main`.
+2. Run `npm run build` locally before opening a pull request.
+3. Open a pull request; the build check must pass before merging.
+
+## License
+
+Released under the [MIT License](LICENSE).
