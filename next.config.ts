@@ -1,1 +1,14 @@
-import type { NextConfig } from "next"; const nextConfig: NextConfig = {}; export default nextConfig;
+import type { NextConfig } from "next";
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+const nextConfig: NextConfig = {
+  // Static export so the demo can be hosted on GitHub Pages.
+  output: "export",
+  images: { unoptimized: true },
+  trailingSlash: true,
+  basePath,
+  assetPrefix: basePath || undefined,
+};
+
+export default nextConfig;
