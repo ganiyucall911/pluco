@@ -9,10 +9,10 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/[.07]">
+    <footer className="border-t border-line">
       <div className="wrap flex flex-col items-center gap-6 pt-16 pb-12 text-center">
         <Logo />
-        <p className="max-w-[300px] text-[13px] leading-6 text-[#8f8f8f]">
+        <p className="max-w-[300px] text-[13px] leading-6 text-mute">
           An open art protocol on Base. Anyone can register a collection, mint a piece or buy one.
         </p>
       </div>
@@ -24,7 +24,7 @@ export function Footer() {
             <div className="grid gap-3 justify-items-center sm:justify-items-start">
               {(items as string[][]).map(([label, href]) => (
                 <Link
-                  className="text-[13px] text-[#a6a6a6] transition hover:text-[#f4f3f1]"
+                  className="text-[13px] text-body transition hover:text-paper"
                   href={href}
                   key={label}
                 >
@@ -36,7 +36,7 @@ export function Footer() {
         ))}
       </div>
 
-      <div className="wrap flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-white/[.07] py-6 text-[11px] uppercase tracking-[.18em] text-[#6e6e6e]">
+      <div className="wrap flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-line py-6 text-[11px] uppercase tracking-[.18em] text-faint">
         <span>© 2026 PLUCO</span>
         <span>Base · Ethereum L2</span>
         <span>Settlement in ETH</span>

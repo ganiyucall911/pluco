@@ -16,10 +16,10 @@ export function Button({ href, children, variant = "primary", className, arrow =
       href={href}
       className={cn(
         "focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-[13px] font-medium tracking-[-0.01em] transition duration-200",
-        variant === "primary" && "bg-[#f4f3f1] text-[#0a0a0a] hover:bg-white",
+        variant === "primary" && "bg-paper text-ink hover:bg-paper",
         variant === "secondary" &&
-          "border border-white/15 text-[#f4f3f1] hover:border-white/35 hover:bg-white/[.04]",
-        variant === "ghost" && "text-[#8f8f8f] hover:text-[#f4f3f1]",
+          "border border-line-strong text-paper hover:border-line-strong hover:bg-paper/[.06]",
+        variant === "ghost" && "text-mute hover:text-paper",
         className,
       )}
     >

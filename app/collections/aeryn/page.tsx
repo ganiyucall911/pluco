@@ -59,14 +59,14 @@ export default function AerynPage() {
       />
 
       <section className="px-6 pb-16">
-        <div className="mx-auto grid max-w-7xl gap-px border border-white/[.08] bg-white/[.08] sm:grid-cols-3">
+        <div className="mx-auto grid max-w-7xl gap-px border border-line bg-paper/[.06] sm:grid-cols-3">
           {[
             ["Pieces", "5"],
             ["Edition", "#/200"],
             ["Chain", "Base"],
           ].map(([k, v]) => (
-            <div key={k} className="bg-[#0c0c0c] px-6 py-6">
-              <p className="text-[10px] uppercase tracking-[.25em] text-[#6E6E6E]">{k}</p>
+            <div key={k} className="bg-surface px-6 py-6">
+              <p className="text-[10px] uppercase tracking-[.25em] text-faint">{k}</p>
               <p className="mt-3 text-2xl font-semibold">{v}</p>
             </div>
           ))}
@@ -75,13 +75,13 @@ export default function AerynPage() {
 
       <section className="px-6 pb-20">
         <div className="mx-auto max-w-7xl">
-          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/[.08] pb-5">
-            <h2 className="text-sm uppercase tracking-[.25em] text-[#A6A6A6]">Pieces</h2>
+          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-5">
+            <h2 className="text-sm uppercase tracking-[.25em] text-body">Pieces</h2>
             <a
               href={COLLECTION}
               target="_blank"
               rel="noreferrer"
-              className="link-underline text-sm text-white"
+              className="link-underline text-sm text-paper"
             >
               View on OpenSea
             </a>
@@ -94,9 +94,9 @@ export default function AerynPage() {
                   href={`${COLLECTION}/${p.id}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="group focus-ring block border border-white/[.08] bg-[#0c0c0c]"
+                  className="group focus-ring block border border-line bg-surface"
                 >
-                  <div className="relative aspect-[3/4] overflow-hidden bg-black">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-ink">
                     <Image
                       src={asset(p.image)}
                       alt={p.title}
@@ -105,10 +105,10 @@ export default function AerynPage() {
                       className="object-contain transition duration-700 group-hover:scale-[1.02]"
                     />
                   </div>
-                  <div className="border-t border-white/[.07] px-4 py-4">
-                    <p className="text-[10px] uppercase tracking-[.2em] text-[#6E6E6E]">{p.side}</p>
-                    <p className="mt-2 text-sm leading-5 text-white">{p.title}</p>
-                    <p className="mt-3 text-xs text-[#A6A6A6]">Listed {p.price}</p>
+                  <div className="border-t border-line px-4 py-4">
+                    <p className="text-[10px] uppercase tracking-[.2em] text-faint">{p.side}</p>
+                    <p className="mt-2 text-sm leading-5 text-paper">{p.title}</p>
+                    <p className="mt-3 text-xs text-body">Listed {p.price}</p>
                   </div>
                 </a>
               </Reveal>
@@ -118,36 +118,36 @@ export default function AerynPage() {
       </section>
 
       <section className="px-6 pb-24">
-        <div className="mx-auto grid max-w-7xl gap-10 border-t border-white/[.08] pt-10 lg:grid-cols-[.9fr_1.1fr]">
+        <div className="mx-auto grid max-w-7xl gap-10 border-t border-line pt-10 lg:grid-cols-[.9fr_1.1fr]">
           <div>
             <h2 className="text-2xl font-semibold">What it is, precisely.</h2>
-            <p className="mt-4 text-sm leading-6 text-[#A6A6A6]">
+            <p className="mt-4 text-sm leading-6 text-body">
               Each token is one card. Nothing is fractional, nothing is duplicated, and no piece is
               minted twice. Copies carrying the same face differ by grade and print side, which is
               what the four listed pieces are.
             </p>
           </div>
           <dl className="grid gap-4 text-sm">
-            <div className="flex justify-between gap-6 border-b border-white/[.07] pb-4">
-              <dt className="text-[#6E6E6E]">Collection</dt>
+            <div className="flex justify-between gap-6 border-b border-line pb-4">
+              <dt className="text-faint">Collection</dt>
               <dd>AERYN GEM MT</dd>
             </div>
-            <div className="flex justify-between gap-6 border-b border-white/[.07] pb-4">
-              <dt className="text-[#6E6E6E]">Creator</dt>
+            <div className="flex justify-between gap-6 border-b border-line pb-4">
+              <dt className="text-faint">Creator</dt>
               <dd><VerifiedName name="PLUCO" /></dd>
             </div>
-            <div className="flex justify-between gap-6 border-b border-white/[.07] pb-4">
-              <dt className="text-[#6E6E6E]">Contract</dt>
+            <div className="flex justify-between gap-6 border-b border-line pb-4">
+              <dt className="text-faint">Contract</dt>
               <dd className="font-mono text-xs">
                 {CONTRACT.slice(0, 10)}…{CONTRACT.slice(-6)}
               </dd>
             </div>
-            <div className="flex justify-between gap-6 border-b border-white/[.07] pb-4">
-              <dt className="text-[#6E6E6E]">Marketplace</dt>
+            <div className="flex justify-between gap-6 border-b border-line pb-4">
+              <dt className="text-faint">Marketplace</dt>
               <dd>OpenSea</dd>
             </div>
             <div className="flex justify-between gap-6">
-              <dt className="text-[#6E6E6E]">Chain</dt>
+              <dt className="text-faint">Chain</dt>
               <dd>Base · ETH</dd>
             </div>
           </dl>

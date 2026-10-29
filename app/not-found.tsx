@@ -2,12 +2,12 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main className="grid min-h-[70vh] place-items-center px-6 pt-40 pb-24">
+    <main className="grid min-h-[70vh] place-items-center px-6 pt-24 pb-24">
       <div className="text-center">
-        <p className="text-xs font-semibold uppercase tracking-[.3em] text-[#FFFFFF]">404</p>
+        <p className="text-xs font-semibold uppercase tracking-[.3em] text-paper">404</p>
         <h1 className="mt-6 text-5xl font-semibold sm:text-7xl">Nothing owned here.</h1>
-        <p className="mx-auto mt-5 max-w-md text-base leading-7 text-[#A6A6A6]">The page you were looking for isn&apos;t part of this collection.</p>
-        <Link href="/" className="focus-ring mt-9 inline-flex min-h-12 items-center rounded-full bg-[#FFFFFF] px-6 text-sm font-semibold text-[#050505]">
+        <p className="mx-auto mt-5 max-w-md text-base leading-7 text-body">The page you were looking for isn&apos;t part of this collection.</p>
+        <Link href="/" className="focus-ring mt-9 inline-flex min-h-12 items-center rounded-full bg-paper px-6 text-sm font-semibold text-ink">
           Back to home
         </Link>
       </div>

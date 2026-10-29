@@ -154,32 +154,32 @@ export default function MintPage() {
       />
 
       <section className="wrap py-16">
-        <div className="grid gap-px border border-white/[.07] bg-white/[.07] lg:grid-cols-[1.1fr_.9fr]">
-          <div className="bg-[#0c0c0c] p-8">
+        <div className="grid gap-px border border-line bg-paper/[.06] lg:grid-cols-[1.1fr_.9fr]">
+          <div className="bg-surface p-8">
             <p className="eyebrow">The drop</p>
             <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="text-[#A6A6A6]">Minted</p>
+                <p className="text-body">Minted</p>
                 <p className="mt-1 text-2xl font-semibold">{minted ?? "—"} / {supply ?? "—"}</p>
               </div>
                   <div>
-                    <p className="text-[#A6A6A6]">Price</p>
+                    <p className="text-body">Price</p>
                     <p className="mt-1 text-2xl font-semibold">
                       {priceLoaded ? formatEth(priceWei) + " ETH" : "—"}
                     </p>
-                    <p className="mt-1 text-xs text-[#6E6E6E]">paid in {CURRENCY}</p>
+                    <p className="mt-1 text-xs text-faint">paid in {CURRENCY}</p>
                   </div>
                   <div>
-                    <p className="text-[#A6A6A6]">Sale</p>
+                    <p className="text-body">Sale</p>
                 <p className="mt-1 text-2xl font-semibold">{open === null ? "—" : open ? "Open" : "Closed"}</p>
               </div>
             </div>
-            <p className="mt-6 text-sm leading-6 text-[#A6A6A6]">
+            <p className="mt-6 text-sm leading-6 text-body">
               Network: {CHAIN_NAME}. Price and per-wallet limit are fixed in the contract, so nobody can change them mid-drop.
               {CONTRACT ? (
                 <>
                   {" "}Contract{" "}
-                  <a className="text-[#FFFFFF] underline" href={EXPLORER + "/address/" + CONTRACT} target="_blank" rel="noreferrer">
+                  <a className="text-paper underline" href={EXPLORER + "/address/" + CONTRACT} target="_blank" rel="noreferrer">
                     {CONTRACT.slice(0, 6)}…{CONTRACT.slice(-4)}
                   </a>
                   .
@@ -188,23 +188,23 @@ export default function MintPage() {
             </p>
           </div>
 
-          <div className="bg-[#0c0c0c] p-8">
+          <div className="bg-surface p-8">
             {!ready ? (
-              <p className="text-sm leading-6 text-[#A6A6A6]">
-                No contract configured yet. Deploy with <span className="text-white">npm run deploy:base-sepolia</span> in contracts/art, then set
+              <p className="text-sm leading-6 text-body">
+                No contract configured yet. Deploy with <span className="text-paper">npm run deploy:base-sepolia</span> in contracts/art, then set
                 NEXT_PUBLIC_PLUCO_ART_CONTRACT and rebuild.
               </p>
             ) : !account ? (
-              <button onClick={connect} className="focus-ring w-full rounded-full bg-[#FFFFFF] px-6 py-4 text-sm font-semibold text-black">
+              <button onClick={connect} className="focus-ring w-full rounded-full bg-paper px-6 py-4 text-sm font-semibold text-black">
                 Connect wallet
               </button>
             ) : soldOut ? (
-              <p className="text-sm text-[#A6A6A6]">Sold out. Secondary listings live on OpenSea and Rarible.</p>
+              <p className="text-sm text-body">Sold out. Secondary listings live on OpenSea and Rarible.</p>
             ) : (
               <button
                 onClick={mint}
                 disabled={busy || open === false}
-                className="focus-ring w-full rounded-full bg-[#FFFFFF] px-6 py-4 text-sm font-semibold text-black disabled:opacity-50"
+                className="focus-ring w-full rounded-full bg-paper px-6 py-4 text-sm font-semibold text-black disabled:opacity-50"
               >
                 {busy
                       ? "Waiting for wallet…"
@@ -215,14 +215,14 @@ export default function MintPage() {
                           : "Mint a piece"}
               </button>
             )}
-            <p className="mt-4 text-xs leading-5 text-[#6E6E6E]">
+            <p className="mt-4 text-xs leading-5 text-faint">
               Signed in as {account ? account.slice(0, 6) + "…" + account.slice(-4) : "no wallet"}.
             </p>
-            {status ? <p className="mt-4 text-sm leading-6 text-white">{status}</p> : null}
+            {status ? <p className="mt-4 text-sm leading-6 text-paper">{status}</p> : null}
             {txHash && CONTRACT ? (
-              <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/[.07] pt-3 text-[13px]">
+              <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-3 text-[13px]">
                 <a
-                  className="link-underline text-[#d9d9d9] hover:text-white"
+                  className="link-underline text-body hover:text-paper"
                   href={EXPLORER + "/tx/" + txHash}
                   target="_blank"
                   rel="noreferrer"
@@ -230,7 +230,7 @@ export default function MintPage() {
                   View transaction
                 </a>
                 <a
-                  className="link-underline text-[#d9d9d9] hover:text-white"
+                  className="link-underline text-body hover:text-paper"
                   href={"https://opensea.io/search?query=" + CONTRACT + "&type=item"}
                   target="_blank"
                   rel="noreferrer"
@@ -240,7 +240,7 @@ export default function MintPage() {
               </div>
             ) : null}
             {txHash ? (
-              <p className="mt-2 text-[11px] leading-5 text-[#6e6e6e]">
+              <p className="mt-2 text-[11px] leading-5 text-faint">
                 OpenSea indexes a contract a few hours after its first mint. Until it does, the search above returns nothing —
                 the piece exists on Base regardless.
               </p>

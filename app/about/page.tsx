@@ -37,27 +37,27 @@ export default function AboutPage() {
       />
 
       <section className="wrap py-16">
-        <div className="grid gap-px border-y border-white/[.07] bg-white/[.07] md:grid-cols-3">
+        <div className="grid gap-px border-y border-line bg-paper/[.06] md:grid-cols-3">
           {principles.map((p, i) => (
-            <div key={p.t} className="bg-[#0a0a0a] p-8">
-              <span className="num text-[11px] tracking-[.18em] text-[#5e5e5e]">
+            <div key={p.t} className="bg-ink p-8">
+              <span className="num text-[11px] tracking-[.18em] text-faint">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h2 className="mt-6 text-[19px]">{p.t}</h2>
-              <p className="mt-2 text-[13px] leading-6 text-[#8f8f8f]">{p.d}</p>
+              <p className="mt-2 text-[13px] leading-6 text-mute">{p.d}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="border-t border-white/[.07] bg-[#0c0c0c]">
+      <section className="border-t border-line bg-surface">
         <div className="wrap grid gap-14 py-20 lg:grid-cols-[1fr_.9fr]">
           <Reveal>
             <p className="eyebrow">Status</p>
             <h2 className="mt-4 max-w-[440px] text-[28px] leading-[1.12] sm:text-[34px]">
               Contracts written. Deployment next.
             </h2>
-            <p className="mt-5 max-w-[420px] text-[13px] leading-6 text-[#8f8f8f]">
+            <p className="mt-5 max-w-[420px] text-[13px] leading-6 text-mute">
               The registry, marketplace and reference collection are compiled and tested on a local
               chain. What remains is a deploy to Base and a wallet to sign it.
             </p>
@@ -69,14 +69,14 @@ export default function AboutPage() {
             </div>
           </Reveal>
           <Reveal>
-            <dl className="border-t border-white/[.09]">
+            <dl className="border-t border-line">
               {facts.map(([k, v]) => (
                 <div
                   key={k}
-                  className="flex items-baseline justify-between gap-6 border-b border-white/[.07] py-5"
+                  className="flex items-baseline justify-between gap-6 border-b border-line py-5"
                 >
-                  <dt className="text-[13px] text-[#8f8f8f]">{k}</dt>
-                  <dd className="num text-right text-[13px] text-[#f4f3f1]">{v}</dd>
+                  <dt className="text-[13px] text-mute">{k}</dt>
+                  <dd className="num text-right text-[13px] text-paper">{v}</dd>
                 </div>
               ))}
             </dl>

@@ -24,7 +24,7 @@ export default function SellPage() {
             <br />
             no surprises.
           </h2>
-          <p className="mt-5 max-w-[320px] text-[13px] leading-6 text-[#8f8f8f]">
+          <p className="mt-5 max-w-[320px] text-[13px] leading-6 text-mute">
             Everything settles in native ETH on Base. PLUCO takes 2.5% of a sale; listing and
             cancelling are free.
           </p>
@@ -32,15 +32,15 @@ export default function SellPage() {
             <Button href="/marketplace">Go to marketplace</Button>
           </div>
         </div>
-        <div className="border-t border-white/[.09]">
+        <div className="border-t border-line">
           {steps.map(([t, c], i) => (
-            <div key={t} className="grid grid-cols-[48px_1fr] gap-4 border-b border-white/[.07] py-6">
-              <span className="num text-[11px] tracking-[.18em] text-[#5e5e5e]">
+            <div key={t} className="grid grid-cols-[48px_1fr] gap-4 border-b border-line py-6">
+              <span className="num text-[11px] tracking-[.18em] text-faint">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
                 <h3 className="text-[16px]">{t}</h3>
-                <p className="mt-1.5 text-[13px] leading-6 text-[#8f8f8f]">{c}</p>
+                <p className="mt-1.5 text-[13px] leading-6 text-mute">{c}</p>
               </div>
             </div>
           ))}

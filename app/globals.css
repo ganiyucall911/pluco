@@ -1,11 +1,54 @@
 @import "tailwindcss";
 
+/* Theme tokens. Dark is the default identity; light follows the OS setting. */
 :root {
+  color-scheme: dark;
   --ink: #0a0a0a;
+  --surface: #0c0c0c;
+  --surface-2: #141414;
   --paper: #f4f3f1;
+  --body: #d9d9d9;
   --mute: #8f8f8f;
+  --faint: #6e6e6e;
   --line: rgba(255, 255, 255, 0.09);
-  --line-strong: rgba(255, 255, 255, 0.16);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --gold: #e2b167;
+  --danger: #ff8a8a;
+  --grain: rgba(255, 255, 255, 0.055);
+  --edge: rgba(255, 255, 255, 0.06);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --ink: #f7f6f4;
+    --surface: #ffffff;
+    --surface-2: #ecebe7;
+    --paper: #101010;
+    --body: #3a3a3a;
+    --mute: #666666;
+    --faint: #8a8a8a;
+    --line: rgba(0, 0, 0, 0.1);
+    --line-strong: rgba(0, 0, 0, 0.22);
+    --gold: #85590c;
+    --danger: #b4231f;
+    --grain: rgba(0, 0, 0, 0.05);
+    --edge: rgba(0, 0, 0, 0.05);
+  }
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-paper: var(--paper);
+  --color-body: var(--body);
+  --color-mute: var(--mute);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-gold: var(--gold);
+  --color-danger: var(--danger);
 }
 
 * { box-sizing: border-box; }
@@ -37,7 +80,14 @@ button, input { font: inherit; }
 img { display: block; }
 ::selection { background: var(--paper); color: var(--ink); }
 
+/* The header is fixed, so every page clears its 64px height once, here,
+   instead of each page remembering a padding-top of its own. */
+main { display: block; padding-top: 64px; }
+
 .wrap { width: 100%; max-width: 1180px; margin-inline: auto; padding-inline: 24px; }
+@media (max-width: 640px) {
+  .wrap { padding-inline: 20px; }
+}
 .eyebrow {
   font-size: 11px;
   letter-spacing: 0.22em;
@@ -52,12 +102,12 @@ img { display: block; }
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-image: radial-gradient(var(--grain) 1px, transparent 1px);
   background-size: 22px 22px;
   mask-image: linear-gradient(to bottom, black, transparent 78%);
   opacity: 0.6;
 }
 
 .edge-fade {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.06), transparent);
+  background: linear-gradient(to bottom, var(--edge), transparent);
 }
