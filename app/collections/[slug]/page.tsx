@@ -8,7 +8,7 @@ import { collections } from "@/lib/data";
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return collections.map((c) => ({ slug: c.slug }));
+  return collections.filter((c) => !c.external).map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

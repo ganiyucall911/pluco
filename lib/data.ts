@@ -1,5 +1,6 @@
-export type Collection={slug:string;name:string;creator:string;category:string;description:string;members:string;accent:string;featured?:boolean};
+export type Collection={slug:string;name:string;creator:string;category:string;description:string;members:string;accent:string;featured?:boolean;image?:string;external?:string};
 export const collections:Collection[]=[
+{slug:"aeryn",name:"AERYN GEM MT",creator:"PLUCO",category:"Trading Cards · Base",description:"Graded-card artwork issued on Base. Five pieces exist today, each one a single slab with its own grade and print side.",members:"5 on Base · ETH",accent:"from-white/[.16] via-[#131313] to-black",featured:true,image:"/aeryn/1.jpg",external:"https://opensea.io/collection/aeryn-gem-mt-10-slab-552734664"},
 {slug:"emerald-syndicate",name:"Emerald Syndicate",creator:"PLUCO",category:"Digital Art",description:"A study in permanence, status and digital belonging.",members:"Demo · 4.2K members",accent:"from-white/[.18] via-[#181818] to-black",featured:true},
 {slug:"neon-archives",name:"Neon Archives",creator:"Nia Vale",category:"Photography",description:"Fragments of imagined cities preserved onchain.",members:"Demo · 2.8K members",accent:"from-white/[.10] via-[#111] to-white/[.06]"},
 {slug:"phantom-atelier",name:"Phantom Atelier",creator:"Morrow House",category:"Fashion",description:"Digital couture for identity beyond the physical.",members:"Demo · 1.9K members",accent:"from-white/[.22] via-[#161616] to-black"},

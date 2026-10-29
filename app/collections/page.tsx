@@ -11,11 +11,16 @@ export default function CollectionsPage() {
     <main>
       <PageHero
         eyebrow="Discover"
-        title="Curated collections, considered."
-        body="A directory of editorial collections across art, photography, fashion, music and membership. All content is demo content."
+        title="Collections, considered."
+        body="AERYN GEM MT is live on Base. Everything else in this directory is sample content shown for layout, and is labelled as such."
       />
       <section className="px-6 pb-24">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {collections.map((item) => (
+            <Reveal key={item.slug}>
+              <CollectionCard item={item} />
+            </Reveal>
+          ))}
           <Reveal>
             <article className="flex h-full flex-col border border-dashed border-white/20 bg-transparent p-6">
               <div className="flex items-start justify-between gap-5">
@@ -36,11 +41,6 @@ export default function CollectionsPage() {
               </p>
             </article>
           </Reveal>
-          {collections.map((item) => (
-            <Reveal key={item.slug}>
-              <CollectionCard item={item} />
-            </Reveal>
-          ))}
         </div>
       </section>
     </main>

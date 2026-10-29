@@ -66,7 +66,7 @@ export default function HomePage() {
                 width={1200}
                 height={600}
                 priority
-                className="mb-10 w-full max-w-[400px] opacity-95 brightness-110"
+                className="mb-10 w-full max-w-[420px]"
               />
               <p className="eyebrow">Open art protocol · Base</p>
               <h1 className="mt-5 text-[38px] leading-[1.04] sm:text-[54px] lg:text-[60px]">
