@@ -70,12 +70,12 @@ export default function HomePage() {
                     className="mb-8 w-full max-w-[280px] sm:mb-10 sm:max-w-[360px]"
               />
               <p className="eyebrow">Open art protocol · Base</p>
-              <h1 className="mt-5 text-[38px] leading-[1.04] sm:text-[54px] lg:text-[60px]">
+              <h1 className="mt-5 text-[36px] leading-[1.12] sm:text-[52px] sm:leading-[1.1] lg:text-[58px]">
                 A market for art,
                 <br />
                 open to anyone.
               </h1>
-              <p className="mt-6 max-w-[520px] text-[15px] leading-7 text-body">
+              <p className="mt-7 max-w-[520px] text-[15px] leading-7 text-body">
                 PLUCO is a registry and marketplace on Base. Register a collection, mint a piece,
                 set a price — or buy one. No gatekeeper, no application, no account.
               </p>

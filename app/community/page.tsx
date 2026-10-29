@@ -22,7 +22,7 @@ export default function CommunityPage() {
         title="Rooms worth holding a key to."
         body="A cultural membership built around access, participation and the people who shape digital ownership."
       />
-      <section className="px-6 pb-24">
+      <section className="px-5 sm:px-6 pb-24">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-3">
           {communities.map((c, i) => (
             <Reveal key={c.name}>
@@ -36,7 +36,7 @@ export default function CommunityPage() {
           ))}
         </div>
       </section>
-      <section className="border-y border-line px-6 py-24">
+      <section className="border-y border-line px-5 sm:px-6 py-24">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_.8fr]">
           <Reveal>
             <SectionTitle
@@ -53,7 +53,7 @@ export default function CommunityPage() {
           </Reveal>
         </div>
       </section>
-      <section className="px-6 py-24">
+      <section className="px-5 sm:px-6 py-24">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-3">
           {stats.map((s) => (
             <div key={s.label} className="rounded-none border border-line bg-surface p-8">

@@ -19,8 +19,8 @@ export default function ExplorePage() {
         body="Start with collections, meet the creators behind them, then find the room that fits."
       />
 
-      <section className="px-6 pb-24">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-5 sm:px-6 pb-24">
+        <div className="mx-auto max-w-[1132px]">
           <SectionTitle eyebrow="Collections" title="Begin with the work." />
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {collections.slice(0, 3).map((item) => (
@@ -33,7 +33,7 @@ export default function ExplorePage() {
         </div>
       </section>
 
-      <section className="border-t border-line px-6 py-24">
+      <section className="border-t border-line px-5 sm:px-6 py-24">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2">
           <div>
             <SectionTitle eyebrow="Creators" title="Then the people." />

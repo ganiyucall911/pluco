@@ -12,7 +12,7 @@ export default function DashboardPage() {
         title="Build health, always current."
         body="A small ops view for the repository behind this site: the latest Build check run, refreshed live so a green badge never goes stale."
       />
-      <section className="px-6 pb-24">
+      <section className="px-5 sm:px-6 pb-24">
         <div className="mx-auto max-w-4xl">
           <BuildStatus />
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
