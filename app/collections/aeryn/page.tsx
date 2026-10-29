@@ -4,6 +4,7 @@ import { PageHero } from "@/components/page-hero";
 import { Button } from "@/components/button";
 import { Reveal } from "@/components/reveal";
 import { asset } from "@/lib/asset";
+import { VerifiedName } from "@/components/verified";
 
 export const metadata: Metadata = {
   title: "AERYN GEM MT",
@@ -133,7 +134,7 @@ export default function AerynPage() {
             </div>
             <div className="flex justify-between gap-6 border-b border-white/[.07] pb-4">
               <dt className="text-[#6E6E6E]">Creator</dt>
-              <dd>PLUCO</dd>
+              <dd><VerifiedName name="PLUCO" /></dd>
             </div>
             <div className="flex justify-between gap-6 border-b border-white/[.07] pb-4">
               <dt className="text-[#6E6E6E]">Contract</dt>

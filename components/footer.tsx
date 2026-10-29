@@ -4,7 +4,7 @@ import { Logo } from "./logo";
 const columns = [
   ["Market", [["Marketplace", "/marketplace"], ["Mint", "/mint"], ["Sell", "/sell"]]],
   ["Protocol", [["Overview", "/protocol"], ["Registry", "/protocol"], ["Fees", "/protocol"]]],
-  ["Company", [["About", "/about"], ["Contact", "/contact"], ["Legal", "/legal"]]],
+  ["Company", [["About", "/about"], ["Verification", "/verification"], ["Contact", "/contact"], ["Legal", "/legal"]]],
 ];
 
 export function Footer() {

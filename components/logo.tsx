@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { asset } from "@/lib/asset";
+import { Verified } from "./verified";
 
 /**
  * The wordmark is always the image asset, never typed text — it is the brand.
@@ -21,6 +22,7 @@ export function Logo({ small = false }: { small?: boolean }) {
         priority
         className={small ? "h-5 w-auto object-contain" : "h-7 w-auto object-contain sm:h-[26px]"}
       />
+      <Verified size={small ? 12 : 14} className="ml-2" />
     </Link>
   );
 }
