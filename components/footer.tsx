@@ -3,7 +3,7 @@ import { Logo } from "./logo";
 
 const columns = [
   ["Market", [["Marketplace", "/marketplace"], ["Mint", "/mint"], ["Sell", "/sell"]]],
-  ["Protocol", [["Overview", "/protocol"], ["Registry", "/protocol"], ["Fees", "/protocol"]]],
+  ["Protocol", [["Overview", "/protocol"], ["Registry", "/protocol"], ["Fees", "/protocol"], ["Launch", "/launch"]]],
   ["Company", [["About", "/about"], ["Verification", "/verification"], ["Contact", "/contact"], ["Legal", "/legal"]]],
 ];
 
