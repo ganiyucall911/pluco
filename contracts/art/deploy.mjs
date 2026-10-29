@@ -50,4 +50,14 @@ await contract.waitForDeployment();
 const address = await contract.getAddress();
 console.log("deployed:", address);
 console.log("explorer:", net.explorer + "/address/" + address);
-console.log("next step: set NEXT_PUBLIC_PLUCO_ART_CONTRACT=" + address);
+    console.log("next step: set NEXT_PUBLIC_PLUCO_ART_CONTRACT=" + address);
+
+    // Secondary market: 2.5% platform fee, royalty comes from the collection's EIP-2981 config.
+    const marketArtifact = JSON.parse(fs.readFileSync(path.join(root, "artifacts", "PlucoMarket.json"), "utf8"));
+    const marketFactory = new ContractFactory(marketArtifact.abi, marketArtifact.bytecode, wallet);
+    const market = await marketFactory.deploy(address, wallet.address, 250);
+    await market.waitForDeployment();
+    const marketAddress = await market.getAddress();
+    console.log("market deployed:", marketAddress);
+    console.log("explorer:", net.explorer + "/address/" + marketAddress);
+    console.log("next step: set NEXT_PUBLIC_PLUCO_MARKET=" + marketAddress);
