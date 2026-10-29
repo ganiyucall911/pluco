@@ -1,0 +1,161 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import { PageHero } from "@/components/page-hero";
+import { Button } from "@/components/button";
+import { Reveal } from "@/components/reveal";
+import { asset } from "@/lib/asset";
+
+export const metadata: Metadata = {
+  title: "AERYN GEM MT",
+  description: "AERYN GEM MT by PLUCO — graded-card artwork issued on Base.",
+};
+
+const CONTRACT = "0xb51639e0489cbd7d5dfb60c552db3ba6ce6e6992";
+const COLLECTION = "https://opensea.io/collection/aeryn-gem-mt-10-slab-552734664";
+
+const pieces = [
+  {
+    id: 1,
+    title: "Aeryn #001/200 — Obsidian Black",
+    side: "Trainer front",
+    image: "/aeryn/1.jpg",
+    price: "$0.94",
+    held: true,
+  },
+  {
+    id: 2,
+    title: "Aeryn #002/200 — Pure White",
+    side: "Trainer front",
+    image: "/aeryn/2.jpg",
+    price: "$0.94",
+    held: true,
+  },
+  {
+    id: 3,
+    title: "Aeryn #003/200 — Obsidian Black",
+    side: "Trainer back",
+    image: "/aeryn/3.jpg",
+    price: "$0.94",
+    held: true,
+  },
+  {
+    id: 5,
+    title: "Aeryn #005/200 — Pure White",
+    side: "Trainer back",
+    image: "/aeryn/5.jpg",
+    price: "$0.94",
+    held: true,
+  },
+];
+
+export default function AerynPage() {
+  return (
+    <main>
+      <PageHero
+        eyebrow="Live on Base"
+        title="AERYN GEM MT"
+        body="Graded-card artwork issued on Base by PLUCO. Five pieces exist today, each a single slab with its own grade and print side. Trade happens on OpenSea; PLUCO greys out the secondary market, not the work."
+      />
+
+      <section className="px-6 pb-16">
+        <div className="mx-auto grid max-w-7xl gap-px border border-white/[.08] bg-white/[.08] sm:grid-cols-3">
+          {[
+            ["Pieces", "5"],
+            ["Edition", "#/200"],
+            ["Chain", "Base"],
+          ].map(([k, v]) => (
+            <div key={k} className="bg-[#0c0c0c] px-6 py-6">
+              <p className="text-[10px] uppercase tracking-[.25em] text-[#6E6E6E]">{k}</p>
+              <p className="mt-3 text-2xl font-semibold">{v}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="px-6 pb-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/[.08] pb-5">
+            <h2 className="text-sm uppercase tracking-[.25em] text-[#A6A6A6]">Pieces</h2>
+            <a
+              href={COLLECTION}
+              target="_blank"
+              rel="noreferrer"
+              className="link-underline text-sm text-white"
+            >
+              View on OpenSea
+            </a>
+          </div>
+
+          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {pieces.map((p) => (
+              <Reveal key={p.id}>
+                <a
+                  href={`${COLLECTION}/${p.id}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group focus-ring block border border-white/[.08] bg-[#0c0c0c]"
+                >
+                  <div className="relative aspect-[3/4] overflow-hidden bg-black">
+                    <Image
+                      src={asset(p.image)}
+                      alt={p.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 25vw"
+                      className="object-contain transition duration-700 group-hover:scale-[1.02]"
+                    />
+                  </div>
+                  <div className="border-t border-white/[.07] px-4 py-4">
+                    <p className="text-[10px] uppercase tracking-[.2em] text-[#6E6E6E]">{p.side}</p>
+                    <p className="mt-2 text-sm leading-5 text-white">{p.title}</p>
+                    <p className="mt-3 text-xs text-[#A6A6A6]">Listed {p.price}</p>
+                  </div>
+                </a>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 pb-24">
+        <div className="mx-auto grid max-w-7xl gap-10 border-t border-white/[.08] pt-10 lg:grid-cols-[.9fr_1.1fr]">
+          <div>
+            <h2 className="text-2xl font-semibold">What it is, precisely.</h2>
+            <p className="mt-4 text-sm leading-6 text-[#A6A6A6]">
+              Each token is one card. Nothing is fractional, nothing is duplicated, and no piece is
+              minted twice. Copies carrying the same face differ by grade and print side, which is
+              what the four listed pieces are.
+            </p>
+          </div>
+          <dl className="grid gap-4 text-sm">
+            <div className="flex justify-between gap-6 border-b border-white/[.07] pb-4">
+              <dt className="text-[#6E6E6E]">Collection</dt>
+              <dd>AERYN GEM MT</dd>
+            </div>
+            <div className="flex justify-between gap-6 border-b border-white/[.07] pb-4">
+              <dt className="text-[#6E6E6E]">Creator</dt>
+              <dd>PLUCO</dd>
+            </div>
+            <div className="flex justify-between gap-6 border-b border-white/[.07] pb-4">
+              <dt className="text-[#6E6E6E]">Contract</dt>
+              <dd className="font-mono text-xs">
+                {CONTRACT.slice(0, 10)}…{CONTRACT.slice(-6)}
+              </dd>
+            </div>
+            <div className="flex justify-between gap-6 border-b border-white/[.07] pb-4">
+              <dt className="text-[#6E6E6E]">Marketplace</dt>
+              <dd>OpenSea</dd>
+            </div>
+            <div className="flex justify-between gap-6">
+              <dt className="text-[#6E6E6E]">Chain</dt>
+              <dd>Base · ETH</dd>
+            </div>
+          </dl>
+        </div>
+        <div className="mx-auto mt-10 flex max-w-7xl flex-wrap gap-3">
+          <Button href={COLLECTION} arrow>Open the collection</Button>
+          <Button href="/collections" variant="secondary">All collections</Button>
+        </div>
+      </section>
+    </main>
+  );
+}
