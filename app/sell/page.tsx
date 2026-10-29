@@ -4,7 +4,7 @@ import { Button } from "@/components/button";
 const steps = [
   ["Your art stays yours", "List a piece without sending it anywhere. The token stays in your wallet until someone pays."],
   ["One approval", "Approve the marketplace once for the collection, then list any piece in it in two clicks."],
-  ["Set your price", "Pick a price in ETH. You can change it or delist at any time."],
+  ["Set your price", "Price in ETH on Base. Buyers pay native ETH, no wrapped tokens, no approvals to hold. Change it or delist at any time."],
   ["Get paid instantly", "The sale settles onchain: your price, minus the 2.5% PLUCO fee and any artist royalty, is credited to you to withdraw."],
 ];
 
@@ -29,7 +29,7 @@ export default function SellPage() {
           </div>
           <div className="mt-10 rounded-[26px] border border-[#78EBC1]/15 bg-[#0e1512] p-6">
             <p className="text-sm leading-6 text-[#a9b3ad]">
-              Fees: 2.5% to PLUCO on each sale, 0% to list or cancel. Royalties set by the collection are paid to the artist.
+              Fees: 2.5% to PLUCO on each sale, 0% to list or cancel. Royalties set by the collection are paid to the artist. Everything settles in native ETH on Base.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
               <Button href="/marketplace">Go to your listings</Button>

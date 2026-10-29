@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Protocol" };
 
 const REGISTRY = process.env.NEXT_PUBLIC_PLUCO_REGISTRY || "";
 const MARKETPLACE = process.env.NEXT_PUBLIC_PLUCO_MARKETPLACE || "";
-const CHAIN_ID = Number(process.env.NEXT_PUBLIC_PLUCO_CHAIN_ID || 84532);
+const CHAIN_ID = Number(process.env.NEXT_PUBLIC_PLUCO_CHAIN_ID || 8453);
 const EXPLORER = CHAIN_ID === 8453 ? "https://basescan.org" : "https://sepolia.basescan.org";
 const NETWORK = CHAIN_ID === 8453 ? "Base" : "Base Sepolia";
 
