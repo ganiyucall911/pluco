@@ -151,33 +151,33 @@ export default function MintPage() {
         body="Every piece is a single ERC-721 token with its own metadata and a 7.5% royalty that follows it forever. No editions, no reruns."
       />
 
-      <section className="px-6 pb-32">
-        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.1fr_.9fr]">
-          <div className="rounded-3xl border border-white/10 bg-white/[.02] p-8">
-            <p className="text-xs font-semibold uppercase tracking-[.28em] text-[#78EBC1]">The drop</p>
+      <section className="wrap py-16">
+        <div className="grid gap-px border border-white/[.07] bg-white/[.07] lg:grid-cols-[1.1fr_.9fr]">
+          <div className="bg-[#0c0c0c] p-8">
+            <p className="eyebrow">The drop</p>
             <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="text-[#9EA6A2]">Minted</p>
+                <p className="text-[#A6A6A6]">Minted</p>
                 <p className="mt-1 text-2xl font-semibold">{minted ?? "—"} / {supply ?? "—"}</p>
               </div>
                   <div>
-                    <p className="text-[#9EA6A2]">Price</p>
+                    <p className="text-[#A6A6A6]">Price</p>
                     <p className="mt-1 text-2xl font-semibold">
                       {priceLoaded ? formatEth(priceWei) + " ETH" : "—"}
                     </p>
-                    <p className="mt-1 text-xs text-[#6f7873]">paid in {CURRENCY}</p>
+                    <p className="mt-1 text-xs text-[#6E6E6E]">paid in {CURRENCY}</p>
                   </div>
                   <div>
-                    <p className="text-[#9EA6A2]">Sale</p>
+                    <p className="text-[#A6A6A6]">Sale</p>
                 <p className="mt-1 text-2xl font-semibold">{open === null ? "—" : open ? "Open" : "Closed"}</p>
               </div>
             </div>
-            <p className="mt-6 text-sm leading-6 text-[#9EA6A2]">
+            <p className="mt-6 text-sm leading-6 text-[#A6A6A6]">
               Network: {CHAIN_NAME}. Price and per-wallet limit are fixed in the contract, so nobody can change them mid-drop.
               {CONTRACT ? (
                 <>
                   {" "}Contract{" "}
-                  <a className="text-[#78EBC1] underline" href={EXPLORER + "/address/" + CONTRACT} target="_blank" rel="noreferrer">
+                  <a className="text-[#FFFFFF] underline" href={EXPLORER + "/address/" + CONTRACT} target="_blank" rel="noreferrer">
                     {CONTRACT.slice(0, 6)}…{CONTRACT.slice(-4)}
                   </a>
                   .
@@ -186,23 +186,23 @@ export default function MintPage() {
             </p>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/[.02] p-8">
+          <div className="bg-[#0c0c0c] p-8">
             {!ready ? (
-              <p className="text-sm leading-6 text-[#9EA6A2]">
+              <p className="text-sm leading-6 text-[#A6A6A6]">
                 No contract configured yet. Deploy with <span className="text-white">npm run deploy:base-sepolia</span> in contracts/art, then set
                 NEXT_PUBLIC_PLUCO_ART_CONTRACT and rebuild.
               </p>
             ) : !account ? (
-              <button onClick={connect} className="focus-ring w-full rounded-full bg-[#78EBC1] px-6 py-4 text-sm font-semibold text-black">
+              <button onClick={connect} className="focus-ring w-full rounded-full bg-[#FFFFFF] px-6 py-4 text-sm font-semibold text-black">
                 Connect wallet
               </button>
             ) : soldOut ? (
-              <p className="text-sm text-[#9EA6A2]">Sold out. Secondary listings live on OpenSea and Rarible.</p>
+              <p className="text-sm text-[#A6A6A6]">Sold out. Secondary listings live on OpenSea and Rarible.</p>
             ) : (
               <button
                 onClick={mint}
                 disabled={busy || open === false}
-                className="focus-ring w-full rounded-full bg-[#78EBC1] px-6 py-4 text-sm font-semibold text-black disabled:opacity-50"
+                className="focus-ring w-full rounded-full bg-[#FFFFFF] px-6 py-4 text-sm font-semibold text-black disabled:opacity-50"
               >
                 {busy
                       ? "Waiting for wallet…"
@@ -213,7 +213,7 @@ export default function MintPage() {
                           : "Mint a piece"}
               </button>
             )}
-            <p className="mt-4 text-xs leading-5 text-[#6f7873]">
+            <p className="mt-4 text-xs leading-5 text-[#6E6E6E]">
               Signed in as {account ? account.slice(0, 6) + "…" + account.slice(-4) : "no wallet"}.
             </p>
             {status ? <p className="mt-4 text-sm leading-6 text-white">{status}</p> : null}

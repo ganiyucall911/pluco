@@ -2,16 +2,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { asset } from "@/lib/asset";
 
-export function Logo() {
+export function Logo({ small = false }: { small?: boolean }) {
   return (
-    <Link href="/" aria-label="PLUCO home" className="focus-ring flex items-center rounded-full">
+    <Link href="/" aria-label="PLUCO home" className="focus-ring flex items-center">
       <Image
-        src={asset("/brand/pluco-mark.png")}
+        src={asset("/brand/pluco-white.png")}
         alt="PLUCO"
-        width={220}
-        height={110}
+        width={1200}
+        height={600}
         priority
-        className="h-10 w-auto object-contain brightness-[1.6] saturate-150 drop-shadow-[0_0_12px_rgba(0,255,60,.45)] sm:h-11"
+        className={
+          small
+            ? "h-6 w-auto object-contain opacity-95"
+            : "h-7 w-auto object-contain opacity-95 sm:h-8"
+        }
       />
     </Link>
   );

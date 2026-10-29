@@ -34,10 +34,10 @@ function ago(iso: string) {
 }
 
 const COLORS: Record<string, string> = {
-  success: "text-[#78EBC1] border-[#78EBC1]/30 bg-[#78EBC1]/10",
+  success: "text-[#FFFFFF] border-[#FFFFFF]/30 bg-[#FFFFFF]/10",
   failure: "text-[#ff8a8a] border-[#ff8a8a]/30 bg-[#ff8a8a]/10",
   pending: "text-[#ffd479] border-[#ffd479]/30 bg-[#ffd479]/10",
-  none: "text-[#9EA6A2] border-white/15 bg-white/5",
+  none: "text-[#A6A6A6] border-white/15 bg-white/5",
 };
 
 function label(run: Run | null) {
@@ -98,12 +98,12 @@ export function BuildStatus() {
   const stale = run ? Date.now() - new Date(run.updated_at).getTime() > STALE_MS : false;
 
   return (
-    <div className="rounded-3xl border border-white/[.08] bg-white/[.02] p-8">
+    <div className="rounded-none border border-white/[.08] bg-white/[.02] p-8">
       <div className="flex flex-wrap items-start justify-between gap-6">
         <div>
-          <p className="text-xs uppercase tracking-[.2em] text-[#6f7873]">Build check · main</p>
+          <p className="text-xs uppercase tracking-[.2em] text-[#6E6E6E]">Build check · main</p>
           <h2 className="mt-3 font-[family-name:var(--font-heading)] text-3xl">CI status</h2>
-          <p className="mt-2 max-w-md text-sm leading-6 text-[#9EA6A2]">
+          <p className="mt-2 max-w-md text-sm leading-6 text-[#A6A6A6]">
             Live from GitHub Actions. Refreshes every 30 seconds while this page is open, and immediately when you return to the tab.
           </p>
         </div>
@@ -121,7 +121,7 @@ export function BuildStatus() {
             className="h-5 w-auto opacity-90"
           />
         </a>
-        <div className="text-sm text-[#9EA6A2]">
+        <div className="text-sm text-[#A6A6A6]">
           {run ? (
             <>
               <p className="text-white">{run.display_title}</p>
@@ -130,7 +130,7 @@ export function BuildStatus() {
                 {run.html_url ? (
                   <>
                     {" · "}
-                    <a className="text-[#78EBC1] hover:underline" href={run.html_url} target="_blank" rel="noreferrer">
+                    <a className="text-[#FFFFFF] hover:underline" href={run.html_url} target="_blank" rel="noreferrer">
                       open run
                     </a>
                   </>
@@ -149,11 +149,11 @@ export function BuildStatus() {
         </div>
       </div>
 
-      <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-white/[.07] pt-4 text-xs text-[#6f7873]">
+      <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-white/[.07] pt-4 text-xs text-[#6E6E6E]">
         <span>{checked ? "Checked " + new Date(checked).toLocaleTimeString() : "Checking…"}</span>
         <span>Auto-refresh 30s</span>
         {stale ? <span className="text-[#ffd479]">Last run is old</span> : null}
-        <button onClick={load} className="focus-ring rounded text-[#78EBC1] hover:underline">
+        <button onClick={load} className="focus-ring rounded text-[#FFFFFF] hover:underline">
           Refresh now
         </button>
       </div>

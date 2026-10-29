@@ -1,1 +1,20 @@
-export function PageHero({eyebrow,title,body}:{eyebrow:string;title:string;body:string}){return <section className="relative overflow-hidden px-6 pb-20 pt-48"><div className="grid-noise absolute inset-0 opacity-60"/><div className="relative mx-auto max-w-7xl"><p className="text-xs font-semibold uppercase tracking-[.28em] text-[#78EBC1]">{eyebrow}</p><h1 className="mt-6 max-w-5xl text-6xl font-semibold leading-[.88] sm:text-8xl">{title}</h1><p className="mt-8 max-w-2xl text-lg leading-8 text-[#9EA6A2]">{body}</p></div></section>}
+export function PageHero({
+  eyebrow,
+  title,
+  body,
+}: {
+  eyebrow: string;
+  title: string;
+  body: string;
+}) {
+  return (
+    <section className="relative overflow-hidden border-b border-white/[.07]">
+      <div className="grain" />
+      <div className="wrap relative py-16 sm:py-20">
+        <p className="eyebrow">{eyebrow}</p>
+        <h1 className="mt-6 max-w-[880px] text-[36px] leading-[1.05] sm:text-[54px]">{title}</h1>
+        <p className="mt-6 max-w-[620px] text-[15px] leading-7 text-[#a6a6a6]">{body}</p>
+      </div>
+    </section>
+  );
+}

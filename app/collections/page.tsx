@@ -14,7 +14,7 @@ export default function CollectionsPage() {
         title="Curated collections, considered."
         body="A directory of editorial collections across art, photography, fashion, music and membership. All content is demo content."
       />
-      <section className="px-6 pb-32">
+      <section className="px-6 pb-24">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 lg:grid-cols-3">
           {collections.map((item) => (
             <Reveal key={item.slug}>

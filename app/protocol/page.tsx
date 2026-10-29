@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
-import { SectionTitle } from "@/components/section-title";
 import { ProtocolStats } from "@/components/protocol-stats";
+import { Button } from "@/components/button";
 
 export const metadata: Metadata = { title: "Protocol" };
 
@@ -21,7 +20,7 @@ const layers = [
   {
     k: "02",
     t: "Collections",
-    d: "PlucoOriginals is the reference collection contract: one-of-one tokens, immutable supply, provenance hash, owner reserve. Any artist can deploy their own and register it, or bring an existing contract.",
+    d: "PlucoOriginals is the reference collection: one-of-one tokens, immutable supply, provenance hash and an owner reserve. Any artist can deploy their own or bring an existing contract.",
   },
   {
     k: "03",
@@ -31,23 +30,14 @@ const layers = [
   {
     k: "04",
     t: "Treasury",
-    d: "A 2.5% protocol fee on secondary sales, hard-capped at 5% in the contract. Proceeds are credited then withdrawn, so no receiver can block or re-enter a sale.",
+    d: "A 2.5% protocol fee on secondary sales, hard-capped at 5% in the contract. Fees are native ETH on Base, paid to the treasury address on settlement.",
   },
 ];
 
 const steps = [
-  {
-    t: "Deploy a collection",
-    d: "cd contracts/art && PRIVATE_KEY=... npm run deploy:base-sepolia",
-  },
-  {
-    t: "Register it",
-    d: "Call register(collection, name, category, metadataURI) on the registry from the artist wallet that owns it.",
-  },
-  {
-    t: "List a piece",
-    d: "approve the marketplace for the token, then list(collection, tokenId, price). Royalties settle automatically on sale.",
-  },
+  ["Deploy", "Deploy a collection from contracts/art, or point the registry at one you already own."],
+  ["Register", "Call register(collection, name, category, metadataURI) from the artist wallet."],
+  ["List", "Approve the marketplace for the token, then list(collection, tokenId, price)."],
 ];
 
 export default function ProtocolPage() {
@@ -55,75 +45,94 @@ export default function ProtocolPage() {
     <main>
       <PageHero
         eyebrow="Protocol"
-        title="Art is the first protocol, not the product."
-        body="PLUCO is being built as a chain, and a chain is only real when something runs on it. This is the first thing: an open art protocol on Base that anyone can plug into."
+        title="Art is the first thing on the chain, not the product."
+        body="PLUCO is being built as a network, and a network is only real when something runs on it. This is the first layer: an open art protocol on Base that anyone can plug into."
       />
 
-      <section className="px-6 pb-24">
-        <div className="mx-auto max-w-7xl">
-          <ProtocolStats />
-          <p className="mt-4 text-xs text-[#6f7873]">
-            Read live from {NETWORK}. {REGISTRY ? "" : "Registry not deployed yet, so counters stay empty."}
-          </p>
-        </div>
+      <section className="wrap py-14">
+        <ProtocolStats />
+        <p className="mt-4 text-[11px] uppercase tracking-[.16em] text-[#5e5e5e]">
+          Live from {NETWORK}
+          {REGISTRY ? "" : " · registry not deployed yet, so counters stay empty"}
+        </p>
       </section>
 
-      <section className="border-t border-white/[.07] px-6 py-24">
-        <div className="mx-auto max-w-7xl">
-          <SectionTitle eyebrow="Architecture" title="Four contracts. No gatekeeper." />
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
+      <section className="border-t border-white/[.07]">
+        <div className="wrap py-20">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="eyebrow">Architecture</p>
+              <h2 className="mt-4 max-w-[560px] text-[28px] leading-[1.12] sm:text-[36px]">
+                Four contracts. No gatekeeper.
+              </h2>
+            </div>
+          </div>
+          <div className="mt-12 grid gap-px border-y border-white/[.07] bg-white/[.07] md:grid-cols-2">
             {layers.map((l) => (
-              <article key={l.k} className="rounded-[28px] border border-white/[.08] bg-[#0d0d0d] p-8">
-                <span className="text-xs uppercase tracking-[.2em] text-[#78EBC1]">{l.k}</span>
-                <h3 className="mt-6 text-2xl font-semibold">{l.t}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#8d9691]">{l.d}</p>
+              <article key={l.k} className="bg-[#0a0a0a] p-8">
+                <span className="num text-[11px] tracking-[.18em] text-[#5e5e5e]">{l.k}</span>
+                <h3 className="mt-6 text-[19px]">{l.t}</h3>
+                <p className="mt-2 max-w-[420px] text-[13px] leading-6 text-[#8f8f8f]">{l.d}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-t border-white/[.07] px-6 py-24">
-        <div className="mx-auto max-w-7xl">
-          <SectionTitle eyebrow="For artists" title="Three calls to come onchain." />
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
-            {steps.map((s, i) => (
-              <article key={s.t} className="rounded-[28px] border border-white/[.08] bg-[#0d0d0d] p-8">
-                <span className="text-xs uppercase tracking-[.2em] text-[#78EBC1]">Step {i + 1}</span>
-                <h3 className="mt-6 text-xl font-semibold">{s.t}</h3>
-                <p className="mt-3 break-words font-mono text-xs leading-6 text-[#8d9691]">{s.d}</p>
-              </article>
+      <section className="border-t border-white/[.07] bg-[#0c0c0c]">
+        <div className="wrap py-20">
+          <p className="eyebrow">For artists</p>
+          <h2 className="mt-4 text-[28px] leading-[1.12] sm:text-[36px]">Three calls to come onchain.</h2>
+          <div className="mt-12 grid gap-px border-y border-white/[.07] bg-white/[.07] md:grid-cols-3">
+            {steps.map(([t, d], i) => (
+              <div key={t} className="bg-[#0c0c0c] p-8">
+                <span className="num text-[11px] tracking-[.18em] text-[#5e5e5e]">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-6 text-[19px]">{t}</h3>
+                <p className="mt-2 text-[13px] leading-6 text-[#8f8f8f]">{d}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-t border-white/[.07] px-6 py-24">
-        <div className="mx-auto max-w-7xl">
-          <SectionTitle eyebrow="Deployed addresses" title="Verify, don't trust." />
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
+      <section className="border-t border-white/[.07]">
+        <div className="wrap py-20">
+          <p className="eyebrow">Deployed addresses</p>
+          <h2 className="mt-4 text-[28px] leading-[1.12] sm:text-[36px]">Verify, don&apos;t trust.</h2>
+          <div className="mt-10 border-t border-white/[.09]">
             {[
               { name: "PlucoRegistry", addr: REGISTRY },
               { name: "PlucoMarketplace", addr: MARKETPLACE },
             ].map((c) => (
-              <div key={c.name} className="rounded-[24px] border border-white/[.08] bg-[#0d0d0d] p-6">
-                <p className="text-xs uppercase tracking-[.2em] text-[#8d9691]">{c.name}</p>
+              <div
+                key={c.name}
+                className="grid gap-2 border-b border-white/[.07] py-5 sm:grid-cols-[220px_1fr] sm:items-center"
+              >
+                <p className="text-[13px] text-[#a6a6a6]">{c.name}</p>
                 {c.addr ? (
-                  <a className="mt-3 block break-all font-mono text-sm text-[#78EBC1] hover:underline" href={EXPLORER + "/address/" + c.addr} target="_blank" rel="noreferrer">
+                  <a
+                    className="break-all font-mono text-[13px] text-[#f4f3f1] underline decoration-white/20 underline-offset-4 hover:decoration-white/60"
+                    href={EXPLORER + "/address/" + c.addr}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     {c.addr}
                   </a>
                 ) : (
-                  <p className="mt-3 font-mono text-sm text-[#6f7873]">Not deployed yet</p>
+                  <p className="font-mono text-[13px] text-[#5e5e5e]">Pending deploy</p>
                 )}
               </div>
             ))}
           </div>
-          <p className="mt-8 max-w-2xl text-sm leading-6 text-[#8d9691]">
-            PLUCO&apos;s own chain is a later step, and it will settle to Ethereum on the same OP Stack spec Base uses. Until it has wallets and liquidity, Base is where the art lives, so it is visible on a network people already use.
+          <p className="mt-8 max-w-[620px] text-[13px] leading-6 text-[#8f8f8f]">
+            PLUCO&apos;s own chain is a later step, and it will settle to Ethereum on the same OP
+            Stack spec Base uses. Until it has wallets and liquidity, Base is where the art lives.
           </p>
-          <Link href="/mint" className="focus-ring mt-8 inline-block text-sm text-[#78EBC1] hover:underline">
-            See the reference collection
-          </Link>
+          <div className="mt-8">
+            <Button href="/mint">See the reference collection</Button>
+          </div>
         </div>
       </section>
     </main>

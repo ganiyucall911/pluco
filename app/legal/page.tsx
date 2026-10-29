@@ -1,31 +1,60 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
-import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = { title: "Legal" };
 
 const sections = [
-  { h: "Demo interface", p: "This site is a design and engineering demonstration. Collections, creators, communities and activity are illustrative and do not represent real assets." },
-  { h: "No financial offering", p: "Nothing on this site constitutes an offer to sell, or a solicitation to buy, any token, NFT or security. No sales occur." },
-  { h: "No chain connection", p: "Wallet connection, signatures and onchain reads are not implemented. No transaction can be initiated from this interface." },
-  { h: "Intellectual property", p: "PLUCO branding, copy and layout are provided for demonstration purposes. Third-party marks remain the property of their owners." },
-  { h: "Contact", p: "Questions about this demo can be directed through the contact page." },
+  {
+    h: "Software, as is",
+    p: "PLUCO is software. The contracts and this interface are provided as is, without warranty. You are responsible for the wallets and transactions you sign.",
+  },
+  {
+    h: "Fees",
+    p: "A 2.5% protocol fee applies to secondary sales and is hard-capped at 5% in the contract. Minting and listing carry no PLUCO fee. Network gas is paid to Base, not to PLUCO.",
+  },
+  {
+    h: "No custody",
+    p: "PLUCO never holds your tokens or your funds. Sellers keep the token until a sale settles, and payments route directly to the seller, the artist and the treasury.",
+  },
+  {
+    h: "Content",
+    p: "Artists are responsible for the work they register and for the rights to it. The registry is permissionless; it does not screen or endorse what is listed.",
+  },
+  {
+    h: "Contact",
+    p: "Questions, bugs and take-down requests go through the project repository on GitHub.",
+  },
 ];
 
 export default function LegalPage() {
   return (
     <main>
-      <PageHero eyebrow="Legal" title="The fine print, plainly." body="A short summary of what this demo is and is not." />
-      <section className="px-6 pb-32">
-        <div className="mx-auto grid max-w-3xl gap-5">
+      <PageHero
+        eyebrow="Legal"
+        title="The fine print, plainly."
+        body="A short summary of what PLUCO is, what it charges and what it does not do."
+      />
+      <section className="wrap grid gap-16 py-16 lg:grid-cols-[0.6fr_1.4fr]">
+        <div>
+          <p className="eyebrow">Terms</p>
+          <p className="mt-4 max-w-[260px] text-[13px] leading-6 text-[#8f8f8f]">
+            Five points. No longer than it needs to be.
+          </p>
+        </div>
+        <div className="border-t border-white/[.09]">
           {sections.map((s, i) => (
-            <Reveal key={s.h}>
-              <article className="rounded-[24px] border border-white/[.08] bg-[#101010] p-8">
-                <p className="text-xs uppercase tracking-[.2em] text-[#78EBC1]">0{i + 1}</p>
-                <h2 className="mt-4 text-xl font-semibold">{s.h}</h2>
-                <p className="mt-3 text-sm leading-6 text-[#9EA6A2]">{s.p}</p>
-              </article>
-            </Reveal>
+            <div
+              key={s.h}
+              className="grid grid-cols-[48px_1fr] gap-4 border-b border-white/[.07] py-6"
+            >
+              <span className="num text-[11px] tracking-[.18em] text-[#5e5e5e]">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h2 className="text-[16px]">{s.h}</h2>
+                <p className="mt-1.5 max-w-[560px] text-[13px] leading-6 text-[#8f8f8f]">{s.p}</p>
+              </div>
+            </div>
           ))}
         </div>
       </section>

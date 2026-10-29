@@ -51,17 +51,17 @@ export function ProtocolStats() {
 
   return (
     <div className="grid gap-4 sm:grid-cols-3">
-      <div className="rounded-[24px] border border-white/[.08] bg-[#0d0d0d] p-6">
+      <div className="rounded-none border border-white/[.08] bg-[#0E0E0E] p-6">
         <p className="text-3xl font-semibold">{value(collections)}</p>
-        <p className="mt-2 text-xs uppercase tracking-[.2em] text-[#8d9691]">Collections registered</p>
+        <p className="mt-2 text-xs uppercase tracking-[.2em] text-[#8C8C8C]">Collections registered</p>
       </div>
-      <div className="rounded-[24px] border border-white/[.08] bg-[#0d0d0d] p-6">
+      <div className="rounded-none border border-white/[.08] bg-[#0E0E0E] p-6">
         <p className="text-3xl font-semibold">{value(listings)}</p>
-        <p className="mt-2 text-xs uppercase tracking-[.2em] text-[#8d9691]">Listings created</p>
+        <p className="mt-2 text-xs uppercase tracking-[.2em] text-[#8C8C8C]">Listings created</p>
       </div>
-      <div className="rounded-[24px] border border-white/[.08] bg-[#0d0d0d] p-6">
+      <div className="rounded-none border border-white/[.08] bg-[#0E0E0E] p-6">
         <p className="text-3xl font-semibold">2.5%</p>
-        <p className="mt-2 text-xs uppercase tracking-[.2em] text-[#8d9691]">Protocol fee, capped at 5%</p>
+        <p className="mt-2 text-xs uppercase tracking-[.2em] text-[#8C8C8C]">Protocol fee, capped at 5%</p>
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ export default function ExplorePage() {
               <Reveal key={item.slug}><CollectionCard item={item} /></Reveal>
             ))}
           </div>
-          <Link href="/collections" className="focus-ring mt-8 inline-block text-sm text-[#78EBC1] hover:underline">
+          <Link href="/collections" className="focus-ring mt-8 inline-block text-sm text-[#FFFFFF] hover:underline">
             All collections
           </Link>
         </div>
@@ -38,11 +38,11 @@ export default function ExplorePage() {
             <SectionTitle eyebrow="Creators" title="Then the people." />
             <div className="grid gap-4">
               {creators.map((c) => (
-                <Link key={c.name} href="/creators" className="focus-ring flex items-center gap-5 rounded-2xl border border-white/[.08] bg-[#0d0d0d] p-4 transition hover:border-[#78EBC1]/25">
+                <Link key={c.name} href="/creators" className="focus-ring flex items-center gap-5 rounded-none border border-white/[.08] bg-[#0E0E0E] p-4 transition hover:border-[#FFFFFF]/25">
                   <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full"><Art accent={c.accent} /></div>
                   <div>
                     <p className="font-semibold">{c.name}</p>
-                    <p className="mt-1 text-sm text-[#9EA6A2]">{c.role}</p>
+                    <p className="mt-1 text-sm text-[#A6A6A6]">{c.role}</p>
                   </div>
                 </Link>
               ))}
@@ -52,9 +52,9 @@ export default function ExplorePage() {
             <SectionTitle eyebrow="Community" title="Then the rooms." />
             <div className="grid gap-4">
               {communities.map((c) => (
-                <Link key={c.name} href="/community" className="focus-ring block rounded-2xl border border-white/[.08] bg-[#0d0d0d] p-6 transition hover:border-[#78EBC1]/25">
+                <Link key={c.name} href="/community" className="focus-ring block rounded-none border border-white/[.08] bg-[#0E0E0E] p-6 transition hover:border-[#FFFFFF]/25">
                   <p className="font-semibold">{c.name}</p>
-                  <p className="mt-2 text-sm leading-6 text-[#8d9691]">{c.copy}</p>
+                  <p className="mt-2 text-sm leading-6 text-[#8C8C8C]">{c.copy}</p>
                 </Link>
               ))}
             </div>

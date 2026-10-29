@@ -1,15 +1,30 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
-import { SectionTitle } from "@/components/section-title";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/button";
 
 export const metadata: Metadata = { title: "About" };
 
 const principles = [
-  { title: "Curation first", body: "Editorial judgement comes before speculation. Collections are presented with context, not price pressure." },
-  { title: "Ownership clearly stated", body: "No fake wallet states, chain endpoints or invented sales. What is demo stays labelled as demo." },
-  { title: "Culture over volume", body: "The network is built around creators and communities, not transaction throughput." },
+  {
+    t: "Open by default",
+    d: "Anyone can register a collection, mint a piece or buy one. No application, no allowlist, no account. The registry has no owner gate on who may enter.",
+  },
+  {
+    t: "Ownership is explicit",
+    d: "Sellers keep the token until it sells. Royalties read from EIP-2981. Every fee is stated before you sign, not discovered afterwards.",
+  },
+  {
+    t: "Built to be read",
+    d: "The contracts are small, documented and verifiable on Basescan. If you cannot inspect it, you should not trust it.",
+  },
+];
+
+const facts = [
+  ["Chain", "Base mainnet"],
+  ["Settlement", "Native ETH"],
+  ["Contracts", "Written, deployment pending"],
+  ["Protocol fee", "2.5%, capped at 5%"],
 ];
 
 export default function AboutPage() {
@@ -17,37 +32,51 @@ export default function AboutPage() {
     <main>
       <PageHero
         eyebrow="About"
-        title="Where digital ownership becomes culture."
-        body="PLUCO is a concept interface for an NFT ownership network — designed around curation, creators and community rather than churn."
+        title="An open market for art on Base."
+        body="PLUCO is a registry and a marketplace, not a mint page. Art is the first thing the network carries; the protocol is what stays."
       />
-      <section className="px-6 pb-24">
-        <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-3">
+
+      <section className="wrap py-16">
+        <div className="grid gap-px border-y border-white/[.07] bg-white/[.07] md:grid-cols-3">
           {principles.map((p, i) => (
-            <Reveal key={p.title}>
-              <article className="h-full rounded-[28px] border border-white/[.08] bg-[#111] p-8">
-                <span className="text-xs uppercase tracking-[.2em] text-[#78EBC1]">0{i + 1}</span>
-                <h2 className="mt-16 text-2xl font-semibold">{p.title}</h2>
-                <p className="mt-3 text-sm leading-6 text-[#8d9691]">{p.body}</p>
-              </article>
-            </Reveal>
+            <div key={p.t} className="bg-[#0a0a0a] p-8">
+              <span className="num text-[11px] tracking-[.18em] text-[#5e5e5e]">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h2 className="mt-6 text-[19px]">{p.t}</h2>
+              <p className="mt-2 text-[13px] leading-6 text-[#8f8f8f]">{p.d}</p>
+            </div>
           ))}
         </div>
       </section>
-      <section className="border-t border-white/[.07] px-6 py-24">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_.9fr]">
+
+      <section className="border-t border-white/[.07] bg-[#0c0c0c]">
+        <div className="wrap grid gap-14 py-20 lg:grid-cols-[1fr_.9fr]">
           <Reveal>
-            <SectionTitle
-              eyebrow="Status"
-              title="A demo interface, integration ready."
-              body="Wallet connection, onchain reads and marketplace transactions are intentionally not implemented. The interface is structured so those services can be added behind a real provider."
-            />
-            <Button href="/brand" variant="secondary">Brand assets</Button>
+            <p className="eyebrow">Status</p>
+            <h2 className="mt-4 max-w-[440px] text-[28px] leading-[1.12] sm:text-[34px]">
+              Contracts written. Deployment next.
+            </h2>
+            <p className="mt-5 max-w-[420px] text-[13px] leading-6 text-[#8f8f8f]">
+              The registry, marketplace and reference collection are compiled and tested on a local
+              chain. What remains is a deploy to Base and a wallet to sign it.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button href="/protocol">Read the protocol</Button>
+              <Button href="/mint" variant="secondary">
+                Reference collection
+              </Button>
+            </div>
           </Reveal>
           <Reveal>
-            <dl className="grid gap-5 rounded-[28px] border border-white/[.08] bg-[#0d0d0d] p-8 text-sm">
-              {[["Product","PLUCO"],["Version","1.0 demo"],["Chain integration","Not connected"],["Transactions","Disabled"],["Content","Demo only"]].map(([k, v]) => (
-                <div key={k} className="flex justify-between gap-6 border-b border-white/[.06] pb-4 last:border-0 last:pb-0">
-                  <dt className="text-[#6f7873]">{k}</dt><dd>{v}</dd>
+            <dl className="border-t border-white/[.09]">
+              {facts.map(([k, v]) => (
+                <div
+                  key={k}
+                  className="flex items-baseline justify-between gap-6 border-b border-white/[.07] py-5"
+                >
+                  <dt className="text-[13px] text-[#8f8f8f]">{k}</dt>
+                  <dd className="num text-right text-[13px] text-[#f4f3f1]">{v}</dd>
                 </div>
               ))}
             </dl>
