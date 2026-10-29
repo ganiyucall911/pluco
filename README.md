@@ -66,6 +66,34 @@ contracts/    # Solidity sources
 docs/         # remediation and fee notes
 ```
 
+## Launching a collection
+
+The site deploys collections itself — no server, no key handling:
+
+1. Open /launch, connect a wallet, pick Base Sepolia first.
+2. Set name, symbol, supply, price, per-wallet limit and the mint fee.
+3. Sign once. The page shows the address, opens the sale, and prints the config.
+
+The mint page reads addresses from public/config.json at runtime, so a new deployment
+only needs that one file updated — no rebuild, no redeploy of the site:
+
+{ "chainId": 8453, "originals": "0x...", "registry": "", "marketplace": "" }
+
+NEXT_PUBLIC_PLUCO_ART_CONTRACT and friends still override it at build time. The launch
+page encodes the constructor call itself, so the bytecode comes from
+public/contracts/PlucoOriginals.json, written by npm run compile in contracts/art.
+
+### What the contract enforces
+
+- one-of-one tokens, each with its own metadata URI
+- price, supply and wallet limit fixed at deploy
+- 7.5% EIP-2981 royalty on every resale
+- primary mint fee to treasury, hard-capped at 10%
+- owner reserve minting without payment
+
+Verified end to end against a local EVM: deploy, sale gate, exact-price check,
+per-wallet limit, fee routing to treasury and the royalty maths.
+
 ## Deployment
 
 Merging to `main` deploys automatically: `.github/workflows/deploy.yml` builds the static export and publishes `out/` to the `gh-pages` branch, which GitHub Pages serves.

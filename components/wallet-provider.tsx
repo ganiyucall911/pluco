@@ -4,6 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 
 export const BASE_CHAIN_ID = 8453;
 export const BASE_CHAIN_HEX = "0x2105";
+export const BASE_SEPOLIA_CHAIN_ID = 84532;
 
 type Eth = {
   request: (args: { method: string; params?: unknown[] | object }) => Promise<unknown>;
@@ -29,6 +30,7 @@ export type WalletOption = {
 
 type WalletState = {
   account: string | null;
+  provider: Eth | null;
   chainId: number | null;
   connecting: boolean;
   error: string | null;
@@ -39,6 +41,7 @@ type WalletState = {
   connect: (id?: string) => Promise<void>;
   disconnect: () => void;
   switchToBase: () => Promise<void>;
+  switchChain: (chainId: number) => Promise<void>;
   clearError: () => void;
 };
 
@@ -61,6 +64,7 @@ function labelFor(eth: Eth, fallback: string) {
 
 export function WalletProvider({ children }: { children: React.ReactNode }) {
   const [account, setAccount] = useState<string | null>(null);
+  const [provider, setProvider] = useState<Eth | null>(null);
   const [chainId, setChainId] = useState<number | null>(null);
   const [connecting, setConnecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -71,6 +75,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
 
   const attach = useCallback((eth: Eth) => {
     activeProvider.current = eth;
+    setProvider(eth);
 
     const onAccounts = (accounts: string[]) => {
       setAccount(accounts && accounts.length ? accounts[0] : null);
@@ -166,32 +171,45 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const switchToBase = useCallback(async () => {
-    const eth = activeProvider.current || (typeof window !== "undefined" ? window.ethereum : undefined);
-    if (!eth) return;
-    try {
-      await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: BASE_CHAIN_HEX }] });
-    } catch (switchError) {
-      const code = (switchError as { code?: number }).code;
-      if (code === 4902) {
-        await eth.request({
-          method: "wallet_addEthereumChain",
-          params: [
-            {
-              chainId: BASE_CHAIN_HEX,
-              chainName: "Base",
-              nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
-              rpcUrls: ["https://mainnet.base.org"],
-              blockExplorerUrls: ["https://basescan.org"],
-            },
-          ],
-        });
-      } else {
-        throw switchError;
+  // Ask the wallet to move to a chain, adding it first if the wallet has never seen it.
+  const switchChain = useCallback(
+    async (target: number) => {
+      const eth = activeProvider.current || (typeof window !== "undefined" ? window.ethereum : undefined);
+      if (!eth) throw new Error("No wallet connected.");
+      const hex = "0x" + target.toString(16);
+      const current = (await eth.request({ method: "eth_chainId" })) as string;
+      if (parseInt(current, 16) === target) {
+        setChainId(target);
+        return;
       }
-    }
-    await readChain(eth);
-  }, [readChain]);
+      const sepolia = target === BASE_SEPOLIA_CHAIN_ID;
+      try {
+        await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: hex }] });
+      } catch (switchError) {
+        const code = (switchError as { code?: number }).code;
+        if (code === 4902) {
+          await eth.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: hex,
+                chainName: sepolia ? "Base Sepolia" : "Base",
+                nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+                rpcUrls: [sepolia ? "https://sepolia.base.org" : "https://mainnet.base.org"],
+                blockExplorerUrls: [sepolia ? "https://sepolia.basescan.org" : "https://basescan.org"],
+              },
+            ],
+          });
+        } else {
+          throw switchError;
+        }
+      }
+      await readChain(eth);
+    },
+    [readChain],
+  );
+
+  const switchToBase = useCallback(() => switchChain(BASE_CHAIN_ID), [switchChain]);
 
   const connect = useCallback(
     async (id?: string) => {
@@ -253,6 +271,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem(NAME_KEY);
     activeProvider.current = null;
     setAccount(null);
+    setProvider(null);
     setChainId(null);
     setActiveName(null);
     setError(null);
@@ -261,9 +280,10 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   const clearError = useCallback(() => setError(null), []);
 
   const value = useMemo<WalletState>(
-    () => ({
-      account,
-      chainId,
+        () => ({
+          account,
+          provider,
+          chainId,
       connecting,
       error,
       hasWallet,
@@ -272,10 +292,25 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       activeName,
       connect,
       disconnect,
-      switchToBase,
-      clearError,
-    }),
-    [account, chainId, connecting, error, hasWallet, options, activeName, connect, disconnect, switchToBase, clearError],
+          switchToBase,
+          switchChain,
+          clearError,
+        }),
+        [
+          account,
+          provider,
+          chainId,
+          connecting,
+          error,
+          hasWallet,
+          options,
+          activeName,
+          connect,
+          disconnect,
+          switchToBase,
+          switchChain,
+          clearError,
+        ],
   );
 
   return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>;
