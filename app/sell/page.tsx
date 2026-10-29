@@ -4,8 +4,8 @@ import { Button } from "@/components/button";
 const steps = [
   ["Your art stays yours", "List a piece without sending it anywhere. The token stays in your wallet until someone pays."],
   ["One approval", "Approve the marketplace once for the collection, then list any piece in it in two clicks."],
-  ["Set your price", "Price in ETH on Base. Buyers pay native ETH, no wrapped tokens, no approvals to hold. Change it or delist at any time."],
-  ["Get paid instantly", "The sale settles onchain: your price, minus the 2.5% PLUCO fee and any artist royalty, is credited to you to withdraw."],
+  ["Set your price", "Price in ETH on Base. Buyers pay native ETH — no wrapped tokens. Change it or delist at any time."],
+  ["Get paid instantly", "The sale settles onchain: your price, minus the 2.5% fee and any artist royalty, is paid to you directly."],
 ];
 
 export default function SellPage() {
@@ -16,26 +16,34 @@ export default function SellPage() {
         title="List a piece in under a minute."
         body="No custody, no middleman holding your art. List, reprice or cancel whenever you want."
       />
-      <section className="px-6 pb-32">
-        <div className="mx-auto max-w-4xl">
-          <div className="grid gap-4 sm:grid-cols-2">
-            {steps.map(([t, c], i) => (
-              <div key={t} className="rounded-[26px] border border-white/[.08] bg-[#0d0d0d] p-6">
-                <span className="text-xs uppercase tracking-[.2em] text-[#78EBC1]">0{i + 1}</span>
-                <h2 className="mt-6 text-xl font-semibold">{t}</h2>
-                <p className="mt-2 text-sm leading-6 text-[#8d9691]">{c}</p>
+      <section className="wrap grid gap-16 py-16 lg:grid-cols-[0.8fr_1.2fr]">
+        <div>
+          <p className="eyebrow">Process</p>
+          <h2 className="mt-4 text-[26px] leading-[1.15]">
+            Four steps,
+            <br />
+            no surprises.
+          </h2>
+          <p className="mt-5 max-w-[320px] text-[13px] leading-6 text-[#8f8f8f]">
+            Everything settles in native ETH on Base. PLUCO takes 2.5% of a sale; listing and
+            cancelling are free.
+          </p>
+          <div className="mt-8">
+            <Button href="/marketplace">Go to marketplace</Button>
+          </div>
+        </div>
+        <div className="border-t border-white/[.09]">
+          {steps.map(([t, c], i) => (
+            <div key={t} className="grid grid-cols-[48px_1fr] gap-4 border-b border-white/[.07] py-6">
+              <span className="num text-[11px] tracking-[.18em] text-[#5e5e5e]">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h3 className="text-[16px]">{t}</h3>
+                <p className="mt-1.5 text-[13px] leading-6 text-[#8f8f8f]">{c}</p>
               </div>
-            ))}
-          </div>
-          <div className="mt-10 rounded-[26px] border border-[#78EBC1]/15 bg-[#0e1512] p-6">
-            <p className="text-sm leading-6 text-[#a9b3ad]">
-              Fees: 2.5% to PLUCO on each sale, 0% to list or cancel. Royalties set by the collection are paid to the artist. Everything settles in native ETH on Base.
-            </p>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <Button href="/marketplace">Go to your listings</Button>
-              <Button href="/mint" variant="secondary">Mint something first</Button>
             </div>
-          </div>
+          ))}
         </div>
       </section>
     </main>

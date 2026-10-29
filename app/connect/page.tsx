@@ -1,35 +1,51 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
-import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/button";
 
 export const metadata: Metadata = { title: "Connect wallet" };
+
+const checklist = [
+  ["Wallet provider", "Add a wallet library project ID (WalletConnect or an injected provider)."],
+  ["Chain and RPC", "Point the app at Base mainnet, chain ID 8453."],
+  ["Session state", "Persist the connected account across reloads, then enable transactions."],
+];
 
 export default function ConnectPage() {
   return (
     <main>
       <PageHero
         eyebrow="Connect"
-        title="Wallet connection is not live."
-        body="This is a demo interface. No wallet provider, chain endpoint or signature request is configured, so nothing here can sign or transact."
+        title="Wallet connection is not live yet."
+        body="This build is the interface and the contracts. No wallet provider or RPC endpoint is configured, so nothing here can sign or transact."
       />
-      <section className="px-6 pb-32">
-        <div className="mx-auto grid max-w-4xl gap-5">
-          <Reveal>
-            <div className="rounded-[32px] border border-[#78EBC1]/15 bg-[#0b1512] p-8 sm:p-12">
-              <h2 className="text-2xl font-semibold">Integration checklist</h2>
-              <ul className="mt-6 grid gap-4 text-sm leading-6 text-[#9EA6A2]">
-                <li className="flex gap-3"><span className="text-[#78EBC1]">01</span>Add a valid wallet library project ID.</li>
-                <li className="flex gap-3"><span className="text-[#78EBC1]">02</span>Configure the supported chain and RPC endpoints.</li>
-                <li className="flex gap-3"><span className="text-[#78EBC1]">03</span>Wire session state, then enable transaction flows.</li>
-              </ul>
-              <p className="mt-8 text-sm text-[#6f7873]">Until then, no connect button on this site will report a success state.</p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Button href="/collections" variant="secondary">Browse collections</Button>
-                <Button href="/about" variant="ghost">Read about the demo</Button>
+      <section className="wrap grid gap-16 py-16 lg:grid-cols-[0.8fr_1.2fr]">
+        <div>
+          <p className="eyebrow">Status</p>
+          <h2 className="mt-4 text-[26px] leading-[1.15]">Integration checklist</h2>
+          <p className="mt-5 max-w-[300px] text-[13px] leading-6 text-[#8f8f8f]">
+            Until all three are in place, no connect button on this site reports a success state.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button href="/marketplace" variant="secondary">
+              Browse marketplace
+            </Button>
+            <Button href="/protocol" variant="ghost">
+              Read the protocol
+            </Button>
+          </div>
+        </div>
+        <div className="border-t border-white/[.09]">
+          {checklist.map(([t, c], i) => (
+            <div key={t} className="grid grid-cols-[48px_1fr] gap-4 border-b border-white/[.07] py-6">
+              <span className="num text-[11px] tracking-[.18em] text-[#5e5e5e]">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h3 className="text-[16px]">{t}</h3>
+                <p className="mt-1.5 text-[13px] leading-6 text-[#8f8f8f]">{c}</p>
               </div>
             </div>
-          </Reveal>
+          ))}
         </div>
       </section>
     </main>

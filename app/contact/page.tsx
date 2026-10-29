@@ -4,29 +4,49 @@ import { Button } from "@/components/button";
 
 export const metadata: Metadata = { title: "Contact" };
 
+const channels = [
+  ["Repository", "github.com/ganiyucall911/pluco", "https://github.com/ganiyucall911/pluco"],
+  ["Issues", "github.com/ganiyucall911/pluco/issues", "https://github.com/ganiyucall911/pluco/issues"],
+];
+
 export default function ContactPage() {
   return (
     <main>
       <PageHero
         eyebrow="Contact"
         title="Start a conversation."
-        body="For creator onboarding, partnerships and press. This demo has no live inbox or form submission."
+        body="For creator onboarding, partnerships, press and take-down requests. Everything is handled in the open, through the project repository."
       />
-      <section className="px-6 pb-32">
-        <div className="mx-auto grid max-w-3xl gap-4">
-          {[["General","hello@pluco.demo"],["Creators","creators@pluco.demo"],["Press","press@pluco.demo"]].map(([k, v]) => (
-            <div key={k} className="flex flex-wrap items-center justify-between gap-4 rounded-[24px] border border-white/[.08] bg-[#111] p-7">
-              <div>
-                <p className="text-xs uppercase tracking-[.2em] text-[#78EBC1]">{k}</p>
-                <p className="mt-2 text-lg">{v}</p>
-              </div>
-              <p className="text-xs uppercase tracking-[.15em] text-[#6f7873]">Demo address</p>
-            </div>
-          ))}
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Button href="/collections" variant="secondary">Explore collections</Button>
-            <Button href="/about" variant="ghost">About PLUCO</Button>
+      <section className="wrap grid gap-16 py-16 lg:grid-cols-[0.6fr_1.4fr]">
+        <div>
+          <p className="eyebrow">Channels</p>
+          <p className="mt-4 max-w-[280px] text-[13px] leading-6 text-[#8f8f8f]">
+            No contact form and no support inbox. Open an issue and it is public from the start.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button href="/protocol" variant="secondary">
+              Protocol
+            </Button>
+            <Button href="/about" variant="ghost">
+              About PLUCO
+            </Button>
           </div>
+        </div>
+        <div className="border-t border-white/[.09]">
+          {channels.map(([k, v, href]) => (
+            <a
+              key={k}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              className="group grid grid-cols-[140px_1fr] items-center gap-4 border-b border-white/[.07] py-6"
+            >
+              <span className="text-[13px] text-[#8f8f8f]">{k}</span>
+              <span className="break-all font-mono text-[13px] text-[#f4f3f1] group-hover:underline group-hover:decoration-white/30 group-hover:underline-offset-4">
+                {v}
+              </span>
+            </a>
+          ))}
         </div>
       </section>
     </main>

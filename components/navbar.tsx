@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
@@ -6,7 +7,7 @@ import { Logo } from "./logo";
 import { Button } from "./button";
 
 const links = [
-  ["Browse", "/marketplace"],
+  ["Marketplace", "/marketplace"],
   ["Mint", "/mint"],
   ["Sell", "/sell"],
   ["Protocol", "/protocol"],
@@ -16,36 +17,51 @@ const links = [
 export function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
-      <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-[#78EBC1]/10 bg-[#050505]/75 px-4 py-2.5 backdrop-blur-2xl">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[.07] bg-[#0a0a0a]/80 backdrop-blur-xl">
+      <div className="wrap flex h-16 items-center justify-between">
         <Logo />
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
           {links.map(([n, h]) => (
-            <Link className="focus-ring rounded text-sm text-[#9EA6A2] transition hover:text-white" key={h} href={h}>
+            <Link
+              className="focus-ring text-[13px] text-[#a6a6a6] transition hover:text-[#f4f3f1]"
+              key={h}
+              href={h}
+            >
               {n}
             </Link>
           ))}
         </nav>
-        <div className="hidden lg:block">
-          <Button href="/connect">Connect wallet</Button>
+        <div className="hidden md:block">
+          <Button href="/connect" variant="secondary" arrow={false}>
+            Connect wallet
+          </Button>
         </div>
         <button
           aria-label="Toggle navigation"
           onClick={() => setOpen(!open)}
-          className="focus-ring rounded-full border border-white/10 p-2 lg:hidden"
+          className="focus-ring rounded-full border border-white/10 p-2 md:hidden"
         >
-          {open ? <X /> : <Menu />}
+          {open ? <X size={18} /> : <Menu size={18} />}
         </button>
       </div>
       {open && (
-        <nav className="mx-auto mt-2 grid max-w-7xl gap-1 rounded-3xl border border-[#78EBC1]/10 bg-[#0b0b0b] p-4 lg:hidden">
-          {links.map(([n, h]) => (
-            <Link onClick={() => setOpen(false)} className="rounded-xl px-4 py-3 text-[#d9ddda] hover:bg-white/5" key={h} href={h}>
-              {n}
-            </Link>
-          ))}
-          <Button href="/connect" className="mt-2">Connect wallet</Button>
-        </nav>
+        <div className="border-t border-white/[.07] bg-[#0a0a0a] px-6 py-3 md:hidden">
+          <nav className="grid gap-1" aria-label="Mobile">
+            {links.map(([n, h]) => (
+              <Link
+                onClick={() => setOpen(false)}
+                className="py-2.5 text-[15px] text-[#d9d9d9]"
+                key={h}
+                href={h}
+              >
+                {n}
+              </Link>
+            ))}
+            <Button href="/connect" className="mt-2" arrow={false}>
+              Connect wallet
+            </Button>
+          </nav>
+        </div>
       )}
     </header>
   );

@@ -26,11 +26,11 @@ export default function CommunityPage() {
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-3">
           {communities.map((c, i) => (
             <Reveal key={c.name}>
-              <article className="flex h-full flex-col rounded-[28px] border border-white/[.08] bg-[#111] p-8">
-                <span className="text-xs uppercase tracking-[.2em] text-[#78EBC1]">0{i + 1}</span>
+              <article className="flex h-full flex-col rounded-none border border-white/[.08] bg-[#111] p-8">
+                <span className="text-xs uppercase tracking-[.2em] text-[#FFFFFF]">0{i + 1}</span>
                 <h2 className="mt-16 text-2xl font-semibold">{c.name}</h2>
-                <p className="mt-3 text-sm leading-6 text-[#8d9691]">{c.copy}</p>
-                <p className="mt-auto border-t border-white/[.07] pt-5 text-xs uppercase tracking-[.15em] text-[#6f7873]">{c.meta}</p>
+                <p className="mt-3 text-sm leading-6 text-[#8C8C8C]">{c.copy}</p>
+                <p className="mt-auto border-t border-white/[.07] pt-5 text-xs uppercase tracking-[.15em] text-[#6E6E6E]">{c.meta}</p>
               </article>
             </Reveal>
           ))}
@@ -47,8 +47,8 @@ export default function CommunityPage() {
             <Button href="/connect" variant="secondary">Connect wallet</Button>
           </Reveal>
           <Reveal>
-            <div className="overflow-hidden rounded-[32px] border border-white/[.08]">
-              <div className="aspect-[4/3]"><Art accent="from-[#78EBC1]/30 via-[#143D31] to-black" label="The Emerald Room" /></div>
+            <div className="overflow-hidden rounded-none border border-white/[.08]">
+              <div className="aspect-[4/3]"><Art accent="from-[#FFFFFF]/30 via-[#181818] to-black" label="The Emerald Room" /></div>
             </div>
           </Reveal>
         </div>
@@ -56,9 +56,9 @@ export default function CommunityPage() {
       <section className="px-6 py-24">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-3">
           {stats.map((s) => (
-            <div key={s.label} className="rounded-[24px] border border-white/[.08] bg-[#0d0d0d] p-8">
+            <div key={s.label} className="rounded-none border border-white/[.08] bg-[#0E0E0E] p-8">
               <p className="text-4xl font-semibold">{s.value}</p>
-              <p className="mt-3 text-xs uppercase tracking-[.2em] text-[#6f7873]">{s.label}</p>
+              <p className="mt-3 text-xs uppercase tracking-[.2em] text-[#6E6E6E]">{s.label}</p>
             </div>
           ))}
         </div>
