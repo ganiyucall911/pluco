@@ -27,8 +27,8 @@ export default function VerificationPage() {
         body="The badge means one thing: the name attached to it controls the contract behind the work, and the claims on the page match the chain. Nothing more is implied."
       />
 
-      <section className="px-6 pb-16">
-        <div className="mx-auto max-w-7xl border border-line bg-surface p-8 md:p-12">
+      <section className="px-5 sm:px-6 pb-16">
+        <div className="mx-auto max-w-[1132px] border border-line bg-surface p-8 md:p-12">
           <div className="flex flex-wrap items-center gap-4">
             <span className="text-3xl font-semibold">PLUCO</span>
             <Verified size={22} />
@@ -41,8 +41,8 @@ export default function VerificationPage() {
         </div>
       </section>
 
-      <section className="px-6 pb-20">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-5 sm:px-6 pb-20">
+        <div className="mx-auto max-w-[1132px]">
           <h2 className="border-b border-line pb-5 text-sm uppercase tracking-[.25em] text-body">
             Requirements
           </h2>
@@ -61,7 +61,7 @@ export default function VerificationPage() {
         </div>
       </section>
 
-      <section className="px-6 pb-24">
+      <section className="px-5 sm:px-6 pb-24">
         <div className="mx-auto grid max-w-7xl gap-8 border-t border-line pt-10 lg:grid-cols-2">
           <div>
             <h2 className="text-2xl font-semibold">What the badge does not mean.</h2>

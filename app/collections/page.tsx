@@ -14,7 +14,7 @@ export default function CollectionsPage() {
         title="Collections, considered."
         body="AERYN GEM MT is live on Base. Everything else in this directory is sample content shown for layout, and is labelled as such."
       />
-      <section className="px-6 pb-24">
+      <section className="px-5 sm:px-6 pb-24">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 lg:grid-cols-3">
           {collections.map((item) => (
             <Reveal key={item.slug}>

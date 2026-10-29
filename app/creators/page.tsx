@@ -21,8 +21,8 @@ export default function CreatorsPage() {
         title="PLUCO."
         body="One name, everywhere the work is minted or listed. Nothing else attached to it."
       />
-      <section className="px-6 pb-24">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-5 pb-24 pt-16 sm:px-6 sm:pt-20">
+        <div className="mx-auto max-w-[1132px]">
           <Reveal>
             <article className="border border-line bg-surface">
               <div className="grid md:grid-cols-[380px_1fr]">

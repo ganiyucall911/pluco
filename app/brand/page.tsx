@@ -21,7 +21,7 @@ export default function BrandPage() {
         title="Identity, restrained."
         body="The PLUCO wordmark, palette and type system. Downloadable assets live under /public/brand."
       />
-      <section className="px-6 pb-24">
+      <section className="px-5 sm:px-6 pb-24">
         <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-[1.2fr_.8fr]">
           <Reveal>
             <div className="grid place-items-center rounded-none border border-line bg-ink p-10">
@@ -42,7 +42,7 @@ export default function BrandPage() {
           </Reveal>
         </div>
       </section>
-      <section className="px-6 pb-24">
+      <section className="px-5 sm:px-6 pb-24">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2">
           <div className="rounded-none border border-line bg-[#111] p-8">
             <p className="text-xs uppercase tracking-[.2em] text-paper">Typography</p>

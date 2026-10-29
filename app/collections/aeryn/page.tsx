@@ -58,7 +58,7 @@ export default function AerynPage() {
         body="Graded-card artwork issued on Base by PLUCO. Five pieces exist today, each a single slab with its own grade and print side. Trade happens on OpenSea; PLUCO greys out the secondary market, not the work."
       />
 
-      <section className="px-6 pb-16">
+      <section className="px-5 sm:px-6 pb-16">
         <div className="mx-auto grid max-w-7xl gap-px border border-line bg-paper/[.06] sm:grid-cols-3">
           {[
             ["Pieces", "5"],
@@ -73,8 +73,8 @@ export default function AerynPage() {
         </div>
       </section>
 
-      <section className="px-6 pb-20">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-5 sm:px-6 pb-20">
+        <div className="mx-auto max-w-[1132px]">
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-5">
             <h2 className="text-sm uppercase tracking-[.25em] text-body">Pieces</h2>
             <a
@@ -117,7 +117,7 @@ export default function AerynPage() {
         </div>
       </section>
 
-      <section className="px-6 pb-24">
+      <section className="px-5 sm:px-6 pb-24">
         <div className="mx-auto grid max-w-7xl gap-10 border-t border-line pt-10 lg:grid-cols-[.9fr_1.1fr]">
           <div>
             <h2 className="text-2xl font-semibold">What it is, precisely.</h2>

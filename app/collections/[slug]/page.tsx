@@ -24,16 +24,16 @@ export default async function CollectionPage({ params }: Props) {
 
   return (
     <main>
-      <section className="relative overflow-hidden px-6 pb-16 pt-10">
+      <section className="relative overflow-hidden px-5 sm:px-6 pb-16 pt-10">
         <div className="grid-noise absolute inset-0 opacity-60" />
-        <div className="relative mx-auto max-w-7xl">
+        <div className="relative mx-auto max-w-[1132px]">
           <p className="text-xs font-semibold uppercase tracking-[.28em] text-paper">{item.category}</p>
           <h1 className="mt-6 max-w-4xl text-6xl font-semibold leading-[.88] sm:text-8xl">{item.name}</h1>
           <p className="mt-6 text-sm text-body">by {item.creator} · {item.members}</p>
         </div>
       </section>
 
-      <section className="px-6 pb-24">
+      <section className="px-5 sm:px-6 pb-24">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.15fr_.85fr]">
           <div className="overflow-hidden rounded-none border border-line">
             <div className="aspect-[4/3]"><Art accent={item.accent} label={item.category} /></div>
@@ -54,8 +54,8 @@ export default async function CollectionPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="px-6 pb-24">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-5 sm:px-6 pb-24">
+        <div className="mx-auto max-w-[1132px]">
           <SectionTitle eyebrow="Inside" title="What membership unlocks." />
           <div className="grid gap-5 md:grid-cols-3">
             {["Editorial drops", "Holder sessions", "Private community"].map((x, i) => (
