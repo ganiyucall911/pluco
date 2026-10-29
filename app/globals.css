@@ -16,6 +16,9 @@
   --danger: #ff8a8a;
   --grain: rgba(255, 255, 255, 0.055);
   --edge: rgba(255, 255, 255, 0.06);
+  /* The wordmark ships as white artwork; light mode flips it to solid black.
+     Done with a variable so it can never disagree with the page theme. */
+  --logo-filter: none;
 }
 
 @media (prefers-color-scheme: light) {
@@ -32,8 +35,9 @@
     --line-strong: rgba(0, 0, 0, 0.22);
     --gold: #85590c;
     --danger: #b4231f;
-    --grain: rgba(0, 0, 0, 0.05);
-    --edge: rgba(0, 0, 0, 0.05);
+        --grain: rgba(0, 0, 0, 0.05);
+        --edge: rgba(0, 0, 0, 0.05);
+        --logo-filter: invert(1);
   }
 }
 
