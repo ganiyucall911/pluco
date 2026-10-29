@@ -51,6 +51,7 @@ export default function MintPage() {
   const [status, setStatus] = useState<string>("");
   const [busy, setBusy] = useState(false);
   const [minted, setMinted] = useState<number | null>(null);
+  const [txHash, setTxHash] = useState<string | null>(null);
   const [supply, setSupply] = useState<number | null>(null);
   const [open, setOpen] = useState<boolean | null>(null);
   const [priceWei, setPriceWei] = useState<bigint>(BigInt(0));
@@ -131,6 +132,7 @@ export default function MintPage() {
               value: "0x" + priceWei.toString(16),
             }],
       })) as string;
+      setTxHash(txHash);
       setStatus("Minted. Transaction " + txHash.slice(0, 10) + "… — it confirms in a few seconds.");
       await readChain(account);
     } catch (error) {
@@ -217,6 +219,32 @@ export default function MintPage() {
               Signed in as {account ? account.slice(0, 6) + "…" + account.slice(-4) : "no wallet"}.
             </p>
             {status ? <p className="mt-4 text-sm leading-6 text-white">{status}</p> : null}
+            {txHash && CONTRACT ? (
+              <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/[.07] pt-3 text-[13px]">
+                <a
+                  className="link-underline text-[#d9d9d9] hover:text-white"
+                  href={EXPLORER + "/tx/" + txHash}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View transaction
+                </a>
+                <a
+                  className="link-underline text-[#d9d9d9] hover:text-white"
+                  href={"https://opensea.io/search?query=" + CONTRACT + "&type=item"}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Find on OpenSea
+                </a>
+              </div>
+            ) : null}
+            {txHash ? (
+              <p className="mt-2 text-[11px] leading-5 text-[#6e6e6e]">
+                OpenSea indexes a contract a few hours after its first mint. Until it does, the search above returns nothing —
+                the piece exists on Base regardless.
+              </p>
+            ) : null}
           </div>
         </div>
       </section>
