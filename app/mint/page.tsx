@@ -5,9 +5,9 @@ import { PageHero } from "@/components/page-hero";
 
 // Contract + network come from the deploy. Set these in .env.local after deploying.
 const CONTRACT = process.env.NEXT_PUBLIC_PLUCO_ART_CONTRACT || "";
-const CHAIN_ID = Number(process.env.NEXT_PUBLIC_PLUCO_CHAIN_ID || 80002); // 80002 = Polygon Amoy, 137 = Polygon
-const CHAIN_NAME = CHAIN_ID === 137 ? "Polygon" : "Polygon Amoy testnet";
-const EXPLORER = CHAIN_ID === 137 ? "https://polygonscan.com" : "https://amoy.polygonscan.com";
+const CHAIN_ID = Number(process.env.NEXT_PUBLIC_PLUCO_CHAIN_ID || 84532); // 84532 = Base Sepolia, 8453 = Base
+const CHAIN_NAME = CHAIN_ID === 8453 ? "Base" : "Base Sepolia testnet";
+const EXPLORER = CHAIN_ID === 8453 ? "https://basescan.org" : "https://sepolia.basescan.org";
 const MINT_SELECTOR = "0xd85d3d27"; // mint(string)
 const READ_SELECTORS = {
   totalMinted: "0xa2309ff8",
@@ -165,7 +165,7 @@ export default function MintPage() {
           <div className="rounded-3xl border border-white/10 bg-white/[.02] p-8">
             {!ready ? (
               <p className="text-sm leading-6 text-[#9EA6A2]">
-                No contract configured yet. Deploy with <span className="text-white">npm run deploy:amoy</span> in contracts/art, then set
+                No contract configured yet. Deploy with <span className="text-white">npm run deploy:base-sepolia</span> in contracts/art, then set
                 NEXT_PUBLIC_PLUCO_ART_CONTRACT and rebuild.
               </p>
             ) : !account ? (
