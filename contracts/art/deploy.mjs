@@ -28,6 +28,9 @@ const rpc = process.env.RPC_URL || net.rpc;
 const supply = Number(arg("supply", process.env.MAX_SUPPLY || 100));
 const price = parseEther(arg("price", process.env.MINT_PRICE || "25"));
 const perWallet = Number(arg("per-wallet", process.env.MAX_PER_WALLET || 3));
+const treasury = process.env.TREASURY || wallet.address;
+const feeBps = Number(arg("fee", process.env.PLATFORM_FEE_BPS || 500)); // 5% of primary mints to PLUCO
+if (feeBps > 1000) throw new Error("mint fee is capped at 1000 bps (10%)");
 
 const { abi, bytecode } = JSON.parse(fs.readFileSync(path.join(root, "artifacts", "PlucoOriginals.json"), "utf8"));
 
@@ -44,7 +47,9 @@ const contract = await factory.deploy(
   price,
   perWallet,
   wallet.address,
-  wallet.address
+  wallet.address,
+  treasury,
+  feeBps
 );
 await contract.waitForDeployment();
 const address = await contract.getAddress();

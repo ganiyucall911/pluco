@@ -1,1 +1,17 @@
-import Link from "next/link"; export function Logo(){return <Link href="/" aria-label="PLUCO home" className="focus-ring flex items-center gap-3 rounded-full"><span className="grid h-9 w-9 place-items-center rounded-full border border-[#78EBC1]/25 bg-[#143D31] font-serif text-xl text-[#78EBC1]">P</span><span className="font-semibold tracking-[.28em]">PLUCO</span></Link>}
+import Link from "next/link";
+import Image from "next/image";
+
+export function Logo() {
+  return (
+    <Link href="/" aria-label="PLUCO home" className="focus-ring flex items-center rounded-full">
+      <Image
+        src="/brand/pluco-mark.png"
+        alt="PLUCO"
+        width={220}
+        height={110}
+        priority
+        className="h-10 w-auto object-contain brightness-[1.6] saturate-150 drop-shadow-[0_0_12px_rgba(0,255,60,.45)] sm:h-11"
+      />
+    </Link>
+  );
+}

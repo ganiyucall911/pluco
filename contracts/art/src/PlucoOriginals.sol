@@ -22,17 +22,26 @@ contract PlucoOriginals is ERC721, ERC721URIStorage, ERC2981, Ownable, Reentranc
     bool public saleOpen;
     string public provenance;
 
+    /// @notice PLUCO's cut of every primary mint, paid out immediately to the treasury.
+    address public treasury;
+    uint96 public feeBps;
+
     mapping(address => uint256) public mintedBy;
 
     event SaleToggled(bool open);
     event ProvenanceSet(string provenanceHash);
     event ArtMinted(address indexed to, uint256 indexed tokenId, string uri);
+    event FeePaid(address indexed treasury, uint256 amount);
+    event TreasurySet(address treasury);
+    event FeeSet(uint96 feeBps);
 
     error SaleClosed();
     error SoldOut();
     error WrongPrice(uint256 expected, uint256 sent);
     error WalletLimit(uint256 limit);
     error BadSupply();
+    error FeeTooHigh();
+    error FeeTransferFailed();
 
     constructor(
         string memory name_,
@@ -41,9 +50,14 @@ contract PlucoOriginals is ERC721, ERC721URIStorage, ERC2981, Ownable, Reentranc
         uint256 mintPrice_,
         uint256 maxPerWallet_,
         address owner_,
-        address royaltyReceiver_
+        address royaltyReceiver_,
+        address treasury_,
+        uint96 feeBps_
     ) ERC721(name_, symbol_) Ownable(owner_) {
         if (maxSupply_ == 0) revert BadSupply();
+        if (feeBps_ > 1_000) revert BadSupply();
+        treasury = treasury_;
+        feeBps = feeBps_;
         maxSupply = maxSupply_;
         mintPrice = mintPrice_;
         maxPerWallet = maxPerWallet_ == 0 ? maxSupply_ : maxPerWallet_;
@@ -62,6 +76,13 @@ contract PlucoOriginals is ERC721, ERC721URIStorage, ERC2981, Ownable, Reentranc
         _safeMint(msg.sender, tokenId);
         _setTokenURI(tokenId, uri);
         emit ArtMinted(msg.sender, tokenId, uri);
+
+        uint256 fee = (mintPrice * feeBps) / 10_000;
+        if (fee > 0) {
+            (bool ok, ) = payable(treasury).call{value: fee}("");
+            if (!ok) revert FeeTransferFailed();
+            emit FeePaid(treasury, fee);
+        }
     }
 
     /// @notice Owner reserves a piece (studio archive, collabs, giveaways).
@@ -86,6 +107,18 @@ contract PlucoOriginals is ERC721, ERC721URIStorage, ERC2981, Ownable, Reentranc
 
     function setDefaultRoyalty(address receiver, uint96 feeNumerator) external onlyOwner {
         _setDefaultRoyalty(receiver, feeNumerator);
+    }
+
+    function setTreasury(address treasury_) external onlyOwner {
+        treasury = treasury_;
+        emit TreasurySet(treasury_);
+    }
+
+    /// @notice Primary mint fee, in basis points. Hard-capped at 10%.
+    function setFeeBps(uint96 feeBps_) external onlyOwner {
+        if (feeBps_ > 1_000) revert FeeTooHigh();
+        feeBps = feeBps_;
+        emit FeeSet(feeBps_);
     }
 
     function withdraw(address payable to) external onlyOwner nonReentrant {
