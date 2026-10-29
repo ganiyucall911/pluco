@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy
 
 on:
   push:
@@ -17,29 +17,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: npm
-
-      - name: Install
-        run: npm ci --no-audit --no-fund
-
-      - name: Build
-        run: npm run build
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
         env:
           NEXT_PUBLIC_BASE_PATH: /pluco
-
-      - name: Disable Jekyll
-        run: touch out/.nojekyll
-
-      - name: Publish
+      - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
           publish_dir: ./out
-          user_name: github-actions[bot]
-          user_email: 41898282+github-actions[bot]@users.noreply.github.com
-          commit_message: deploy ${{ github.sha }}
+          publish_branch: gh-pages
+          cname: ""
