@@ -37,22 +37,22 @@ export default function LegalPage() {
       <section className="wrap grid gap-16 py-16 lg:grid-cols-[0.6fr_1.4fr]">
         <div>
           <p className="eyebrow">Terms</p>
-          <p className="mt-4 max-w-[260px] text-[13px] leading-6 text-[#8f8f8f]">
+          <p className="mt-4 max-w-[260px] text-[13px] leading-6 text-mute">
             Five points. No longer than it needs to be.
           </p>
         </div>
-        <div className="border-t border-white/[.09]">
+        <div className="border-t border-line">
           {sections.map((s, i) => (
             <div
               key={s.h}
-              className="grid grid-cols-[48px_1fr] gap-4 border-b border-white/[.07] py-6"
+              className="grid grid-cols-[48px_1fr] gap-4 border-b border-line py-6"
             >
-              <span className="num text-[11px] tracking-[.18em] text-[#5e5e5e]">
+              <span className="num text-[11px] tracking-[.18em] text-faint">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
                 <h2 className="text-[16px]">{s.h}</h2>
-                <p className="mt-1.5 max-w-[560px] text-[13px] leading-6 text-[#8f8f8f]">{s.p}</p>
+                <p className="mt-1.5 max-w-[560px] text-[13px] leading-6 text-mute">{s.p}</p>
               </div>
             </div>
           ))}

@@ -21,10 +21,10 @@ export default function DashboardPage() {
               ["Workflow", "Build check", ".github/workflows/build.yml — npm ci, npm audit, npm run build."],
               ["Repo", "ganiyucall911/pluco", "Status is read straight from the GitHub Actions API."],
             ].map(([k, v, d]) => (
-              <div key={k} className="rounded-none border border-white/[.08] p-5">
-                <p className="text-xs uppercase tracking-[.18em] text-[#6E6E6E]">{k}</p>
-                <p className="mt-2 text-sm text-white">{v}</p>
-                <p className="mt-2 text-xs leading-5 text-[#A6A6A6]">{d}</p>
+              <div key={k} className="rounded-none border border-line p-5">
+                <p className="text-xs uppercase tracking-[.18em] text-faint">{k}</p>
+                <p className="mt-2 text-sm text-paper">{v}</p>
+                <p className="mt-2 text-xs leading-5 text-body">{d}</p>
               </div>
             ))}
           </div>

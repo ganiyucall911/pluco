@@ -51,13 +51,13 @@ export default function ProtocolPage() {
 
       <section className="wrap py-14">
         <ProtocolStats />
-        <p className="mt-4 text-[11px] uppercase tracking-[.16em] text-[#5e5e5e]">
+        <p className="mt-4 text-[11px] uppercase tracking-[.16em] text-faint">
           Live from {NETWORK}
           {REGISTRY ? "" : " · registry not deployed yet, so counters stay empty"}
         </p>
       </section>
 
-      <section className="border-t border-white/[.07]">
+      <section className="border-t border-line">
         <div className="wrap py-20">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
@@ -67,53 +67,53 @@ export default function ProtocolPage() {
               </h2>
             </div>
           </div>
-          <div className="mt-12 grid gap-px border-y border-white/[.07] bg-white/[.07] md:grid-cols-2">
+          <div className="mt-12 grid gap-px border-y border-line bg-paper/[.06] md:grid-cols-2">
             {layers.map((l) => (
-              <article key={l.k} className="bg-[#0a0a0a] p-8">
-                <span className="num text-[11px] tracking-[.18em] text-[#5e5e5e]">{l.k}</span>
+              <article key={l.k} className="bg-ink p-8">
+                <span className="num text-[11px] tracking-[.18em] text-faint">{l.k}</span>
                 <h3 className="mt-6 text-[19px]">{l.t}</h3>
-                <p className="mt-2 max-w-[420px] text-[13px] leading-6 text-[#8f8f8f]">{l.d}</p>
+                <p className="mt-2 max-w-[420px] text-[13px] leading-6 text-mute">{l.d}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-t border-white/[.07] bg-[#0c0c0c]">
+      <section className="border-t border-line bg-surface">
         <div className="wrap py-20">
           <p className="eyebrow">For artists</p>
           <h2 className="mt-4 text-[28px] leading-[1.12] sm:text-[36px]">Three calls to come onchain.</h2>
-          <div className="mt-12 grid gap-px border-y border-white/[.07] bg-white/[.07] md:grid-cols-3">
+          <div className="mt-12 grid gap-px border-y border-line bg-paper/[.06] md:grid-cols-3">
             {steps.map(([t, d], i) => (
-              <div key={t} className="bg-[#0c0c0c] p-8">
-                <span className="num text-[11px] tracking-[.18em] text-[#5e5e5e]">
+              <div key={t} className="bg-surface p-8">
+                <span className="num text-[11px] tracking-[.18em] text-faint">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-6 text-[19px]">{t}</h3>
-                <p className="mt-2 text-[13px] leading-6 text-[#8f8f8f]">{d}</p>
+                <p className="mt-2 text-[13px] leading-6 text-mute">{d}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-t border-white/[.07]">
+      <section className="border-t border-line">
         <div className="wrap py-20">
           <p className="eyebrow">Deployed addresses</p>
           <h2 className="mt-4 text-[28px] leading-[1.12] sm:text-[36px]">Verify, don&apos;t trust.</h2>
-          <div className="mt-10 border-t border-white/[.09]">
+          <div className="mt-10 border-t border-line">
             {[
               { name: "PlucoRegistry", addr: REGISTRY },
               { name: "PlucoMarketplace", addr: MARKETPLACE },
             ].map((c) => (
               <div
                 key={c.name}
-                className="grid gap-2 border-b border-white/[.07] py-5 sm:grid-cols-[220px_1fr] sm:items-center"
+                className="grid gap-2 border-b border-line py-5 sm:grid-cols-[220px_1fr] sm:items-center"
               >
-                <p className="text-[13px] text-[#a6a6a6]">{c.name}</p>
+                <p className="text-[13px] text-body">{c.name}</p>
                 {c.addr ? (
                   <a
-                    className="break-all font-mono text-[13px] text-[#f4f3f1] underline decoration-white/20 underline-offset-4 hover:decoration-white/60"
+                    className="break-all font-mono text-[13px] text-paper underline decoration-white/20 underline-offset-4 hover:decoration-white/60"
                     href={EXPLORER + "/address/" + c.addr}
                     target="_blank"
                     rel="noreferrer"
@@ -121,12 +121,12 @@ export default function ProtocolPage() {
                     {c.addr}
                   </a>
                 ) : (
-                  <p className="font-mono text-[13px] text-[#5e5e5e]">Pending deploy</p>
+                  <p className="font-mono text-[13px] text-faint">Pending deploy</p>
                 )}
               </div>
             ))}
           </div>
-          <p className="mt-8 max-w-[620px] text-[13px] leading-6 text-[#8f8f8f]">
+          <p className="mt-8 max-w-[620px] text-[13px] leading-6 text-mute">
             PLUCO&apos;s own chain is a later step, and it will settle to Ethereum on the same OP
             Stack spec Base uses. Until it has wallets and liquidity, Base is where the art lives.
           </p>

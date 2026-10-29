@@ -28,13 +28,13 @@ export default function VerificationPage() {
       />
 
       <section className="px-6 pb-16">
-        <div className="mx-auto max-w-7xl border border-white/[.08] bg-[#0c0c0c] p-8 md:p-12">
+        <div className="mx-auto max-w-7xl border border-line bg-surface p-8 md:p-12">
           <div className="flex flex-wrap items-center gap-4">
             <span className="text-3xl font-semibold">PLUCO</span>
             <Verified size={22} />
-            <span className="text-[10px] uppercase tracking-[.22em] text-[#6E6E6E]">Verified creator</span>
+            <span className="text-[10px] uppercase tracking-[.22em] text-faint">Verified creator</span>
           </div>
-          <p className="mt-6 max-w-2xl text-sm leading-6 text-[#A6A6A6]">
+          <p className="mt-6 max-w-2xl text-sm leading-6 text-body">
             Example of the mark in use. It appears next to the creator name wherever that creator is
             credited — never on its own, never on a page that merely mentions the name.
           </p>
@@ -43,18 +43,18 @@ export default function VerificationPage() {
 
       <section className="px-6 pb-20">
         <div className="mx-auto max-w-7xl">
-          <h2 className="border-b border-white/[.08] pb-5 text-sm uppercase tracking-[.25em] text-[#A6A6A6]">
+          <h2 className="border-b border-line pb-5 text-sm uppercase tracking-[.25em] text-body">
             Requirements
           </h2>
           <ol className="mt-2">
             {requirements.map(([title, body], i) => (
               <li
                 key={title}
-                className="grid gap-2 border-b border-white/[.07] py-6 sm:grid-cols-[60px_1fr_1.4fr] sm:gap-6"
+                className="grid gap-2 border-b border-line py-6 sm:grid-cols-[60px_1fr_1.4fr] sm:gap-6"
               >
-                <span className="font-mono text-xs text-[#6E6E6E]">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-xs text-faint">{String(i + 1).padStart(2, "0")}</span>
                 <span className="text-base font-medium">{title}</span>
-                <span className="text-sm leading-6 text-[#A6A6A6]">{body}</span>
+                <span className="text-sm leading-6 text-body">{body}</span>
               </li>
             ))}
           </ol>
@@ -62,10 +62,10 @@ export default function VerificationPage() {
       </section>
 
       <section className="px-6 pb-24">
-        <div className="mx-auto grid max-w-7xl gap-8 border-t border-white/[.08] pt-10 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-7xl gap-8 border-t border-line pt-10 lg:grid-cols-2">
           <div>
             <h2 className="text-2xl font-semibold">What the badge does not mean.</h2>
-            <p className="mt-4 text-sm leading-6 text-[#A6A6A6]">
+            <p className="mt-4 text-sm leading-6 text-body">
               It is not an endorsement of price, rarity or investment value. It does not protect a
               buyer from a seller changing a listing, and it is not a guarantee that a collection will
               mint. Verification can be withdrawn if a claim stops being true.
@@ -73,7 +73,7 @@ export default function VerificationPage() {
           </div>
           <div>
             <h2 className="text-2xl font-semibold">How to be verified.</h2>
-            <p className="mt-4 text-sm leading-6 text-[#A6A6A6]">
+            <p className="mt-4 text-sm leading-6 text-body">
               Register the collection, then send the artist name, the contract address and a signature
               from the controlling wallet. Review is manual and takes one to two days.
             </p>
@@ -83,8 +83,8 @@ export default function VerificationPage() {
             </div>
           </div>
         </div>
-        <p className="mx-auto mt-10 max-w-7xl text-xs text-[#6E6E6E]">
-          Questions about a specific listing? <Link className="link-underline text-white" href="/contact">Contact PLUCO</Link>.
+        <p className="mx-auto mt-10 max-w-7xl text-xs text-faint">
+          Questions about a specific listing? <Link className="link-underline text-paper" href="/contact">Contact PLUCO</Link>.
         </p>
       </section>
     </main>

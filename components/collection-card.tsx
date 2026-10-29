@@ -9,7 +9,7 @@ export function CollectionCard({ item }: { item: Collection }) {
   return (
     <Link
       href={`/collections/${item.slug}`}
-      className="group focus-ring overflow-hidden rounded-none border border-white/[.09] bg-[#111] transition duration-500 hover:-translate-y-2 hover:border-white/25"
+      className="group focus-ring overflow-hidden rounded-none border border-line bg-[#111] transition duration-500 hover:-translate-y-2 hover:border-line-strong"
     >
       <div className="relative aspect-[4/3]">
         {item.image ? (
@@ -28,12 +28,12 @@ export function CollectionCard({ item }: { item: Collection }) {
         <div className="flex items-start justify-between gap-5">
           <div>
             <h3 className="text-2xl font-semibold">{item.name}</h3>
-            <p className="mt-2 text-sm text-[#A6A6A6]">by {item.creator}</p>
+            <p className="mt-2 text-sm text-body">by {item.creator}</p>
           </div>
-          <ArrowUpRight className="text-white" />
+          <ArrowUpRight className="text-paper" />
         </div>
-        <p className="mt-5 line-clamp-2 text-sm leading-6 text-[#A6A6A6]">{item.description}</p>
-        <p className="mt-6 border-t border-white/[.07] pt-4 text-xs uppercase tracking-[.15em] text-[#6E6E6E]">
+        <p className="mt-5 line-clamp-2 text-sm leading-6 text-body">{item.description}</p>
+        <p className="mt-6 border-t border-line pt-4 text-xs uppercase tracking-[.15em] text-faint">
           {item.members}
         </p>
       </div>
