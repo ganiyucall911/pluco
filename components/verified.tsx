@@ -14,7 +14,7 @@ export function Verified({
   return (
     <span
       className={`inline-flex shrink-0 items-center justify-center align-middle ${className}`}
-      style={{ transform: "translateY(-1px)" }}
+      style={{ transform: "translateY(1px)" }}
       title="Verified creator"
     >
       <svg
