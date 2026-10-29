@@ -22,8 +22,8 @@ export function Logo({ small = false }: { small?: boolean }) {
         priority
         className={
           small
-            ? "h-6 w-auto object-contain"
-            : "h-8 w-auto object-contain sm:h-9"
+            ? "h-7 w-auto object-contain"
+            : "h-9 w-auto object-contain sm:h-10"
         }
       />
     </Link>
