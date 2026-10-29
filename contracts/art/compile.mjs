@@ -6,7 +6,7 @@ import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 const root = path.dirname(new URL(import.meta.url).pathname);
-const entry = "src/PlucoOriginals.sol";
+const entries = ["src/PlucoOriginals.sol", "src/PlucoMarket.sol"];
 
 function findImports(importPath) {
   const candidates = [
@@ -19,7 +19,7 @@ function findImports(importPath) {
 
 const input = {
   language: "Solidity",
-  sources: { [entry]: { content: fs.readFileSync(path.join(root, entry), "utf8") } },
+      sources: Object.fromEntries(entries.map((e) => [e, { content: fs.readFileSync(path.join(root, e), "utf8") }])),
   settings: {
     optimizer: { enabled: true, runs: 200 },
     evmVersion: "cancun",
@@ -35,11 +35,12 @@ if (errors.length) {
   process.exit(1);
 }
 
-const c = out.contracts[entry].PlucoOriginals;
-fs.mkdirSync(path.join(root, "artifacts"), { recursive: true });
-fs.writeFileSync(
-  path.join(root, "artifacts", "PlucoOriginals.json"),
-  JSON.stringify({ contractName: "PlucoOriginals", abi: c.abi, bytecode: "0x" + c.evm.bytecode.object }, null, 2)
-);
-console.log("compiled: PlucoOriginals");
-console.log("abi entries:", c.abi.length, "bytecode bytes:", c.evm.bytecode.object.length / 2);
+    fs.mkdirSync(path.join(root, "artifacts"), { recursive: true });
+    for (const [entry, name] of [["src/PlucoOriginals.sol", "PlucoOriginals"], ["src/PlucoMarket.sol", "PlucoMarket"]]) {
+      const c = out.contracts[entry][name];
+      fs.writeFileSync(
+        path.join(root, "artifacts", name + ".json"),
+        JSON.stringify({ contractName: name, abi: c.abi, bytecode: "0x" + c.evm.bytecode.object }, null, 2)
+      );
+      console.log("compiled:", name, "| abi entries:", c.abi.length, "| bytecode bytes:", c.evm.bytecode.object.length / 2);
+    }
