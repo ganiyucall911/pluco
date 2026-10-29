@@ -66,7 +66,8 @@ export default function HomePage() {
                 width={1200}
                 height={600}
                 priority
-                className="mb-8 w-full max-w-[300px] invert dark:invert-0 sm:mb-10 sm:max-w-[380px]"
+                    style={{ filter: "var(--logo-filter)" }}
+                    className="mb-8 w-full max-w-[280px] sm:mb-10 sm:max-w-[360px]"
               />
               <p className="eyebrow">Open art protocol · Base</p>
               <h1 className="mt-5 text-[38px] leading-[1.04] sm:text-[54px] lg:text-[60px]">

@@ -26,13 +26,13 @@ export default function CreatorsPage() {
           <Reveal>
             <article className="border border-line bg-surface">
               <div className="grid md:grid-cols-[380px_1fr]">
-                        <div className="flex aspect-[4/3] items-center justify-center border-b border-line bg-ink md:aspect-auto md:border-b-0 md:border-r">
+                      <div className="flex aspect-square items-center justify-center border-b border-line bg-[#0a0a0a] md:aspect-auto md:min-h-[380px] md:border-b-0 md:border-r">
                       <Image
                         src={asset("/brand/pluco-white.png")}
-                        alt="PLUCO creator mark"
+                        alt="PLUCO creator picture"
                         width={2946}
                         height={1474}
-                            className="h-auto w-[72%] max-w-[260px] object-contain"
+                        className="h-auto w-[64%] max-w-[220px] object-contain"
                       />
                     </div>
                 <div className="flex flex-col p-8 sm:p-10">
