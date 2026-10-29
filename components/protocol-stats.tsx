@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const REGISTRY = process.env.NEXT_PUBLIC_PLUCO_REGISTRY || "";
 const MARKETPLACE = process.env.NEXT_PUBLIC_PLUCO_MARKETPLACE || "";
-const CHAIN_ID = Number(process.env.NEXT_PUBLIC_PLUCO_CHAIN_ID || 84532);
+const CHAIN_ID = Number(process.env.NEXT_PUBLIC_PLUCO_CHAIN_ID || 8453);
 const RPC = CHAIN_ID === 8453 ? "https://mainnet.base.org" : "https://sepolia.base.org";
 
 const COLLECTION_COUNT = "0xd57f966b";

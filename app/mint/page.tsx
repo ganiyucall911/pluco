@@ -5,14 +5,16 @@ import { PageHero } from "@/components/page-hero";
 
 // Contract + network come from the deploy. Set these in .env.local after deploying.
 const CONTRACT = process.env.NEXT_PUBLIC_PLUCO_ART_CONTRACT || "";
-const CHAIN_ID = Number(process.env.NEXT_PUBLIC_PLUCO_CHAIN_ID || 84532); // 84532 = Base Sepolia, 8453 = Base
+const CHAIN_ID = Number(process.env.NEXT_PUBLIC_PLUCO_CHAIN_ID || 8453); // 8453 = Base mainnet, 84532 = Base Sepolia
 const CHAIN_NAME = CHAIN_ID === 8453 ? "Base" : "Base Sepolia testnet";
+const CURRENCY = CHAIN_ID === 8453 ? "ETH on Base" : "test ETH";
 const EXPLORER = CHAIN_ID === 8453 ? "https://basescan.org" : "https://sepolia.basescan.org";
 const MINT_SELECTOR = "0xd85d3d27"; // mint(string)
 const READ_SELECTORS = {
   totalMinted: "0xa2309ff8",
   maxSupply: "0xd5abeb01",
   saleOpen: "0x99288dbb",
+  mintPrice: "0x6817c76c",
 };
 
 type Eth = {
@@ -34,6 +36,12 @@ function encodeMint(uri: string): string {
   return MINT_SELECTOR + offset + length + padded;
 }
 
+function formatEth(wei: bigint): string {
+  const whole = wei / BigInt(1e18);
+  const frac = (wei % BigInt(1e18)).toString().padStart(18, "0").replace(/0+$/, "");
+  return frac ? whole.toString() + "." + frac : whole.toString();
+}
+
 function decodeUint(result: string): number {
   return Number(BigInt(result));
 }
@@ -45,20 +53,24 @@ export default function MintPage() {
   const [minted, setMinted] = useState<number | null>(null);
   const [supply, setSupply] = useState<number | null>(null);
   const [open, setOpen] = useState<boolean | null>(null);
+  const [priceWei, setPriceWei] = useState<bigint>(BigInt(0));
+  const [priceLoaded, setPriceLoaded] = useState(false);
 
   const readChain = useCallback(async (from?: string) => {
     const eth = getEth();
     if (!eth || !CONTRACT) return;
     const base = { to: CONTRACT };
     try {
-      const [m, s, o] = await Promise.all(
-        Object.values(READ_SELECTORS).map((data) =>
+          const [m, s, o, p] = await Promise.all(
+            Object.values(READ_SELECTORS).map((data) =>
           eth.request({ method: "eth_call", params: [{ ...base, data }, from ?? "0x0000000000000000000000000000000000000000", "latest"] })
         )
       );
       setMinted(decodeUint(m as string));
       setSupply(decodeUint(s as string));
-      setOpen(BigInt(o as string) === BigInt(1));
+          setOpen(BigInt(o as string) === BigInt(1));
+          setPriceWei(BigInt(p as string));
+          setPriceLoaded(true);
     } catch {
       // Contract not reachable on this network yet.
     }
@@ -112,7 +124,12 @@ export default function MintPage() {
       await ensureChain(eth);
       const txHash = (await eth.request({
         method: "eth_sendTransaction",
-        params: [{ from: account, to: CONTRACT, data: encodeMint(uri.trim()) }],
+            params: [{
+              from: account,
+              to: CONTRACT,
+              data: encodeMint(uri.trim()),
+              value: "0x" + priceWei.toString(16),
+            }],
       })) as string;
       setStatus("Minted. Transaction " + txHash.slice(0, 10) + "… — it confirms in a few seconds.");
       await readChain(account);
@@ -143,8 +160,15 @@ export default function MintPage() {
                 <p className="text-[#9EA6A2]">Minted</p>
                 <p className="mt-1 text-2xl font-semibold">{minted ?? "—"} / {supply ?? "—"}</p>
               </div>
-              <div>
-                <p className="text-[#9EA6A2]">Sale</p>
+                  <div>
+                    <p className="text-[#9EA6A2]">Price</p>
+                    <p className="mt-1 text-2xl font-semibold">
+                      {priceLoaded ? formatEth(priceWei) + " ETH" : "—"}
+                    </p>
+                    <p className="mt-1 text-xs text-[#6f7873]">paid in {CURRENCY}</p>
+                  </div>
+                  <div>
+                    <p className="text-[#9EA6A2]">Sale</p>
                 <p className="mt-1 text-2xl font-semibold">{open === null ? "—" : open ? "Open" : "Closed"}</p>
               </div>
             </div>
@@ -180,7 +204,13 @@ export default function MintPage() {
                 disabled={busy || open === false}
                 className="focus-ring w-full rounded-full bg-[#78EBC1] px-6 py-4 text-sm font-semibold text-black disabled:opacity-50"
               >
-                {busy ? "Waiting for wallet…" : open === false ? "Sale not open yet" : "Mint a piece"}
+                {busy
+                      ? "Waiting for wallet…"
+                      : open === false
+                        ? "Sale not open yet"
+                        : priceLoaded
+                          ? "Mint for " + formatEth(priceWei) + " ETH"
+                          : "Mint a piece"}
               </button>
             )}
             <p className="mt-4 text-xs leading-5 text-[#6f7873]">
