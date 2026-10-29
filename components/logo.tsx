@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 
 export function Logo() {
   return (
     <Link href="/" aria-label="PLUCO home" className="focus-ring flex items-center rounded-full">
       <Image
-        src="/brand/pluco-mark.png"
+        src={asset("/brand/pluco-mark.png")}
         alt="PLUCO"
         width={220}
         height={110}

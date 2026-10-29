@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/button";
+import { asset } from "@/lib/asset";
 
 const actions = [
   {
@@ -39,7 +40,7 @@ export default function HomePage() {
         <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
           <Reveal>
             <Image
-              src="/brand/pluco-mark.png"
+              src={asset("/brand/pluco-mark.png")}
               alt="PLUCO"
               width={1100}
               height={550}
