@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://ganiyucall911.github.io/pluco/sitemap.xml

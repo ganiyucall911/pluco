@@ -1,4 +1,4 @@
 :HL["/pluco/_next/static/chunks/24xvzp3dyk86v.css","style"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"/_not-found","h":96,"c":"$Q2"}]]
-0:{"b":"foXuu21zaGnvZqioxEdtE","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"K8WnOJwq17f8CAByTP4IU","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
