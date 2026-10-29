@@ -1,0 +1,11 @@
+{
+  "name": "PLUCO Originals #1",
+  "description": "One-of-one digital artwork from the PLUCO Originals collection.",
+  "image": "ipfs://REPLACE_WITH_IMAGE_CID/1.png",
+  "animation_url": "ipfs://REPLACE_WITH_VIDEO_CID/1.mp4",
+  "attributes": [
+    { "trait_type": "Medium", "value": "Digital painting" },
+    { "trait_type": "Edition", "value": "1 of 1" },
+    { "trait_type": "Year", "value": 2026 }
+  ]
+}
