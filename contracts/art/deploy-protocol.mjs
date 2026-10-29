@@ -41,7 +41,9 @@ await registry.waitForDeployment();
 const registryAddress = await registry.getAddress();
 console.log("PlucoRegistry:", registryAddress);
 
-const treasury = process.env.TREASURY || wallet.address;
+// Fees are paid in native ETH on Base to the PLUCO treasury.
+const TREASURY = "0xcaEC37D3AdcE9a141BF5d78895cb3074Fae77AD9";
+const treasury = process.env.TREASURY || TREASURY;
 const marketArt = load("PlucoMarketplace");
 const market = await new ContractFactory(marketArt.abi, marketArt.bytecode, wallet).deploy(
   wallet.address,

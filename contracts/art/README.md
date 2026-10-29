@@ -32,8 +32,12 @@ PRIVATE_KEY=0x... node deploy-protocol.mjs --network base-sepolia
 Base mainnet:
 
 ```bash
-PRIVATE_KEY=0x... TREASURY=0x... node deploy-protocol.mjs --network base --fee 250
+PRIVATE_KEY=0x... node deploy-protocol.mjs --network base --fee 250
 ```
+
+Fees are native ETH on Base and go to the treasury, which defaults to
+`0xcaEC37D3AdcE9a141BF5d78895cb3074Fae77AD9` in both deploy scripts. Set `TREASURY=0x...`
+only to override it.
 
 Then deploy a collection if you want the reference one:
 

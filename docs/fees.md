@@ -22,5 +22,11 @@ in code so the fee can never be raised past what the README promises without a r
 Registration itself costs no fee, only Base gas: about 260,000 gas per collection, which at
 today's Base gas price is roughly $0.003.
 
-Revenue is credited to the treasury address and withdrawn with `withdraw()` on the marketplace,
-or sent straight to the treasury on primary mints in PlucoOriginals.
+Every fee is paid in ETH on Base to the PLUCO treasury:
+
+    treasury: 0xcaEC37D3AdcE9a141BF5d78895cb3074Fae77AD9
+
+On a primary mint in PlucoOriginals the fee is forwarded to that address in the same transaction.
+On a marketplace sale it is credited to that address and withdrawn with `withdraw()` as native ETH.
+Both deploy scripts default to this address; TREASURY in the environment can override it, so check
+the constructor argument logged at deploy if you ever change it.

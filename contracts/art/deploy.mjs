@@ -28,7 +28,9 @@ const rpc = process.env.RPC_URL || net.rpc;
 const supply = Number(arg("supply", process.env.MAX_SUPPLY || 100));
 const price = parseEther(arg("price", process.env.MINT_PRICE || "25"));
 const perWallet = Number(arg("per-wallet", process.env.MAX_PER_WALLET || 3));
-const treasury = process.env.TREASURY || wallet.address;
+// Fees are paid in native ETH on Base to the PLUCO treasury.
+const TREASURY = "0xcaEC37D3AdcE9a141BF5d78895cb3074Fae77AD9";
+const treasury = process.env.TREASURY || TREASURY;
 const feeBps = Number(arg("fee", process.env.PLATFORM_FEE_BPS || 500)); // 5% of primary mints to PLUCO
 if (feeBps > 1000) throw new Error("mint fee is capped at 1000 bps (10%)");
 
