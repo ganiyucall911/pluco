@@ -1,6 +1,6 @@
 // Deploy PlucoOriginals. Usage:
-//   RPC_URL=... PRIVATE_KEY=0x... node deploy.mjs [--network amoy|polygon] [--supply 100] [--price 25] [--per-wallet 3]
-// Price is in the chain's native currency (POL on Polygon). Everything is overridable by env.
+//   RPC_URL=... PRIVATE_KEY=0x... node deploy.mjs [--network base-sepolia|base] [--supply 100] [--price 0.005] [--per-wallet 3]
+// Price is in the chain's native currency (ETH on Base). Everything is overridable by env.
 import fs from "node:fs";
 import path from "node:path";
 import { JsonRpcProvider, Wallet, ContractFactory, parseEther } from "ethers";
@@ -13,11 +13,11 @@ const arg = (name, fallback) => {
 };
 
 const NETWORKS = {
-  amoy: { chainId: 80002, rpc: "https://rpc-amoy.polygon.technology", explorer: "https://amoy.polygonscan.com" },
-  polygon: { chainId: 137, rpc: "https://polygon-rpc.com", explorer: "https://polygonscan.com" },
+  "base-sepolia": { chainId: 84532, rpc: "https://sepolia.base.org", explorer: "https://sepolia.basescan.org" },
+  base: { chainId: 8453, rpc: "https://mainnet.base.org", explorer: "https://basescan.org" },
 };
 
-const networkName = arg("network", process.env.NETWORK || "amoy");
+const networkName = arg("network", process.env.NETWORK || "base-sepolia");
 const net = NETWORKS[networkName];
 if (!net) throw new Error("unknown network " + networkName);
 

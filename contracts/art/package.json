@@ -6,8 +6,8 @@
   "description": "PLUCO Originals — 1-of-1 digital art ERC-721 with EIP-2981 royalties",
   "scripts": {
     "compile": "node compile.mjs",
-    "deploy:amoy": "node compile.mjs && node deploy.mjs --network amoy",
-    "deploy:polygon": "node compile.mjs && node deploy.mjs --network polygon"
+    "deploy:base-sepolia": "node compile.mjs && node deploy.mjs --network base-sepolia",
+    "deploy:base": "node compile.mjs && node deploy.mjs --network base"
   },
   "dependencies": {
     "@openzeppelin/contracts": "5.1.0",
