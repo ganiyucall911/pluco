@@ -1,6 +1,6 @@
 export type Collection={slug:string;name:string;creator:string;category:string;description:string;members:string;accent:string;featured?:boolean};
 export const collections:Collection[]=[
-{slug:"emerald-syndicate",name:"Emerald Syndicate",creator:"PLUCO Studio",category:"Digital Art",description:"A study in permanence, status and digital belonging.",members:"Demo · 4.2K members",accent:"from-[#78EBC1]/45 via-[#143D31] to-[#080a09]",featured:true},
+{slug:"emerald-syndicate",name:"Emerald Syndicate",creator:"PLUCO",category:"Digital Art",description:"A study in permanence, status and digital belonging.",members:"Demo · 4.2K members",accent:"from-[#78EBC1]/45 via-[#143D31] to-[#080a09]",featured:true},
 {slug:"neon-archives",name:"Neon Archives",creator:"Nia Vale",category:"Photography",description:"Fragments of imagined cities preserved onchain.",members:"Demo · 2.8K members",accent:"from-[#245646] via-[#111] to-[#78EBC1]/20"},
 {slug:"phantom-atelier",name:"Phantom Atelier",creator:"Morrow House",category:"Fashion",description:"Digital couture for identity beyond the physical.",members:"Demo · 1.9K members",accent:"from-[#d7cfbf]/25 via-[#143D31] to-black"},
 {slug:"sonic-relics",name:"Sonic Relics",creator:"Ayo Frequency",category:"Music",description:"Limited sound artifacts and intimate member sessions.",members:"Demo · 3.1K members",accent:"from-[#78EBC1]/30 via-black to-[#245646]"},
