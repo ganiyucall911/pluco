@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
+import { Verified } from "@/components/verified";
 import { Reveal } from "@/components/reveal";
 import { Art } from "@/components/art";
 import { ArrowUpRight } from "lucide-react";
@@ -29,7 +30,10 @@ export default function CreatorsPage() {
                 </div>
                 <div className="flex flex-col p-8 sm:p-10">
                   <p className="text-[11px] uppercase tracking-[.28em] text-[#6E6E6E]">Creator name</p>
-                  <h2 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">PLUCO</h2>
+                  <h2 className="mt-4 flex items-center gap-3 text-4xl font-semibold tracking-tight sm:text-5xl">
+                    <span className="leading-none">PLUCO</span>
+                    <Verified size={26} />
+                  </h2>
                   <p className="mt-5 max-w-xl text-[15px] leading-7 text-[#A6A6A6]">
                     Digital artwork published on Base. Every mint, listing and sale is signed by this
                     name and nothing else — no studio, no alias.
