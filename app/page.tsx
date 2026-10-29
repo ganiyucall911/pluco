@@ -1,109 +1,112 @@
+import Image from "next/image";
 import Link from "next/link";
-import { Hero } from "@/components/hero";
 import { Reveal } from "@/components/reveal";
-import { SectionTitle } from "@/components/section-title";
-import { CollectionCard } from "@/components/collection-card";
-import { Art } from "@/components/art";
 import { Button } from "@/components/button";
-import { collections, creators, communities } from "@/lib/data";
+
+const actions = [
+  {
+    n: "01",
+    title: "Mint",
+    href: "/mint",
+    copy: "Turn a file into a piece anyone can own. Add a price and go.",
+  },
+  {
+    n: "02",
+    title: "Browse",
+    href: "/marketplace",
+    copy: "See what people are selling. Every listing shows the artist and the fee.",
+  },
+  {
+    n: "03",
+    title: "Sell",
+    href: "/sell",
+    copy: "Set a price, approve once, done. You keep the art until it sells.",
+  },
+];
+
+const steps = [
+  ["Connect", "Any wallet works. No signup, no email, no account."],
+  ["Pick or list", "Mint something new, or list a piece you already own."],
+  ["Get paid", "Sellers are paid onchain the second a sale settles."],
+];
 
 export default function HomePage() {
   return (
     <main>
-      <Hero />
-
-      <section className="px-6 pb-28">
-        <div className="mx-auto max-w-7xl">
+      <section className="relative overflow-hidden px-6 pb-24 pt-36">
+        <div className="grid-noise absolute inset-0 opacity-70" />
+        <div className="absolute left-1/2 top-[18%] h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-[#143D31]/40 blur-[130px]" />
+        <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
           <Reveal>
-            <div className="flex flex-wrap items-end justify-between gap-8">
-              <SectionTitle
-                eyebrow="Featured"
-                title="Collections with a point of view."
-                body="Editorial curation comes before speculation. Every collection shown here is demo content."
-              />
-              <Button href="/collections" variant="secondary">View all collections</Button>
-            </div>
-          </Reveal>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {collections.slice(0, 2).map((item, i) => (
-              <Reveal key={item.slug} className={i === 0 ? "lg:col-span-2" : ""}>
-                <CollectionCard item={item} />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-white/[.07] px-6 py-28">
-        <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[.85fr_1.15fr]">
-          <Reveal>
-            <SectionTitle
-              eyebrow="Creators"
-              title="Made by people, not algorithms."
-              body="A network built around the artists, studios and sound designers who give digital objects their meaning."
-            />
-            <Button href="/creators" className="mt-2">Meet the creators</Button>
-          </Reveal>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {creators.map((c) => (
-              <Reveal key={c.name}>
-                <Link
-                  href="/creators"
-                  className="focus-ring group flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-white/[.08] bg-[#111] transition duration-500 hover:-translate-y-1 hover:border-[#78EBC1]/25"
-                >
-                  <div className="aspect-[16/10]"><Art accent={c.accent} label={c.role.split(" · ")[0]} /></div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold">{c.name}</h3>
-                    <p className="mt-1 text-sm text-[#9EA6A2]">{c.role}</p>
-                    <p className="mt-5 text-xs uppercase tracking-[.15em] text-[#6f7873]">{c.works}</p>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-6 py-28">
-        <div className="mx-auto max-w-7xl">
-          <Reveal>
-            <SectionTitle
-              eyebrow="Community"
-              title="Ownership is only the beginning."
-              body="Collections open doors to rooms, conversations and gatherings that exist beyond the marketplace."
+            <Image
+              src="/brand/pluco-mark.png"
+              alt="PLUCO"
+              width={1100}
+              height={550}
+              priority
+              className="mx-auto w-full max-w-[560px] brightness-[1.45] saturate-125 drop-shadow-[0_0_70px_rgba(0,255,60,.28)]"
             />
           </Reveal>
-          <div className="grid gap-5 md:grid-cols-3">
-            {communities.map((c, i) => (
-              <Reveal key={c.name}>
-                <Link
-                  href="/community"
-                  className="focus-ring block h-full rounded-[28px] border border-white/[.08] bg-[#0d0d0d] p-8 transition duration-500 hover:-translate-y-1 hover:border-[#78EBC1]/25"
-                >
-                  <span className="text-xs uppercase tracking-[.2em] text-[#78EBC1]">0{i + 1}</span>
-                  <h3 className="mt-20 text-2xl font-semibold">{c.name}</h3>
-                  <p className="mt-3 text-sm leading-6 text-[#8d9691]">{c.copy}</p>
-                  <p className="mt-8 border-t border-white/[.07] pt-4 text-xs uppercase tracking-[.15em] text-[#6f7873]">{c.meta}</p>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-6 pb-32">
-        <div className="mx-auto max-w-7xl overflow-hidden rounded-[40px] border border-[#78EBC1]/15 bg-gradient-to-br from-[#143D31] via-[#0b1512] to-black px-8 py-20 text-center sm:px-16">
           <Reveal>
-            <p className="text-xs font-semibold uppercase tracking-[.3em] text-[#78EBC1]">Explore the network</p>
-            <h2 className="mx-auto mt-6 max-w-3xl text-4xl font-semibold leading-[.95] sm:text-6xl">Curated, transparent, integration ready.</h2>
-            <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-[#9EA6A2]">
-              A demo interface for the PLUCO ecosystem. No live sales, wallets or chain endpoints are connected.
+            <h1 className="mt-10 text-4xl font-semibold leading-[1.02] sm:text-5xl">Mint. Buy. Sell. That's it.</h1>
+            <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-[#9EA6A2]">
+              An open art market on Base. Anyone can register a collection, mint a piece or buy one — one wallet, three buttons, no clutter.
             </p>
-            <div className="mt-9 flex flex-wrap justify-center gap-3">
-              <Button href="/marketplace">Open marketplace</Button>
-              <Button href="/explore" variant="secondary">Explore PLUCO</Button>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Button href="/mint">Start minting</Button>
+              <Button href="/marketplace" variant="secondary">Browse art</Button>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      <section className="px-6 pb-24">
+        <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-3">
+          {actions.map((a) => (
+            <Reveal key={a.title}>
+              <Link
+                href={a.href}
+                className="focus-ring group flex h-full flex-col rounded-[28px] border border-white/[.08] bg-[#0d0d0d] p-7 transition duration-300 hover:-translate-y-1 hover:border-[#78EBC1]/30"
+              >
+                <span className="text-xs uppercase tracking-[.2em] text-[#78EBC1]">{a.n}</span>
+                <h2 className="mt-10 text-2xl font-semibold">{a.title}</h2>
+                <p className="mt-3 text-sm leading-6 text-[#8d9691]">{a.copy}</p>
+                <span className="mt-6 text-sm text-[#78EBC1] transition group-hover:translate-x-1">Open →</span>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-y border-white/[.07] px-6 py-24">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-2xl font-semibold sm:text-3xl">Three steps, in that order.</h2>
+          <div className="mt-10 grid gap-8 sm:grid-cols-3">
+            {steps.map(([t, c], i) => (
+              <div key={t} className="border-t border-white/[.09] pt-5">
+                <p className="text-xs uppercase tracking-[.2em] text-[#626a66]">Step {i + 1}</p>
+                <h3 className="mt-3 text-lg font-semibold">{t}</h3>
+                <p className="mt-2 text-sm leading-6 text-[#8d9691]">{c}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-10 max-w-2xl rounded-2xl border border-[#78EBC1]/15 bg-[#0e1512] p-5 text-sm leading-6 text-[#a9b3ad]">
+            <strong className="text-white">Clear pricing.</strong> Listing and minting are free. PLUCO takes 2.5% of each sale, the artist
+            earns a royalty on every resale, and sellers keep the rest. No hidden gas games, no lock-in.
+          </p>
+        </div>
+      </section>
+
+      <section className="px-6 py-24">
+        <div className="mx-auto max-w-6xl overflow-hidden rounded-[40px] border border-[#78EBC1]/15 bg-gradient-to-br from-[#0f2a22] via-[#0b1512] to-black px-8 py-16 text-center">
+          <h2 className="mx-auto max-w-2xl text-3xl font-semibold leading-[1] sm:text-5xl">Open to everyone. Owned by the artists.</h2>
+          <p className="mx-auto mt-5 max-w-lg text-sm leading-6 text-[#9EA6A2]">
+            No gatekeeper, no application form. Register a collection and it is live on the network.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Button href="/connect">Connect a wallet</Button>
+            <Button href="/protocol" variant="secondary">Read the protocol</Button>
+          </div>
         </div>
       </section>
     </main>
