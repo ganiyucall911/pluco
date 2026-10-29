@@ -68,12 +68,17 @@ docs/         # remediation and fee notes
 
 ## Deployment
 
-Two workflows run on every push to `main`:
+GitHub Pages serves the `gh-pages` branch at the site root. To publish the current commit:
 
-- **Build check** (`.github/workflows/build.yml`) — `npm ci` and `npm run build` on every push and pull request. This job is a required status check on `main`, with strict mode (branch must be up to date) and administrators included.
-- **Deploy** (`.github/workflows/deploy.yml`) — builds with `NEXT_PUBLIC_BASE_PATH=/pluco` and publishes `./out` to the `gh-pages` branch, which GitHub Pages serves. It can also be run manually from the Actions tab.
+```sh
+npm run deploy
+```
 
-Merging a pull request into `main` is therefore all it takes to ship. No manual build or upload step.
+That script builds with `NEXT_PUBLIC_BASE_PATH=/pluco`, writes `out/.nojekyll`, and force-syncs `./out` into `gh-pages` with a single commit named after the deployed revision. It is safe to rerun: it exits without committing when nothing changed.
+
+The **Build check** workflow (`.github/workflows/build.yml`) runs `npm ci` and `npm run build` on every push and pull request. It is a required status check on `main`, with strict mode (branch must be up to date) and administrators included, so `main` always builds.
+
+The live site therefore equals the last commit you ran `npm run deploy` on. Automated publishing on merge needs a GitHub token with the `workflow` scope to add a Pages workflow; until then the script is the deploy path.
 
 ## Contributing
 
