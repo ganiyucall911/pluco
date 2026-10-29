@@ -68,7 +68,28 @@ docs/         # remediation and fee notes
 
 ## Deployment
 
-Merging to `main` deploys automatically: `.github/workflows/deploy.yml` builds the static export and publishes `out/` to the `gh-pages` branch, which GitHub Pages serves.
+Merging to `main` publishes automatically: `.github/workflows/deploy.yml` builds the static export and pushes `out/` to the `gh-pages` branch, which GitHub Pages serves.
 
-To deploy by hand: `npm run deploy` (builds, then publishes to `gh-pages`). It needs a `gh` login with push access to the repo.
+To publish by hand, or to preview exactly what ships:
 
+```sh
+npm run deploy
+```
+
+That script builds with `NEXT_PUBLIC_BASE_PATH=/pluco`, writes `out/.nojekyll`, and force-syncs `./out` into `gh-pages` with a single commit named after the deployed revision. It is safe to rerun: it exits without committing when nothing changed.
+
+The **Build check** workflow (`.github/workflows/build.yml`) runs `npm ci` and `npm run build` on every push and pull request. It is a required status check on `main`, with strict mode (branch must be up to date) and administrators included, so `main` always builds.
+
+## Contributing
+
+1. Branch from `main`.
+2. Run `npm run build` locally before opening a pull request.
+3. Open a pull request; the build check must pass before merging.
+
+## Dependency notes
+
+Next.js is pinned to `16.4.3`; earlier releases bundle a PostCSS version with known XSS and source-map path traversal advisories. Keep `npm audit` free of high-severity findings — see [docs/REMEDIATION.md](docs/REMEDIATION.md).
+
+## License
+
+Released under the [MIT License](LICENSE).
