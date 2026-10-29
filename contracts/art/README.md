@@ -1,42 +1,52 @@
-# PLUCO Originals — art contracts
+# PLUCO Art Protocol
 
-1-of-1 digital art on Base: ERC-721, EIP-2981 royalties (7.5%), fixed price and per-wallet limit set at deploy.
+Open art protocol for PLUCO, deployed on Base. Art is the first thing to run on the
+network, not the whole product: the chain, wallet and indexer come next.
 
-## Why not pluco-chain
+## Contracts (`src/`)
 
-The standalone chain has no marketplaces, wallets or collectors yet, so art minted there would be invisible. These contracts deploy to Base: Coinbase-backed distribution, cheap gas, native ETH, and a live creator/NFT scene. The same contract can be redeployed to pluco-chain later without changing the artwork or metadata.
+| Contract | Role |
+| --- | --- |
+| `PlucoRegistry.sol` | Open onchain index of ERC-721 collections. Artist, category, metadata URI, active flag. Holds no art, takes no fee. |
+| `PlucoMarketplace.sol` | Non-custodial listings with EIP-2981 royalties and a protocol fee (default 2.5%, hard cap 5%). Pull-payment proceeds. |
+| `PlucoOriginals.sol` | Reference collection: 1-of-1 tokens, each with its own metadata URI, immutable supply, provenance hash, owner reserve. |
 
-## Compile
+## Build
 
 ```bash
+cd contracts/art
 npm install
-npm run compile   # writes artifacts/PlucoOriginals.json
+npm run compile        # writes ABI + bytecode to ./artifacts
 ```
+
+Compiler: solc 0.8.26, evmVersion cancun, optimizer 200 runs.
 
 ## Deploy
 
-Testnet first (free Base Sepolia ETH from https://portal.cdp.coinbase.com/products/faucet):
+Base Sepolia (testnet, free ETH from a Base faucet):
 
 ```bash
-PRIVATE_KEY=0x... node deploy.mjs --network base-sepolia --supply 100 --price 0.005 --per-wallet 3
+PRIVATE_KEY=0x... node deploy-protocol.mjs --network base-sepolia
 ```
 
-Then mainnet with `--network base`. Price is in ETH, so `--price 0.005` means 0.005 ETH per piece.
+Base mainnet:
 
-Deployer key stays in your shell or a local .env that is gitignored. The deployer receives royalties and withdrawals; move both to a multisig before a real drop.
+```bash
+PRIVATE_KEY=0x... TREASURY=0x... node deploy-protocol.mjs --network base --fee 250
+```
 
-## After deploying
+Then deploy a collection if you want the reference one:
 
-1. Copy the address into the site: `NEXT_PUBLIC_PLUCO_ART_CONTRACT=0x...` and `NEXT_PUBLIC_PLUCO_CHAIN_ID=8453` in .env.local.
-2. Open the sale: `setSaleOpen(true)` from the owner wallet.
-3. Pin artwork + metadata to IPFS (Pinata or NFT.Storage) and keep the CIDs.
-4. Freeze provenance: `setProvenance("<sha256 of the final artwork bundle>")`.
-5. Verify the contract on Basescan so collectors can read it.
+```bash
+PRIVATE_KEY=0x... node deploy.mjs --network base --supply 100 --price 0.005 --per-wallet 3
+```
 
-Metadata template: `metadata/1.json`. Each token takes its own URI, so every piece stays unique. Token IDs start at 1 and run to maxSupply.
+The scripts print the addresses to set on the site:
+`NEXT_PUBLIC_PLUCO_REGISTRY`, `NEXT_PUBLIC_PLUCO_MARKETPLACE`,
+`NEXT_PUBLIC_PLUCO_ART_CONTRACT`, `NEXT_PUBLIC_PLUCO_CHAIN_ID`.
 
-## Security notes
+## Why Base and not PLUCO chain yet
 
-- Reentrancy guarded on mint and withdraw.
-- Supply, price and per-wallet limit are immutable; only the sale switch, URIs (owner mint) and royalties are owner-controlled.
-- Royalty is capped by OpenZeppelin ERC-2981 at 10%; this collection uses 7.5%.
+PLUCO will be its own OP Stack L2, settling to Ethereum on the same spec Base uses.
+Until it has wallets, liquidity and an indexer, art minted there would be invisible.
+Base gives distribution today and the contracts are portable to PLUCO later, unchanged.
