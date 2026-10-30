@@ -320,7 +320,7 @@ export default function LaunchPage() {
               disabled={busy}
               className="focus-ring mt-6 w-full rounded-full bg-paper px-6 py-4 text-sm font-semibold text-ink disabled:opacity-50"
             >
-              {busy ? "Waiting for your wallet…" : account ? "Deploy collection on " + net.name : connecting ? "Connecting…" : "Connect wallet"}
+              {busy ? "Waiting for your wallet…" : account ? "Deploy collection on " + net.name : connecting ? "Connecting…" : "Log in"} 
             </button>
 
             {status ? <p className="mt-4 text-sm leading-6 text-paper">{status}</p> : null}

@@ -44,7 +44,7 @@ export default function CommunityPage() {
               title="Studio notes, sessions and holder-only rooms."
               body="Community programming sits alongside the collections — conversations, critiques and quiet gatherings rather than hype."
             />
-            <Button href="/connect" variant="secondary">Connect wallet</Button>
+            <Button href="/connect" variant="secondary">Create an account</Button>
           </Reveal>
           <Reveal>
             <div className="overflow-hidden rounded-none border border-line">
