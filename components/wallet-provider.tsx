@@ -164,6 +164,10 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       }
     }, 400);
 
+    // Publish the baseline list (MetaMask Connect, plus Reown when configured)
+    // even when no injected wallet is present; announces below add to it.
+    commit();
+
     // Silently restore a previous session.
     const restore = async () => {
       if (localStorage.getItem(STORAGE_KEY) !== "1") return;
