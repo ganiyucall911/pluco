@@ -105,9 +105,9 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
 
     const commit = () => {
       const list = [...found.values()];
-      // No MetaMask extension in this browser: offer MetaMask Connect instead, which
-      // works from desktop (QR) and mobile (deeplink) without an injected provider.
-      if (!list.some((o) => /metamask/i.test(o.name))) {
+      // MetaMask Connect is always offered: the extension modal on desktop, a QR or
+      // deeplink on mobile, and it is the only option when nothing is injected.
+      if (!list.some((o) => o.id === MM_ID)) {
         list.push({ id: MM_ID, name: MM_NAME });
       }
       setOptions(list);
