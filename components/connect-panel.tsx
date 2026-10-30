@@ -43,7 +43,7 @@ export function ConnectPanel() {
         <div className="flex items-center justify-between gap-4">
           <dt className="text-mute">Wallet</dt>
           <dd className="inline-flex items-center gap-2">
-            {activeName || (hasWallet ? `${options.length} detected` : "Not found")}
+            {activeName || (hasWallet ? `${options.filter((o) => o.provider).length} detected` : "Not found")}
           </dd>
         </div>
       </dl>
@@ -68,7 +68,7 @@ export function ConnectPanel() {
             </button>
           ))}
 
-        {!account && !options.length && (
+        {!account && !options.some((o) => o.provider) && (
           <div className="border border-line p-4">
             <p className="text-[13px] leading-6 text-mute">
               No wallet detected in this browser. On a phone, open this page inside MetaMask, Coinbase Wallet or the

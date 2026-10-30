@@ -1,6 +1,13 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import {
+  MM_ID,
+  MM_NAME,
+  connectMetaMaskMultichain,
+  disconnectMetaMaskMultichain,
+  restoreMetaMaskMultichain,
+} from "@/lib/metamask-multichain";
 
 export const BASE_CHAIN_ID = 8453;
 export const BASE_CHAIN_HEX = "0x2105";
@@ -25,7 +32,8 @@ export type WalletOption = {
   id: string;
   name: string;
   icon?: string;
-  provider: Eth;
+  /** Absent for the MetaMask Connect option, which builds its provider on connect. */
+  provider?: Eth;
 };
 
 type WalletState = {
@@ -97,8 +105,14 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
 
     const commit = () => {
       const list = [...found.values()];
+      // MetaMask Connect is always offered: the extension modal on desktop, a QR or
+      // deeplink on mobile, and it is the only option when nothing is injected.
+      if (!list.some((o) => o.id === MM_ID)) {
+        list.push({ id: MM_ID, name: MM_NAME });
+      }
       setOptions(list);
-      setHasWallet(list.length > 0);
+      // MetaMask Connect always works, so a wallet is always available.
+      setHasWallet(true);
     };
 
     const onAnnounce = (event: Event) => {
@@ -137,6 +151,8 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     // Silently restore a previous session.
     const restore = async () => {
       if (localStorage.getItem(STORAGE_KEY) !== "1") return;
+      // MetaMask Connect sessions are restored by the SDK, not through window.ethereum.
+      if (localStorage.getItem(NAME_KEY) === MM_NAME) return;
       const eth = legacy || found.values().next().value?.provider;
       if (!eth) return;
       try {
@@ -214,13 +230,50 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   const connect = useCallback(
     async (id?: string) => {
       setError(null);
+
+      // No id given: prefer an injected wallet, otherwise MetaMask Connect.
+      const wanted = id ?? options.find((o) => o.provider)?.id ?? MM_ID;
+
+      if (wanted === MM_ID) {
+        setConnecting(true);
+        try {
+          const { provider: mm, accounts } = await connectMetaMaskMultichain();
+          setAccount(accounts[0]);
+          setActiveName(MM_NAME);
+          attach(mm as unknown as Eth);
+          localStorage.setItem(STORAGE_KEY, "1");
+          localStorage.setItem(NAME_KEY, MM_NAME);
+          await readChain(mm as unknown as Eth);
+          const id2 = parseInt((await mm.request({ method: "eth_chainId" })) as string, 16);
+          if (id2 !== BASE_CHAIN_ID) {
+            try {
+              await switchToBase();
+            } catch {
+              setError("Connected, but the wallet is on another network. Switch it to Base.");
+            }
+          }
+        } catch (e) {
+          const code = (e as { code?: number }).code;
+          setError(
+            code === 4001
+              ? "Request rejected in MetaMask."
+              : e instanceof Error
+                ? e.message
+                : "Could not connect MetaMask.",
+          );
+        } finally {
+          setConnecting(false);
+        }
+        return;
+      }
+
       const chosen =
         (id ? options.find((o) => o.id === id) : options[0]) ||
         (typeof window !== "undefined" && window.ethereum
           ? { id: "injected", name: labelFor(window.ethereum, "Browser wallet"), provider: window.ethereum }
           : null);
 
-      if (!chosen) {
+      if (!chosen || !chosen.provider) {
         setError(
           typeof navigator !== "undefined" && /iPhone|iPad|Android/i.test(navigator.userAgent)
             ? "This browser has no wallet inside it. Open this page inside MetaMask, Coinbase Wallet or the Base app."
@@ -231,18 +284,19 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
 
       setConnecting(true);
       try {
-        const accounts = (await chosen.provider.request({ method: "eth_requestAccounts" })) as string[];
+        const eth = chosen.provider as Eth;
+        const accounts = (await eth.request({ method: "eth_requestAccounts" })) as string[];
         if (!accounts || !accounts.length) {
           setError("The wallet returned no account. Unlock it and try again.");
           return;
         }
         setAccount(accounts[0]);
         setActiveName(chosen.name);
-        attach(chosen.provider);
+        attach(eth);
         localStorage.setItem(STORAGE_KEY, "1");
         localStorage.setItem(NAME_KEY, chosen.name);
-        await readChain(chosen.provider);
-        const id2 = parseInt((await chosen.provider.request({ method: "eth_chainId" })) as string, 16);
+        await readChain(eth);
+        const id2 = parseInt((await eth.request({ method: "eth_chainId" })) as string, 16);
         if (id2 !== BASE_CHAIN_ID) {
           try {
             await switchToBase();
@@ -266,7 +320,29 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     [attach, options, readChain, switchToBase],
   );
 
+  // Bring back a MetaMask Connect session on reload without prompting.
+  useEffect(() => {
+    if (typeof window === "undefined" || localStorage.getItem(NAME_KEY) !== MM_NAME) return;
+    let cancelled = false;
+    restoreMetaMaskMultichain().then((res) => {
+      if (cancelled) return;
+      if (!res) {
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(NAME_KEY);
+        return;
+      }
+      setAccount(res.accounts[0]);
+      setActiveName(MM_NAME);
+      attach(res.provider as unknown as Eth);
+      readChain(res.provider as unknown as Eth);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [attach, readChain]);
+
   const disconnect = useCallback(() => {
+    if (localStorage.getItem(NAME_KEY) === MM_NAME) void disconnectMetaMaskMultichain();
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(NAME_KEY);
     activeProvider.current = null;
