@@ -6,8 +6,8 @@ import { asset } from "@/lib/asset";
 const steps = [
   {
     n: "01",
-    title: "Connect",
-    copy: "Any wallet works. No account, no email, no permission needed.",
+    title: "Create an account",
+    copy: "Your wallet is the account. Log in with any Base wallet — no email, no password.",
   },
   {
     n: "02",
@@ -201,7 +201,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Button href="/connect">Connect wallet</Button>
+            <Button href="/connect">Create an account</Button>
             <Button href="/mint" variant="secondary">
               Mint a piece
             </Button>

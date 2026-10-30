@@ -174,7 +174,7 @@ export default function MintPage() {
                 disabled={connecting}
                 className="focus-ring w-full rounded-full bg-paper px-6 py-4 text-sm font-semibold text-ink disabled:opacity-50"
               >
-                {connecting ? "Connecting…" : "Connect wallet"}
+                {connecting ? "Connecting…" : "Log in"} 
               </button>
             ) : soldOut ? (
               <p className="text-sm text-body">Sold out. Secondary listings live on OpenSea and Rarible.</p>
