@@ -5,12 +5,6 @@ import { ArrowRight, Check, Wallet, AlertTriangle } from "lucide-react";
 import { useWallet, shortAddress } from "./wallet-provider";
 import { cn } from "@/lib/cn";
 
-const INSTALLS = [
-  { name: "MetaMask", href: "https://metamask.io/download/" },
-  { name: "Rabby", href: "https://rabby.io/" },
-  { name: "Coinbase Wallet", href: "https://www.coinbase.com/wallet" },
-];
-
 type Mode = "create" | "login";
 
 const COPY: Record<Mode, string> = {
@@ -42,7 +36,6 @@ export function AuthPanel() {
     error,
     hasWallet,
     onBase,
-    options,
     activeName,
     connect,
     disconnect,
@@ -94,11 +87,8 @@ export function AuthPanel() {
             <dd className="num">{chainId ?? "—"}</dd>
           </div>
           <div className="flex items-center justify-between gap-4">
-            <dt className="text-mute">Wallet</dt>
-            <dd className="inline-flex items-center gap-2">
-              {activeName ||
-                (hasWallet ? options.filter((o) => o.provider).length + " detected" : "Not found")}
-            </dd>
+            <dt className="text-mute">Connection</dt>
+            <dd>{activeName || "WalletConnect"}</dd>
           </div>
         </dl>
 
@@ -165,63 +155,39 @@ export function AuthPanel() {
       </h2>
       <p className="mt-3 max-w-[44ch] text-[13px] leading-6 text-mute">{COPY[mode]}</p>
 
-      <div className="mt-7 grid gap-2">
-        {options.map((o) => (
-          <button
-            key={o.id}
-            type="button"
-            onClick={() => connect(o.id)}
-            disabled={connecting}
-            className="focus-ring flex h-12 items-center gap-3 border border-line-strong px-4 text-left text-[13px] font-medium text-paper transition hover:border-paper/40 hover:bg-paper/[.06] disabled:opacity-60"
-          >
-            {o.icon ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={o.icon} alt="" width={20} height={20} className="rounded-sm" />
-            ) : (
-              <Wallet size={15} strokeWidth={1.75} />
-            )}
-            <span className="flex-1">
-              {connecting
-                ? "Waiting for wallet…"
-                : (mode === "create" ? "Create account with " : "Log in with ") + o.name}
-            </span>
-            <ArrowRight size={14} className="text-faint" />
-          </button>
-        ))}
+      <button
+        type="button"
+        onClick={() => connect()}
+        disabled={connecting || !hasWallet}
+        className="focus-ring mt-7 flex h-12 w-full items-center gap-3 border border-line-strong px-4 text-left text-[13px] font-medium text-paper transition hover:border-paper/40 hover:bg-paper/[.06] disabled:opacity-60"
+      >
+        <Wallet size={15} strokeWidth={1.75} />
+        <span className="flex-1">
+          {connecting
+            ? "Waiting for wallet…"
+            : mode === "create"
+              ? "Create account with a wallet"
+              : "Log in with a wallet"}
+        </span>
+        <ArrowRight size={14} className="text-faint" />
+      </button>
 
-        {!options.some((o) => o.provider) && (
-          <div className="mt-2 border border-line p-4">
-            <p className="text-[13px] leading-6 text-mute">
-              No browser wallet detected. The options above still work with a phone or any WalletConnect
-              wallet, or install one of these and reload:
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {INSTALLS.map((w) => (
-                <a
-                  key={w.name}
-                  href={w.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="focus-ring border border-line-strong px-3 py-2 text-[12px] text-paper transition hover:border-paper/40"
-                >
-                  {w.name}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-
-      <p className="mt-6 border-t border-line pt-5 text-[12px] leading-6 text-faint">
-        No password to reset and no email to verify: the address is the identity. Signing in never asks your
-        wallet to sign anything.
+      <p className="mt-4 text-[12px] leading-6 text-faint">
+        MetaMask, Rabby, Coinbase Wallet, Phantom, Solflare or any WalletConnect wallet — extension on
+        desktop, QR or the wallet app on mobile.
       </p>
 
-      {error && (
-        <p className="mt-4 flex items-start gap-2 text-[13px] leading-6 text-gold">
-          <AlertTriangle size={14} className="mt-1 shrink-0" /> {error}
+      {error && <p className="mt-4 text-[12px] leading-6 text-gold">{error}</p>}
+
+      {!hasWallet && (
+        <p className="mt-4 text-[12px] leading-6 text-gold">
+          Wallet connection is not configured. Add the Reown project ID to enable it.
         </p>
       )}
+
+      <p className="mt-6 border-t border-line pt-5 text-[12px] leading-6 text-faint">
+        No password to reset and no email to verify: the wallet signs, PLUCO only reads the address.
+      </p>
     </div>
   );
 }
