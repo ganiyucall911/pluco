@@ -14,6 +14,9 @@ import {
   REOWN_NAME,
   connectReown,
   disconnectReown,
+  getEmail,
+  openAccountView,
+  openEmailLogin,
   reownConfigured,
   restoreReown,
   switchReownNetwork,
@@ -46,7 +49,11 @@ type WalletState = {
   onBase: boolean;
   options: WalletOption[];
   activeName: string | null;
+  /** Address of an email-login account, when the user signed in with a code. */
+  email: string | null;
   connect: (id?: string) => Promise<void>;
+  emailSignIn: () => void;
+  manageAccount: () => void;
   disconnect: () => void;
   switchToBase: () => Promise<void>;
   switchChain: (chainId: number) => Promise<void>;
@@ -67,6 +74,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   const [connecting, setConnecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeName, setActiveName] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
 
   const attach = useCallback((eth: Eth) => {
     setProvider(eth);
@@ -107,6 +115,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       const eth = res.provider as unknown as Eth;
       setAccount(res.address);
       setActiveName(REOWN_NAME);
+      setEmail(getEmail());
       attach(eth);
       readChain(eth);
     });
@@ -137,6 +146,8 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       attach(eth);
       localStorage.setItem(STORAGE_KEY, "1");
       localStorage.setItem(NAME_KEY, REOWN_NAME);
+      // AppKit fills the user record a moment after the account connects.
+      window.setTimeout(() => setEmail(getEmail()), 400);
       await readChain(eth);
       const current = parseInt((await eth.request({ method: "eth_chainId" })) as string, 16);
       if (current !== BASE_CHAIN_ID) {
@@ -169,8 +180,20 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     setProvider(null);
     setChainId(null);
     setActiveName(null);
+    setEmail(null);
     setError(null);
   }, []);
+
+  const emailSignIn = useCallback(() => {
+    setError(null);
+    if (!reownConfigured()) {
+      setError("Wallet connection is not configured yet.");
+      return;
+    }
+    openEmailLogin();
+  }, []);
+
+  const manageAccount = useCallback(() => openAccountView(), []);
 
   const clearError = useCallback(() => setError(null), []);
 
@@ -185,13 +208,31 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       onBase: chainId === BASE_CHAIN_ID,
       options: OPTIONS,
       activeName,
+      email,
       connect,
+      emailSignIn,
+      manageAccount,
       disconnect,
       switchToBase,
       switchChain,
       clearError,
     }),
-    [account, provider, chainId, connecting, error, activeName, connect, disconnect, switchToBase, switchChain, clearError],
+    [
+      account,
+      provider,
+      chainId,
+      connecting,
+      error,
+      activeName,
+      email,
+      connect,
+      emailSignIn,
+      manageAccount,
+      disconnect,
+      switchToBase,
+      switchChain,
+      clearError,
+    ],
   );
 
   return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>;

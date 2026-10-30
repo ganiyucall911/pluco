@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowRight, Check, Wallet, AlertTriangle } from "lucide-react";
+import { ArrowRight, Check, Copy, ExternalLink, LogOut, Mail, Settings2, Wallet, AlertTriangle } from "lucide-react";
 import { useWallet, shortAddress } from "./wallet-provider";
 import { cn } from "@/lib/cn";
 
@@ -9,9 +9,14 @@ type Mode = "create" | "login";
 
 const COPY: Record<Mode, string> = {
   create:
-    "Your wallet is the account. Connecting creates it — no email, no password, no form.",
+    "Your wallet is the account, or use an email and a 6-digit code. No password, no form.",
   login:
-    "Pick the wallet you signed up with. PLUCO reads the address and nothing else.",
+    "Open the account with the wallet — or the email code — you signed up with.",
+};
+
+const CHAINS: Record<number, string> = {
+  8453: "Base",
+  84532: "Base Sepolia",
 };
 
 function seenKey(address: string) {
@@ -37,7 +42,10 @@ export function AuthPanel() {
     hasWallet,
     onBase,
     activeName,
+    email,
     connect,
+    emailSignIn,
+    manageAccount,
     disconnect,
     switchToBase,
     clearError,
@@ -45,6 +53,7 @@ export function AuthPanel() {
 
   const [mode, setMode] = useState<Mode>("create");
   const [justCreated, setJustCreated] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   // After a connection: new address = account created, known address = welcome back.
   useEffect(() => {
@@ -61,34 +70,72 @@ export function AuthPanel() {
     }
   }, [account]);
 
+  useEffect(() => {
+    if (!copied) return;
+    const t = window.setTimeout(() => setCopied(false), 1600);
+    return () => window.clearTimeout(t);
+  }, [copied]);
+
+  async function copyAddress() {
+    if (!account) return;
+    try {
+      await navigator.clipboard.writeText(account);
+      setCopied(true);
+    } catch {
+      /* clipboard blocked */
+    }
+  }
+
   if (account) {
+    const initials = account.slice(2, 4).toUpperCase();
+    const chain = chainId ? CHAINS[chainId] || "Chain " + chainId : "—";
+
     return (
       <div className="border border-line bg-surface p-8 sm:p-10">
         <p className="eyebrow">{justCreated ? "Account created" : "Signed in"}</p>
-        <h2 className="mt-4 flex items-center gap-3 text-[26px] leading-[1.15]">
-          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-paper/30">
-            <Check size={14} strokeWidth={2.4} />
-          </span>
-          {justCreated ? "Welcome to PLUCO." : "Welcome back."}
-        </h2>
-        <p className="mt-3 max-w-[42ch] text-[13px] leading-6 text-mute">
-          {justCreated
-            ? "This wallet now has an account. Mint, list or buy straight away — your collection deploys on your first mint."
-            : "Everything tied to this address is where you left it."}
-        </p>
 
-        <dl className="mt-7 grid gap-4 border-t border-line pt-6 text-sm">
-          <div className="flex items-center justify-between gap-4">
-            <dt className="text-mute">Account</dt>
-            <dd className="num">{shortAddress(account)}</dd>
+        <div className="mt-6 flex items-center gap-4">
+          <span
+            aria-hidden
+            className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-line-strong bg-ink text-[15px] font-medium tracking-[0.08em] text-paper"
+          >
+            {initials}
+          </span>
+          <div className="min-w-0">
+            <h2 className="text-[22px] leading-[1.2]">
+              {justCreated ? "Welcome to PLUCO." : "Welcome back."}
+            </h2>
+            <p className="mt-1 text-[12px] leading-5 text-mute">
+              {justCreated
+                ? "This address now has an account. Your collection deploys on your first mint."
+                : "Everything tied to this address is where you left it."}
+            </p>
           </div>
-          <div className="flex items-center justify-between gap-4">
+        </div>
+
+        <dl className="mt-7 grid gap-0 border-t border-line text-sm">
+          <div className="flex items-center justify-between gap-4 border-b border-line py-4">
+            <dt className="text-mute">Address</dt>
+            <dd className="flex items-center gap-2">
+              <span className="num">{shortAddress(account)}</span>
+              <button
+                type="button"
+                onClick={copyAddress}
+                aria-label="Copy address"
+                className="focus-ring inline-flex items-center gap-1 border border-line-strong px-2 py-1 text-[11px] text-mute transition hover:border-paper/40 hover:text-paper"
+              >
+                {copied ? <Check size={12} /> : <Copy size={12} />}
+                {copied ? "Copied" : "Copy"}
+              </button>
+            </dd>
+          </div>
+          <div className="flex items-center justify-between gap-4 border-b border-line py-4">
             <dt className="text-mute">Network</dt>
-            <dd className="num">{chainId ?? "—"}</dd>
+            <dd className="num">{chain}</dd>
           </div>
-          <div className="flex items-center justify-between gap-4">
-            <dt className="text-mute">Connection</dt>
-            <dd>{activeName || "WalletConnect"}</dd>
+          <div className="flex items-center justify-between gap-4 border-b border-line py-4">
+            <dt className="text-mute">{email ? "Email" : "Wallet"}</dt>
+            <dd className="truncate">{email || activeName || "WalletConnect"}</dd>
           </div>
         </dl>
 
@@ -108,20 +155,27 @@ export function AuthPanel() {
           >
             Start minting <ArrowRight size={14} />
           </a>
+          <button
+            type="button"
+            onClick={manageAccount}
+            className="focus-ring inline-flex h-11 items-center gap-2 rounded-full border border-line-strong px-5 text-[13px] text-paper transition hover:border-paper/40"
+          >
+            <Settings2 size={14} /> Manage account
+          </button>
           <a
             href={"https://basescan.org/address/" + account}
             target="_blank"
             rel="noreferrer"
-            className="focus-ring inline-flex h-11 items-center rounded-full px-5 text-[13px] text-mute underline-offset-4 hover:text-paper hover:underline"
+            className="focus-ring inline-flex h-11 items-center gap-2 rounded-full px-5 text-[13px] text-mute underline-offset-4 hover:text-paper hover:underline"
           >
-            View account on BaseScan
+            View on BaseScan <ExternalLink size={13} />
           </a>
           <button
             type="button"
             onClick={disconnect}
-            className="focus-ring inline-flex h-11 items-center rounded-full border border-line-strong px-5 text-[13px] text-paper transition hover:border-paper/40"
+            className="focus-ring inline-flex h-11 items-center gap-2 rounded-full border border-line-strong px-5 text-[13px] text-paper transition hover:border-paper/40"
           >
-            Sign out
+            <LogOut size={14} /> Sign out
           </button>
         </div>
       </div>
@@ -155,26 +209,42 @@ export function AuthPanel() {
       </h2>
       <p className="mt-3 max-w-[44ch] text-[13px] leading-6 text-mute">{COPY[mode]}</p>
 
-      <button
-        type="button"
-        onClick={() => connect()}
-        disabled={connecting || !hasWallet}
-        className="focus-ring mt-7 flex h-12 w-full items-center gap-3 border border-line-strong px-4 text-left text-[13px] font-medium text-paper transition hover:border-paper/40 hover:bg-paper/[.06] disabled:opacity-60"
-      >
-        <Wallet size={15} strokeWidth={1.75} />
-        <span className="flex-1">
-          {connecting
-            ? "Waiting for wallet…"
-            : mode === "create"
-              ? "Create account with a wallet"
-              : "Log in with a wallet"}
-        </span>
-        <ArrowRight size={14} className="text-faint" />
-      </button>
+      <div className="mt-7 grid gap-2">
+        <button
+          type="button"
+          onClick={() => connect()}
+          disabled={connecting || !hasWallet}
+          className="focus-ring flex h-12 items-center gap-3 border border-line-strong px-4 text-left text-[13px] font-medium text-paper transition hover:border-paper/40 hover:bg-paper/[.06] disabled:opacity-60"
+        >
+          <Wallet size={15} strokeWidth={1.75} />
+          <span className="flex-1">
+            {connecting
+              ? "Waiting for wallet…"
+              : mode === "create"
+                ? "Create account with a wallet"
+                : "Log in with a wallet"}
+          </span>
+          <ArrowRight size={14} className="text-faint" />
+        </button>
+
+        <button
+          type="button"
+          onClick={emailSignIn}
+          disabled={!hasWallet}
+          className="focus-ring flex h-12 items-center gap-3 border border-line-strong px-4 text-left text-[13px] font-medium text-paper transition hover:border-paper/40 hover:bg-paper/[.06] disabled:opacity-60"
+        >
+          <Mail size={15} strokeWidth={1.75} />
+          <span className="flex-1">
+            {mode === "create" ? "Continue with email" : "Log in with email"}
+          </span>
+          <ArrowRight size={14} className="text-faint" />
+        </button>
+      </div>
 
       <p className="mt-4 text-[12px] leading-6 text-faint">
-        MetaMask, Rabby, Coinbase Wallet, Phantom, Solflare or any WalletConnect wallet — extension on
-        desktop, QR or the wallet app on mobile.
+        The wallet window opens MetaMask, Rabby, Coinbase Wallet, Phantom, Solflare or any
+        WalletConnect wallet — extension on desktop, QR or the wallet app on mobile. With email,
+        a 6-digit code is sent to your inbox and you type it in the same window.
       </p>
 
       {error && <p className="mt-4 text-[12px] leading-6 text-gold">{error}</p>}
@@ -186,7 +256,8 @@ export function AuthPanel() {
       )}
 
       <p className="mt-6 border-t border-line pt-5 text-[12px] leading-6 text-faint">
-        No password to reset and no email to verify: the wallet signs, PLUCO only reads the address.
+        No password to reset: the wallet signs, or the emailed code proves the address. PLUCO only
+        reads the address and the email you sign in with.
       </p>
     </div>
   );
