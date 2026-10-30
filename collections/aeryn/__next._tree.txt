@@ -1,7 +1,7 @@
-:HL["/pluco/_next/static/chunks/38n65ns60g6gd.css","style"]
+:HL["/pluco/_next/static/chunks/2nh8c8gc73yw5.css","style"]
 :HL["/pluco/_next/static/media/07c7676b89ed2778-s.p.2bn3s6zvc0dyp.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/pluco/_next/static/media/237858b39a32779d-s.p.2cyn07wtgehh0.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 3:[["children",{"s":"__PAGE__","h":160}]]
 2:[["children",{"s":"aeryn","h":96,"c":"$Q3"}]]
 1:[["children",{"s":"collections","h":96,"c":"$Q2"}]]
-0:{"b":"AM3D2n0OQXc5yIo6P9GdH","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"clwfgzGFinmEFfseCDUtX","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
