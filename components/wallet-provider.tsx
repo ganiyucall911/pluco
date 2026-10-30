@@ -8,6 +8,15 @@ import {
   disconnectMetaMaskMultichain,
   restoreMetaMaskMultichain,
 } from "@/lib/metamask-multichain";
+import {
+  REOWN_ID,
+  REOWN_NAME,
+  connectReown,
+  disconnectReown,
+  reownConfigured,
+  restoreReown,
+  switchReownNetwork,
+} from "@/lib/reown";
 
 export const BASE_CHAIN_ID = 8453;
 export const BASE_CHAIN_HEX = "0x2105";
@@ -22,10 +31,13 @@ type Eth = {
   isCoinbaseWallet?: boolean;
 };
 
-declare global {
-  interface Window {
-    ethereum?: Eth;
-  }
+/**
+ * The legacy injected provider. Read through a cast because wallet SDKs already
+ * declare Window.ethereum with their own, incompatible type.
+ */
+function injected(): Eth | undefined {
+  if (typeof window === "undefined") return undefined;
+  return (window as unknown as { ethereum?: Eth }).ethereum;
 }
 
 export type WalletOption = {
@@ -110,6 +122,10 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       if (!list.some((o) => o.id === MM_ID)) {
         list.push({ id: MM_ID, name: MM_NAME });
       }
+      // Reown AppKit: one modal for every wallet (extension, mobile QR, Solana).
+      if (reownConfigured() && !list.some((o) => o.id === REOWN_ID)) {
+        list.push({ id: REOWN_ID, name: REOWN_NAME });
+      }
       setOptions(list);
       // MetaMask Connect always works, so a wallet is always available.
       setHasWallet(true);
@@ -134,14 +150,14 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     window.dispatchEvent(new Event("eip6963:requestProvider"));
 
     // Wallets that predate EIP-6963 still expose window.ethereum.
-    const legacy = typeof window !== "undefined" ? window.ethereum : undefined;
+    const legacy = injected();
     if (legacy && !found.size) {
       found.set("injected", { id: "injected", name: labelFor(legacy, "Browser wallet"), provider: legacy });
       commit();
     }
 
     const timer = setTimeout(() => {
-      const late = typeof window !== "undefined" ? window.ethereum : undefined;
+      const late = injected();
       if (late && !found.size) {
         found.set("injected", { id: "injected", name: labelFor(late, "Browser wallet"), provider: late });
         commit();
@@ -190,8 +206,14 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   // Ask the wallet to move to a chain, adding it first if the wallet has never seen it.
   const switchChain = useCallback(
     async (target: number) => {
-      const eth = activeProvider.current || (typeof window !== "undefined" ? window.ethereum : undefined);
+      const eth = activeProvider.current || injected();
       if (!eth) throw new Error("No wallet connected.");
+      // WalletConnect sessions switch network through AppKit, not wallet_switchEthereumChain.
+      if (activeName === REOWN_NAME) {
+        await switchReownNetwork(target);
+        setChainId(target);
+        return;
+      }
       const hex = "0x" + target.toString(16);
       const current = (await eth.request({ method: "eth_chainId" })) as string;
       if (parseInt(current, 16) === target) {
@@ -222,7 +244,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       }
       await readChain(eth);
     },
-    [readChain],
+    [activeName, readChain],
   );
 
   const switchToBase = useCallback(() => switchChain(BASE_CHAIN_ID), [switchChain]);
@@ -233,6 +255,37 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
 
       // No id given: prefer an injected wallet, otherwise MetaMask Connect.
       const wanted = id ?? options.find((o) => o.provider)?.id ?? MM_ID;
+
+      if (wanted === REOWN_ID) {
+        setConnecting(true);
+        try {
+          const { address, provider: rw } = await connectReown();
+          const eth = rw as unknown as Eth;
+          setAccount(address);
+          setActiveName(REOWN_NAME);
+          attach(eth);
+          localStorage.setItem(STORAGE_KEY, "1");
+          localStorage.setItem(NAME_KEY, REOWN_NAME);
+          await readChain(eth);
+          const current = parseInt((await eth.request({ method: "eth_chainId" })) as string, 16);
+          if (current !== BASE_CHAIN_ID) {
+            await switchReownNetwork(BASE_CHAIN_ID);
+            await readChain(eth);
+          }
+        } catch (e) {
+          const code = (e as { code?: number }).code;
+          setError(
+            code === 4001
+              ? "Wallet selection cancelled."
+              : e instanceof Error
+                ? e.message
+                : "Could not connect the wallet.",
+          );
+        } finally {
+          setConnecting(false);
+        }
+        return;
+      }
 
       if (wanted === MM_ID) {
         setConnecting(true);
@@ -267,11 +320,10 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
         return;
       }
 
+      const legacyEth = injected();
       const chosen =
         (id ? options.find((o) => o.id === id) : options[0]) ||
-        (typeof window !== "undefined" && window.ethereum
-          ? { id: "injected", name: labelFor(window.ethereum, "Browser wallet"), provider: window.ethereum }
-          : null);
+        (legacyEth ? { id: "injected", name: labelFor(legacyEth, "Browser wallet"), provider: legacyEth } : null);
 
       if (!chosen || !chosen.provider) {
         setError(
@@ -341,8 +393,27 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     };
   }, [attach, readChain]);
 
+  // Reown AppKit restores its own WalletConnect session.
+  useEffect(() => {
+    if (typeof window === "undefined" || localStorage.getItem(NAME_KEY) !== REOWN_NAME) return;
+    let cancelled = false;
+    restoreReown().then((res) => {
+      if (cancelled) return;
+      if (!res) return;
+      const eth = res.provider as unknown as Eth;
+      setAccount(res.address);
+      setActiveName(REOWN_NAME);
+      attach(eth);
+      readChain(eth);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [attach, readChain]);
+
   const disconnect = useCallback(() => {
     if (localStorage.getItem(NAME_KEY) === MM_NAME) void disconnectMetaMaskMultichain();
+    if (localStorage.getItem(NAME_KEY) === REOWN_NAME) void disconnectReown();
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(NAME_KEY);
     activeProvider.current = null;
