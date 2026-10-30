@@ -15,6 +15,7 @@ import type { AppKit } from "@reown/appkit";
 import { EthersAdapter } from "@reown/appkit-adapter-ethers";
 import { SolanaAdapter } from "@reown/appkit-adapter-solana";
 import { base, baseSepolia, solana } from "@reown/appkit/networks";
+import { ChainController, OptionsController, RouterController } from "@reown/appkit-controllers";
 
 export const REOWN_ID = "reown";
 export const REOWN_NAME = "WalletConnect / more wallets";
@@ -36,7 +37,18 @@ function metadata() {
   };
 }
 
-let modal: AppKit | null = null;
+    let modal: AppKit | null = null;
+
+/**
+ * PLUCO signs in with a wallet or an emailed code, never with a social account. The
+ * Reown dashboard can enable socials for the project and AppKit reads that flag from
+ * its remote config, so socials are cleared here and again when the config arrives.
+ */
+function hideSocials() {
+  const current = OptionsController.state.remoteFeatures ?? {};
+  if (!current.socials || current.socials.length === 0) return;
+  OptionsController.setRemoteFeatures({ ...current, socials: [] });
+}
 
 export function getReown(): AppKit | null {
   if (!reownConfigured() || typeof window === "undefined") return null;
@@ -48,10 +60,19 @@ export function getReown(): AppKit | null {
       metadata: metadata(),
       projectId: PROJECT_ID,
       themeMode: "dark",
-      features: { analytics: false, email: false, socials: false, swaps: false, onramp: false },
-    });
-  }
-  return modal;
+          features: {
+            analytics: false,
+            email: true,
+            emailShowWallets: true,
+            socials: false,
+            swaps: false,
+            onramp: false,
+          },
+      });
+      hideSocials();
+      OptionsController.subscribeKey("remoteFeatures", hideSocials);
+    }
+    return modal;
 }
 
 type Connected = { address: string; provider: unknown };
@@ -106,6 +127,39 @@ export function switchReownNetwork(chainId: number) {
   if (!appKit) return Promise.resolve();
   const target = chainId === baseSepolia.id ? baseSepolia : base;
   return appKit.switchNetwork(target, { throwOnFailure: false }).catch(() => undefined);
+}
+
+/** Open AppKit on its account view (send, receive, network, disconnect). */
+export function openAccountView() {
+  const appKit = getReown();
+  if (!appKit) return;
+  appKit.open({ view: "Account" }).catch(() => undefined);
+}
+
+/**
+ * Open AppKit straight on the email form: the user types an address, AppKit mails a
+ * 6-digit code and shows its own code-entry step. Falls back to the normal connect
+ * view if the email view is unavailable.
+ */
+export function openEmailLogin() {
+  const appKit = getReown();
+  if (!appKit) return;
+  try {
+    RouterController.push("EmailLogin");
+  } catch {
+    /* fall through to the connect view */
+  }
+  appKit.open().catch(() => undefined);
+}
+
+/** The email an email-login account was created with, if any. */
+export function getEmail(): string | null {
+  try {
+    const user = (ChainController.state as unknown as { user?: { email?: string | null } }).user;
+    return user?.email ?? null;
+  } catch {
+    return null;
+  }
 }
 
 export async function disconnectReown() {
