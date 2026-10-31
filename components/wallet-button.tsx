@@ -18,6 +18,7 @@ export function WalletButton({ className = "" }: { className?: string }) {
     clearError,
     hasWallet,
     adopt,
+    connect,
     reportError,
     error,
     namespace,
@@ -69,6 +70,10 @@ export function WalletButton({ className = "" }: { className?: string }) {
                 setOpen(false);
               }}
               onError={(message) => reportError(message)}
+              onOpenAll={() => {
+                setOpen(false);
+                void connect();
+              }}
             />
             <Link
               href="/connect"

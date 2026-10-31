@@ -16,7 +16,7 @@ import { EthersAdapter } from "@reown/appkit-adapter-ethers";
 import { SolanaAdapter } from "@reown/appkit-adapter-solana";
 import { BitcoinAdapter } from "@reown/appkit-adapter-bitcoin";
 import { base, baseSepolia, solana, bitcoin, bitcoinTestnet } from "@reown/appkit/networks";
-import { ChainController, RouterController } from "@reown/appkit-controllers";
+import { ChainController, ConnectorController, RouterController } from "@reown/appkit-controllers";
 
 export const REOWN_ID = "reown";
 export const REOWN_NAME = "WalletConnect / more wallets";
@@ -26,6 +26,43 @@ const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export function reownConfigured() {
   return Boolean(PROJECT_ID);
+}
+
+/**
+ * AppKit asks its Secure Site iframe for the login code over postMessage. When that
+ * iframe cannot load (origin not allowed for the project, third-party cookies blocked)
+ * the request never settles and the email form spins forever. Race it against a
+ * timeout so the user gets "Couldn't send the code" instead of an endless spinner.
+ */
+const EMAIL_TIMEOUT_MS = 20_000;
+const EMAIL_FAILED =
+  "Couldn't send the code. Check the address, or sign in with a wallet.";
+
+type EmailProvider = {
+  connectEmail?: (...args: never[]) => Promise<unknown>;
+  __plucoGuarded?: boolean;
+};
+
+export function guardEmailAuth() {
+  try {
+    const connector = ConnectorController.getAuthConnector() as unknown as
+      | { provider?: EmailProvider }
+      | undefined;
+    const provider = connector?.provider;
+    const original = provider?.connectEmail;
+    if (!provider || typeof original !== "function" || provider.__plucoGuarded) return;
+    provider.__plucoGuarded = true;
+
+    provider.connectEmail = (...args: never[]) =>
+      Promise.race([
+        original.apply(provider, args),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error(EMAIL_FAILED)), EMAIL_TIMEOUT_MS),
+        ),
+      ]);
+  } catch {
+    /* AppKit not initialised yet */
+  }
 }
 
 function metadata() {
@@ -61,6 +98,8 @@ export function getReown(): AppKit | null {
               },
       });
         }
+    guardEmailAuth();
+    ConnectorController.subscribeKey("connectors", () => guardEmailAuth());
     return modal;
 }
 
@@ -133,6 +172,7 @@ export function openAccountView() {
 export function openEmailLogin() {
   const appKit = getReown();
   if (!appKit) return;
+  guardEmailAuth();
   try {
     RouterController.push("EmailLogin");
   } catch {

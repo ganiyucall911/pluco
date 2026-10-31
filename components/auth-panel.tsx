@@ -47,6 +47,7 @@ export function AuthPanel() {
         email,
         adopt,
         reportError,
+        connect,
     emailSignIn,
     manageAccount,
     disconnect,
@@ -234,6 +235,7 @@ export function AuthPanel() {
         disabled={!hasWallet}
         onConnected={(address, ns, label) => adopt(address, ns, label)}
         onError={(message) => reportError(message)}
+        onOpenAll={() => void connect()}
       />
 
       <div className="mt-4 grid gap-2">

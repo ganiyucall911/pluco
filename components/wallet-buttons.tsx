@@ -19,6 +19,8 @@ type WalletId = "metamask" | "phantom" | "leather" | "walletConnect";
 type Props = {
   onConnected: (address: string, namespace: Namespace, label: string) => void;
   onError: (message: string) => void;
+  /** Opens the AppKit modal: QR for WalletConnect, any wallet, email and socials. */
+  onOpenAll?: () => void;
   disabled?: boolean;
   className?: string;
 };
@@ -36,7 +38,7 @@ function message(e: Error) {
   return raw || "Could not connect the wallet.";
 }
 
-export function WalletButtons({ onConnected, onError, disabled = false, className = "" }: Props) {
+export function WalletButtons({ onConnected, onError, onOpenAll, disabled = false, className = "" }: Props) {
   const [pending, setPending] = useState<WalletId | null>(null);
 
   const settle = useCallback(() => setPending(null), []);
@@ -79,6 +81,13 @@ export function WalletButtons({ onConnected, onError, disabled = false, classNam
 
   function pick(row: (typeof ROWS)[number]) {
     onError("");
+    // The wallet-button controller never resolves the QR for a bare WalletConnect
+    // request, so that row opens AppKit's own modal, which does.
+    if (row.id === "walletConnect" && onOpenAll) {
+      setPending(null);
+      onOpenAll();
+      return;
+    }
     setPending(row.id);
     const hook = row.namespace === "solana" ? solana : row.namespace === "bip122" ? bitcoin : evm;
     hook
