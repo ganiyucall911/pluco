@@ -13,18 +13,22 @@ import {
   REOWN_ID,
   REOWN_NAME,
   connectReown,
+  getReown,
   disconnectReown,
   getEmail,
   openAccountView,
   openEmailLogin,
   reownConfigured,
-  restoreReown,
+  restoreAnyReown,
   switchReownNetwork,
 } from "@/lib/reown";
 
 export const BASE_CHAIN_ID = 8453;
 export const BASE_CHAIN_HEX = "0x2105";
 export const BASE_SEPOLIA_CHAIN_ID = 84532;
+
+/** Chain namespaces PLUCO can sign in with, all through Reown AppKit. */
+export type Namespace = "eip155" | "solana" | "bip122";
 
 type Eth = {
   request: (args: { method: string; params?: unknown[] | object }) => Promise<unknown>;
@@ -49,9 +53,14 @@ type WalletState = {
   onBase: boolean;
   options: WalletOption[];
   activeName: string | null;
+  /** Namespace the current session was created in. */
+  namespace: Namespace | null;
   /** Address of an email-login account, when the user signed in with a code. */
   email: string | null;
   connect: (id?: string) => Promise<void>;
+  /** Adopt a session the Reown wallet button already established. */
+  adopt: (address: string, namespace: Namespace, label?: string) => void;
+  reportError: (message: string) => void;
   emailSignIn: () => void;
   manageAccount: () => void;
   disconnect: () => void;
@@ -75,6 +84,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const [activeName, setActiveName] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
+  const [namespace, setNamespace] = useState<Namespace | null>(null);
 
   const attach = useCallback((eth: Eth) => {
     setProvider(eth);
@@ -109,19 +119,25 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined" || !reownConfigured()) return;
     if (localStorage.getItem(NAME_KEY) !== REOWN_NAME) return;
-    let cancelled = false;
-    restoreReown().then((res) => {
-      if (cancelled || !res) return;
-      const eth = res.provider as unknown as Eth;
-      setAccount(res.address);
-      setActiveName(REOWN_NAME);
-      setEmail(getEmail());
-      attach(eth);
-      readChain(eth);
-    });
-    return () => {
-      cancelled = true;
-    };
+    const restored = restoreAnyReown();
+    if (!restored) return;
+    setAccount(restored.address);
+    setNamespace(restored.namespace);
+    setActiveName(
+      restored.namespace === "eip155"
+        ? REOWN_NAME
+        : restored.namespace === "solana"
+          ? "Solana"
+          : "Bitcoin",
+    );
+    setEmail(getEmail());
+    if (restored.namespace === "eip155") {
+      const eth = getReown()?.getWalletProvider() as unknown as Eth | undefined;
+      if (eth) {
+        attach(eth);
+        void readChain(eth);
+      }
+    }
   }, [attach, readChain]);
 
   const switchChain = useCallback(async (target: number) => {
@@ -142,6 +158,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       const { address, provider: rw } = await connectReown();
       const eth = rw as unknown as Eth;
       setAccount(address);
+      setNamespace("eip155");
       setActiveName(REOWN_NAME);
       attach(eth);
       localStorage.setItem(STORAGE_KEY, "1");
@@ -173,17 +190,61 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   }, [attach, readChain]);
 
   const disconnect = useCallback(() => {
-    void disconnectReown();
+    void disconnectReown(namespace ?? "eip155");
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(NAME_KEY);
     setAccount(null);
     setProvider(null);
     setChainId(null);
     setActiveName(null);
+    setNamespace(null);
     setEmail(null);
     setError(null);
-  }, []);
+  }, [namespace]);
 
+  const reportError = useCallback((message: string) => setError(message), []);
+
+  /** A session Reown established itself, from one of the wallet buttons. */
+  const adopt = useCallback(
+    (address: string, ns: Namespace, label?: string) => {
+      setError(null);
+      setAccount(address);
+      setNamespace(ns);
+      setActiveName(label ?? (ns === "eip155" ? REOWN_NAME : ns === "solana" ? "Solana" : "Bitcoin"));
+      try {
+        localStorage.setItem(STORAGE_KEY, "1");
+        localStorage.setItem(NAME_KEY, REOWN_NAME);
+      } catch {
+        /* storage blocked */
+      }
+      // AppKit fills the user record a moment after the account connects.
+      window.setTimeout(() => setEmail(getEmail()), 400);
+
+      if (ns !== "eip155") return;
+      const eth = getReown()?.getWalletProvider() as unknown as Eth | undefined;
+      if (!eth) return;
+      attach(eth);
+      void (async () => {
+        try {
+          const id = parseInt((await eth.request({ method: "eth_chainId" })) as string, 16);
+          setChainId(id);
+          if (id !== BASE_CHAIN_ID) {
+            await switchReownNetwork(BASE_CHAIN_ID);
+            await readChain(eth);
+          }
+        } catch {
+          /* keeps the chain it connected with */
+        }
+      })();
+    },
+    [attach, readChain],
+  );
+
+  /**
+   * AppKit sends the code itself, but when its secure-site request fails — project
+   * without email enabled, or the origin not allowed — the form spins forever. Watch
+   * the clock and say so instead.
+   */
   const emailSignIn = useCallback(() => {
     setError(null);
     if (!reownConfigured()) {
@@ -191,6 +252,20 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     openEmailLogin();
+    window.setTimeout(() => {
+      const appKit = getReown();
+      const connected = appKit
+        ? ["eip155", "solana", "bip122"].some((ns) => {
+            const account = appKit.getAccount(ns as "eip155");
+            return Boolean(account?.isConnected);
+          })
+        : false;
+      if (connected) return;
+      setError(
+        "Couldn't send the code. Email sign-in may not be enabled for this Reown project, or this site isn't an allowed origin in it.",
+      );
+      appKit?.close().catch(() => undefined);
+    }, 25000);
   }, []);
 
   const manageAccount = useCallback(() => openAccountView(), []);
@@ -208,8 +283,11 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       onBase: chainId === BASE_CHAIN_ID,
       options: OPTIONS,
       activeName,
+      namespace,
       email,
       connect,
+      adopt,
+      reportError,
       emailSignIn,
       manageAccount,
       disconnect,
@@ -224,8 +302,11 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       connecting,
       error,
       activeName,
+      namespace,
       email,
       connect,
+      adopt,
+      reportError,
       emailSignIn,
       manageAccount,
       disconnect,

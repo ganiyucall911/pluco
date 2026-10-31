@@ -14,8 +14,9 @@ import { createAppKit } from "@reown/appkit";
 import type { AppKit } from "@reown/appkit";
 import { EthersAdapter } from "@reown/appkit-adapter-ethers";
 import { SolanaAdapter } from "@reown/appkit-adapter-solana";
-import { base, baseSepolia, solana } from "@reown/appkit/networks";
-import { ChainController, OptionsController, RouterController } from "@reown/appkit-controllers";
+import { BitcoinAdapter } from "@reown/appkit-adapter-bitcoin";
+import { base, baseSepolia, solana, bitcoin, bitcoinTestnet } from "@reown/appkit/networks";
+import { ChainController, RouterController } from "@reown/appkit-controllers";
 
 export const REOWN_ID = "reown";
 export const REOWN_NAME = "WalletConnect / more wallets";
@@ -39,39 +40,27 @@ function metadata() {
 
     let modal: AppKit | null = null;
 
-/**
- * PLUCO signs in with a wallet or an emailed code, never with a social account. The
- * Reown dashboard can enable socials for the project and AppKit reads that flag from
- * its remote config, so socials are cleared here and again when the config arrives.
- */
-function hideSocials() {
-  const current = OptionsController.state.remoteFeatures ?? {};
-  if (!current.socials || current.socials.length === 0) return;
-  OptionsController.setRemoteFeatures({ ...current, socials: [] });
-}
-
 export function getReown(): AppKit | null {
   if (!reownConfigured() || typeof window === "undefined") return null;
   if (!modal) {
     modal = createAppKit({
-      adapters: [new EthersAdapter(), new SolanaAdapter()],
-      networks: [base, baseSepolia, solana],
+          adapters: [new EthersAdapter(), new SolanaAdapter(), new BitcoinAdapter()],
+          networks: [base, baseSepolia, solana, bitcoin, bitcoinTestnet],
       defaultNetwork: base,
       metadata: metadata(),
-      projectId: PROJECT_ID,
-      themeMode: "dark",
-          features: {
-            analytics: false,
-            email: true,
-            emailShowWallets: true,
-            socials: false,
-            swaps: false,
-            onramp: false,
-          },
+          projectId: PROJECT_ID,
+          allWallets: "SHOW",
+          themeMode: "dark",
+              features: {
+                analytics: false,
+                email: true,
+                emailShowWallets: true,
+                socials: ["google", "x", "github", "discord", "apple", "facebook", "farcaster"],
+                swaps: false,
+                onramp: false,
+              },
       });
-      hideSocials();
-      OptionsController.subscribeKey("remoteFeatures", hideSocials);
-    }
+        }
     return modal;
 }
 
@@ -162,12 +151,27 @@ export function getEmail(): string | null {
   }
 }
 
-export async function disconnectReown() {
+export type ReownNamespace = "eip155" | "solana" | "bip122";
+
+export async function disconnectReown(namespace: ReownNamespace = "eip155") {
   const appKit = getReown();
   if (!appKit) return;
   try {
-    await appKit.disconnect("eip155");
+    await appKit.disconnect(namespace);
   } catch {
     /* nothing to revoke */
   }
+}
+
+/** Pick up a session AppKit restored from storage, in any namespace. */
+export function restoreAnyReown(): { address: string; namespace: ReownNamespace } | null {
+  const appKit = getReown();
+  if (!appKit) return null;
+  for (const namespace of ["eip155", "solana", "bip122"] as ReownNamespace[]) {
+    const account = appKit.getAccount(namespace);
+    if (account?.isConnected && account.address) {
+      return { address: account.address, namespace };
+    }
+  }
+  return null;
 }

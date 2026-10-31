@@ -2,12 +2,26 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { Wallet, ChevronDown, LogOut, ExternalLink, AlertTriangle } from "lucide-react";
+import { Wallet, ChevronDown, LogOut, ExternalLink, AlertTriangle, Mail } from "lucide-react";
 import { useWallet, shortAddress } from "./wallet-provider";
+import { WalletButtons } from "./wallet-buttons";
 import { cn } from "@/lib/cn";
 
 export function WalletButton({ className = "" }: { className?: string }) {
-  const { account, connecting, onBase, switchToBase, disconnect, activeName, clearError } = useWallet();
+  const {
+    account,
+    connecting,
+    onBase,
+    switchToBase,
+    disconnect,
+    activeName,
+    clearError,
+    hasWallet,
+    adopt,
+    reportError,
+    error,
+    namespace,
+  } = useWallet();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -36,10 +50,37 @@ export function WalletButton({ className = "" }: { className?: string }) {
     }
 
     return (
-      <Link href="/connect" onClick={() => clearError()} className={cls}>
-        <Wallet size={14} strokeWidth={1.75} />
-        Log in
-      </Link>
+      <div className="relative" ref={ref}>
+        <button type="button" onClick={() => setOpen(!open)} className={cls}>
+          <Wallet size={14} strokeWidth={1.75} />
+          Log in
+          <ChevronDown size={13} strokeWidth={1.75} />
+        </button>
+
+        {open && (
+          <div className="absolute right-0 top-[52px] z-50 w-[300px] border border-line-strong bg-surface p-2 shadow-[0_24px_70px_rgba(0,0,0,.45)]">
+            <p className="px-2 pb-2 pt-1 text-[10px] uppercase tracking-[.2em] text-faint">
+              Create account or log in
+            </p>
+            <WalletButtons
+              disabled={!hasWallet}
+              onConnected={(address, ns, label) => {
+                adopt(address, ns, label);
+                setOpen(false);
+              }}
+              onError={(message) => reportError(message)}
+            />
+            <Link
+              href="/connect"
+              onClick={() => setOpen(false)}
+              className="mt-2 flex w-full items-center gap-2 border-t border-line px-3 py-2.5 text-[12px] text-body hover:bg-paper/[.06]"
+            >
+              <Mail size={13} /> Continue with email
+            </Link>
+            {error && <p className="px-3 pb-2 pt-1 text-[11px] leading-5 text-gold">{error}</p>}
+          </div>
+        )}
+      </div>
     );
   }
 
@@ -61,9 +102,10 @@ export function WalletButton({ className = "" }: { className?: string }) {
       {open && (
         <div className="absolute right-0 top-[52px] z-50 w-[248px] border border-line-strong bg-surface p-2 shadow-[0_24px_70px_rgba(0,0,0,.45)]">
           <p className="px-3 pb-2 pt-1 text-[10px] uppercase tracking-[.2em] text-faint">
-            {activeName || "Wallet"} · {onBase ? "Base" : "Wrong network"}
+            {activeName || "Wallet"} ·{" "}
+            {namespace === "solana" ? "Solana" : namespace === "bip122" ? "Bitcoin" : onBase ? "Base" : "Wrong network"}
           </p>
-          {!onBase && (
+          {namespace === "eip155" && !onBase && (
             <button
               type="button"
               onClick={() => switchToBase()}
