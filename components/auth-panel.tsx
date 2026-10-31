@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, Check, Copy, ExternalLink, LogOut, Mail, Settings2, Wallet, AlertTriangle } from "lucide-react";
 import { useWallet, shortAddress } from "./wallet-provider";
+import { WalletButtons } from "./wallet-buttons";
 import { cn } from "@/lib/cn";
 
 type Mode = "create" | "login";
@@ -41,9 +42,11 @@ export function AuthPanel() {
     error,
     hasWallet,
     onBase,
-    activeName,
-    email,
-    connect,
+        activeName,
+        namespace,
+        email,
+        adopt,
+        reportError,
     emailSignIn,
     manageAccount,
     disconnect,
@@ -88,7 +91,20 @@ export function AuthPanel() {
 
   if (account) {
     const initials = account.slice(2, 4).toUpperCase();
-    const chain = chainId ? CHAINS[chainId] || "Chain " + chainId : "—";
+    const chain = chainId
+      ? CHAINS[chainId] || "Chain " + chainId
+      : namespace === "solana"
+        ? "Solana"
+        : namespace === "bip122"
+          ? "Bitcoin"
+          : "—";
+    const explorer =
+      namespace === "solana"
+        ? "https://solscan.io/account/" + account
+        : namespace === "bip122"
+          ? "https://mempool.space/address/" + account
+          : "https://basescan.org/address/" + account;
+    const explorerName = namespace === "solana" ? "Solscan" : namespace === "bip122" ? "mempool.space" : "BaseScan";
 
     return (
       <div className="border border-line bg-surface p-8 sm:p-10">
@@ -140,7 +156,7 @@ export function AuthPanel() {
         </dl>
 
         <div className="mt-8 flex flex-wrap gap-3">
-          {!onBase && (
+          {namespace === "eip155" && !onBase && (
             <button
               type="button"
               onClick={() => switchToBase()}
@@ -163,12 +179,12 @@ export function AuthPanel() {
             <Settings2 size={14} /> Manage account
           </button>
           <a
-            href={"https://basescan.org/address/" + account}
+            href={explorer}
             target="_blank"
             rel="noreferrer"
             className="focus-ring inline-flex h-11 items-center gap-2 rounded-full px-5 text-[13px] text-mute underline-offset-4 hover:text-paper hover:underline"
           >
-            View on BaseScan <ExternalLink size={13} />
+            View on {explorerName} <ExternalLink size={13} />
           </a>
           <button
             type="button"
@@ -209,24 +225,18 @@ export function AuthPanel() {
       </h2>
       <p className="mt-3 max-w-[44ch] text-[13px] leading-6 text-mute">{COPY[mode]}</p>
 
-      <div className="mt-7 grid gap-2">
-        <button
-          type="button"
-          onClick={() => connect()}
-          disabled={connecting || !hasWallet}
-          className="focus-ring flex h-12 items-center gap-3 border border-line-strong px-4 text-left text-[13px] font-medium text-paper transition hover:border-paper/40 hover:bg-paper/[.06] disabled:opacity-60"
-        >
-          <Wallet size={15} strokeWidth={1.75} />
-          <span className="flex-1">
-            {connecting
-              ? "Waiting for wallet…"
-              : mode === "create"
-                ? "Create account with a wallet"
-                : "Log in with a wallet"}
-          </span>
-          <ArrowRight size={14} className="text-faint" />
-        </button>
+      <p className="mt-7 text-[10px] uppercase tracking-[.2em] text-faint">
+        {mode === "create" ? "Create with a wallet" : "Log in with a wallet"}
+      </p>
 
+      <WalletButtons
+        className="mt-3"
+        disabled={!hasWallet}
+        onConnected={(address, ns, label) => adopt(address, ns, label)}
+        onError={(message) => reportError(message)}
+      />
+
+      <div className="mt-4 grid gap-2">
         <button
           type="button"
           onClick={emailSignIn}
@@ -242,9 +252,9 @@ export function AuthPanel() {
       </div>
 
       <p className="mt-4 text-[12px] leading-6 text-faint">
-        The wallet window opens MetaMask, Rabby, Coinbase Wallet, Phantom, Solflare or any
-        WalletConnect wallet — extension on desktop, QR or the wallet app on mobile. With email,
-        a 6-digit code is sent to your inbox and you type it in the same window.
+        MetaMask signs on Base, Phantom on Solana, Leather on Bitcoin; WalletConnect opens a QR
+        or the wallet app for anything else. With email, a 6-digit code is sent to your inbox
+        and you type it in the same window.
       </p>
 
       {error && <p className="mt-4 text-[12px] leading-6 text-gold">{error}</p>}
