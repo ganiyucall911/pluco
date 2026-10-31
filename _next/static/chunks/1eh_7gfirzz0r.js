@@ -71,12 +71,12 @@
     display: block;
     width: inherit;
   }
-`;var w=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n};let m=class extends t.f{constructor(){super(),this.unsubscribe=[],this.viewState=o.f.state.view,this.history=o.f.state.history.join(","),this.unsubscribe.push(o.f.subscribeKey("view",()=>{this.history=o.f.state.history.join(","),document.documentElement.style.setProperty("--apkt-duration-dynamic","var(--apkt-durations-lg)")}))}disconnectedCallback(){this.unsubscribe.forEach(e=>e()),document.documentElement.style.setProperty("--apkt-duration-dynamic","0s")}render(){return i.c`${this.templatePageContainer()}`}templatePageContainer(){return i.c`<w3m-router-container
+`;var m=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n};let w=class extends t.f{constructor(){super(),this.unsubscribe=[],this.viewState=o.f.state.view,this.history=o.f.state.history.join(","),this.unsubscribe.push(o.f.subscribeKey("view",()=>{this.history=o.f.state.history.join(","),document.documentElement.style.setProperty("--apkt-duration-dynamic","var(--apkt-durations-lg)")}))}disconnectedCallback(){this.unsubscribe.forEach(e=>e()),document.documentElement.style.setProperty("--apkt-duration-dynamic","0s")}render(){return i.c`${this.templatePageContainer()}`}templatePageContainer(){return i.c`<w3m-router-container
       history=${this.history}
       .setView=${()=>{this.viewState=o.f.state.view}}
     >
       ${this.viewTemplate(this.viewState)}
-    </w3m-router-container>`}viewTemplate(e){switch(e){case"AccountSettings":return i.c`<w3m-account-settings-view></w3m-account-settings-view>`;case"Account":return i.c`<w3m-account-view></w3m-account-view>`;case"AllWallets":return i.c`<w3m-all-wallets-view></w3m-all-wallets-view>`;case"ApproveTransaction":return i.c`<w3m-approve-transaction-view></w3m-approve-transaction-view>`;case"BuyInProgress":return i.c`<w3m-buy-in-progress-view></w3m-buy-in-progress-view>`;case"ChooseAccountName":return i.c`<w3m-choose-account-name-view></w3m-choose-account-name-view>`;case"Connect":default:return i.c`<w3m-connect-view></w3m-connect-view>`;case"Create":return i.c`<w3m-connect-view walletGuide="explore"></w3m-connect-view>`;case"ConnectingWalletConnect":return i.c`<w3m-connecting-wc-view></w3m-connecting-wc-view>`;case"ConnectingWalletConnectBasic":return i.c`<w3m-connecting-wc-basic-view></w3m-connecting-wc-basic-view>`;case"ConnectingExternal":return i.c`<w3m-connecting-external-view></w3m-connecting-external-view>`;case"ConnectingSiwe":return i.c`<w3m-connecting-siwe-view></w3m-connecting-siwe-view>`;case"ConnectWallets":return i.c`<w3m-connect-wallets-view></w3m-connect-wallets-view>`;case"ConnectSocials":return i.c`<w3m-connect-socials-view></w3m-connect-socials-view>`;case"ConnectingSocial":return i.c`<w3m-connecting-social-view></w3m-connecting-social-view>`;case"DataCapture":return i.c`<w3m-data-capture-view></w3m-data-capture-view>`;case"DataCaptureOtpConfirm":return i.c`<w3m-data-capture-otp-confirm-view></w3m-data-capture-otp-confirm-view>`;case"Downloads":return i.c`<w3m-downloads-view></w3m-downloads-view>`;case"EmailLogin":return i.c`<w3m-email-login-view></w3m-email-login-view>`;case"EmailVerifyOtp":return i.c`<w3m-email-verify-otp-view></w3m-email-verify-otp-view>`;case"EmailVerifyDevice":return i.c`<w3m-email-verify-device-view></w3m-email-verify-device-view>`;case"GetWallet":return i.c`<w3m-get-wallet-view></w3m-get-wallet-view>`;case"Networks":return i.c`<w3m-networks-view></w3m-networks-view>`;case"SwitchNetwork":return i.c`<w3m-network-switch-view></w3m-network-switch-view>`;case"ProfileWallets":return i.c`<w3m-profile-wallets-view></w3m-profile-wallets-view>`;case"Transactions":return i.c`<w3m-transactions-view></w3m-transactions-view>`;case"OnRampProviders":return i.c`<w3m-onramp-providers-view></w3m-onramp-providers-view>`;case"OnRampTokenSelect":return i.c`<w3m-onramp-token-select-view></w3m-onramp-token-select-view>`;case"OnRampFiatSelect":return i.c`<w3m-onramp-fiat-select-view></w3m-onramp-fiat-select-view>`;case"UpgradeEmailWallet":return i.c`<w3m-upgrade-wallet-view></w3m-upgrade-wallet-view>`;case"UpdateEmailWallet":return i.c`<w3m-update-email-wallet-view></w3m-update-email-wallet-view>`;case"UpdateEmailPrimaryOtp":return i.c`<w3m-update-email-primary-otp-view></w3m-update-email-primary-otp-view>`;case"UpdateEmailSecondaryOtp":return i.c`<w3m-update-email-secondary-otp-view></w3m-update-email-secondary-otp-view>`;case"UnsupportedChain":return i.c`<w3m-unsupported-chain-view></w3m-unsupported-chain-view>`;case"Swap":return i.c`<w3m-swap-view></w3m-swap-view>`;case"SwapSelectToken":return i.c`<w3m-swap-select-token-view></w3m-swap-select-token-view>`;case"SwapPreview":return i.c`<w3m-swap-preview-view></w3m-swap-preview-view>`;case"WalletSend":return i.c`<w3m-wallet-send-view></w3m-wallet-send-view>`;case"WalletSendSelectToken":return i.c`<w3m-wallet-send-select-token-view></w3m-wallet-send-select-token-view>`;case"WalletSendPreview":return i.c`<w3m-wallet-send-preview-view></w3m-wallet-send-preview-view>`;case"WalletSendConfirmed":return i.c`<w3m-send-confirmed-view></w3m-send-confirmed-view>`;case"WhatIsABuy":return i.c`<w3m-what-is-a-buy-view></w3m-what-is-a-buy-view>`;case"WalletReceive":return i.c`<w3m-wallet-receive-view></w3m-wallet-receive-view>`;case"WalletCompatibleNetworks":return i.c`<w3m-wallet-compatible-networks-view></w3m-wallet-compatible-networks-view>`;case"WhatIsAWallet":return i.c`<w3m-what-is-a-wallet-view></w3m-what-is-a-wallet-view>`;case"ConnectingMultiChain":return i.c`<w3m-connecting-multi-chain-view></w3m-connecting-multi-chain-view>`;case"WhatIsANetwork":return i.c`<w3m-what-is-a-network-view></w3m-what-is-a-network-view>`;case"ConnectingFarcaster":return i.c`<w3m-connecting-farcaster-view></w3m-connecting-farcaster-view>`;case"SwitchActiveChain":return i.c`<w3m-switch-active-chain-view></w3m-switch-active-chain-view>`;case"RegisterAccountName":return i.c`<w3m-register-account-name-view></w3m-register-account-name-view>`;case"RegisterAccountNameSuccess":return i.c`<w3m-register-account-name-success-view></w3m-register-account-name-success-view>`;case"SmartSessionCreated":return i.c`<w3m-smart-session-created-view></w3m-smart-session-created-view>`;case"SmartSessionList":return i.c`<w3m-smart-session-list-view></w3m-smart-session-list-view>`;case"SIWXSignMessage":return i.c`<w3m-siwx-sign-message-view></w3m-siwx-sign-message-view>`;case"Pay":return i.c`<w3m-pay-view></w3m-pay-view>`;case"PayLoading":return i.c`<w3m-pay-loading-view></w3m-pay-loading-view>`;case"PayQuote":return i.c`<w3m-pay-quote-view></w3m-pay-quote-view>`;case"FundWallet":return i.c`<w3m-fund-wallet-view></w3m-fund-wallet-view>`;case"PayWithExchange":return i.c`<w3m-deposit-from-exchange-view></w3m-deposit-from-exchange-view>`;case"PayWithExchangeSelectAsset":return i.c`<w3m-deposit-from-exchange-select-asset-view></w3m-deposit-from-exchange-select-asset-view>`;case"UsageExceeded":return i.c`<w3m-usage-exceeded-view></w3m-usage-exceeded-view>`;case"SmartAccountSettings":return i.c`<w3m-smart-account-settings-view></w3m-smart-account-settings-view>`}}};m.styles=[h],w([(0,r.f)()],m.prototype,"viewState",void 0),w([(0,r.f)()],m.prototype,"history",void 0),m=w([(0,a.f)("w3m-router")],m),e.s(["W3mRouter",0,m],465487)},225416,803596,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(56350),o=e.i(82283);e.i(404041);var a=e.i(645975);e.i(62238),e.i(249536);var n=t;e.i(852634),e.i(839009),e.i(73944);var s=e.i(459088),c=e.i(162611);let l=c.m`
+    </w3m-router-container>`}viewTemplate(e){switch(e){case"AccountSettings":return i.c`<w3m-account-settings-view></w3m-account-settings-view>`;case"Account":return i.c`<w3m-account-view></w3m-account-view>`;case"AllWallets":return i.c`<w3m-all-wallets-view></w3m-all-wallets-view>`;case"ApproveTransaction":return i.c`<w3m-approve-transaction-view></w3m-approve-transaction-view>`;case"BuyInProgress":return i.c`<w3m-buy-in-progress-view></w3m-buy-in-progress-view>`;case"ChooseAccountName":return i.c`<w3m-choose-account-name-view></w3m-choose-account-name-view>`;case"Connect":default:return i.c`<w3m-connect-view></w3m-connect-view>`;case"Create":return i.c`<w3m-connect-view walletGuide="explore"></w3m-connect-view>`;case"ConnectingWalletConnect":return i.c`<w3m-connecting-wc-view></w3m-connecting-wc-view>`;case"ConnectingWalletConnectBasic":return i.c`<w3m-connecting-wc-basic-view></w3m-connecting-wc-basic-view>`;case"ConnectingExternal":return i.c`<w3m-connecting-external-view></w3m-connecting-external-view>`;case"ConnectingSiwe":return i.c`<w3m-connecting-siwe-view></w3m-connecting-siwe-view>`;case"ConnectWallets":return i.c`<w3m-connect-wallets-view></w3m-connect-wallets-view>`;case"ConnectSocials":return i.c`<w3m-connect-socials-view></w3m-connect-socials-view>`;case"ConnectingSocial":return i.c`<w3m-connecting-social-view></w3m-connecting-social-view>`;case"DataCapture":return i.c`<w3m-data-capture-view></w3m-data-capture-view>`;case"DataCaptureOtpConfirm":return i.c`<w3m-data-capture-otp-confirm-view></w3m-data-capture-otp-confirm-view>`;case"Downloads":return i.c`<w3m-downloads-view></w3m-downloads-view>`;case"EmailLogin":return i.c`<w3m-email-login-view></w3m-email-login-view>`;case"EmailVerifyOtp":return i.c`<w3m-email-verify-otp-view></w3m-email-verify-otp-view>`;case"EmailVerifyDevice":return i.c`<w3m-email-verify-device-view></w3m-email-verify-device-view>`;case"GetWallet":return i.c`<w3m-get-wallet-view></w3m-get-wallet-view>`;case"Networks":return i.c`<w3m-networks-view></w3m-networks-view>`;case"SwitchNetwork":return i.c`<w3m-network-switch-view></w3m-network-switch-view>`;case"ProfileWallets":return i.c`<w3m-profile-wallets-view></w3m-profile-wallets-view>`;case"Transactions":return i.c`<w3m-transactions-view></w3m-transactions-view>`;case"OnRampProviders":return i.c`<w3m-onramp-providers-view></w3m-onramp-providers-view>`;case"OnRampTokenSelect":return i.c`<w3m-onramp-token-select-view></w3m-onramp-token-select-view>`;case"OnRampFiatSelect":return i.c`<w3m-onramp-fiat-select-view></w3m-onramp-fiat-select-view>`;case"UpgradeEmailWallet":return i.c`<w3m-upgrade-wallet-view></w3m-upgrade-wallet-view>`;case"UpdateEmailWallet":return i.c`<w3m-update-email-wallet-view></w3m-update-email-wallet-view>`;case"UpdateEmailPrimaryOtp":return i.c`<w3m-update-email-primary-otp-view></w3m-update-email-primary-otp-view>`;case"UpdateEmailSecondaryOtp":return i.c`<w3m-update-email-secondary-otp-view></w3m-update-email-secondary-otp-view>`;case"UnsupportedChain":return i.c`<w3m-unsupported-chain-view></w3m-unsupported-chain-view>`;case"Swap":return i.c`<w3m-swap-view></w3m-swap-view>`;case"SwapSelectToken":return i.c`<w3m-swap-select-token-view></w3m-swap-select-token-view>`;case"SwapPreview":return i.c`<w3m-swap-preview-view></w3m-swap-preview-view>`;case"WalletSend":return i.c`<w3m-wallet-send-view></w3m-wallet-send-view>`;case"WalletSendSelectToken":return i.c`<w3m-wallet-send-select-token-view></w3m-wallet-send-select-token-view>`;case"WalletSendPreview":return i.c`<w3m-wallet-send-preview-view></w3m-wallet-send-preview-view>`;case"WalletSendConfirmed":return i.c`<w3m-send-confirmed-view></w3m-send-confirmed-view>`;case"WhatIsABuy":return i.c`<w3m-what-is-a-buy-view></w3m-what-is-a-buy-view>`;case"WalletReceive":return i.c`<w3m-wallet-receive-view></w3m-wallet-receive-view>`;case"WalletCompatibleNetworks":return i.c`<w3m-wallet-compatible-networks-view></w3m-wallet-compatible-networks-view>`;case"WhatIsAWallet":return i.c`<w3m-what-is-a-wallet-view></w3m-what-is-a-wallet-view>`;case"ConnectingMultiChain":return i.c`<w3m-connecting-multi-chain-view></w3m-connecting-multi-chain-view>`;case"WhatIsANetwork":return i.c`<w3m-what-is-a-network-view></w3m-what-is-a-network-view>`;case"ConnectingFarcaster":return i.c`<w3m-connecting-farcaster-view></w3m-connecting-farcaster-view>`;case"SwitchActiveChain":return i.c`<w3m-switch-active-chain-view></w3m-switch-active-chain-view>`;case"RegisterAccountName":return i.c`<w3m-register-account-name-view></w3m-register-account-name-view>`;case"RegisterAccountNameSuccess":return i.c`<w3m-register-account-name-success-view></w3m-register-account-name-success-view>`;case"SmartSessionCreated":return i.c`<w3m-smart-session-created-view></w3m-smart-session-created-view>`;case"SmartSessionList":return i.c`<w3m-smart-session-list-view></w3m-smart-session-list-view>`;case"SIWXSignMessage":return i.c`<w3m-siwx-sign-message-view></w3m-siwx-sign-message-view>`;case"Pay":return i.c`<w3m-pay-view></w3m-pay-view>`;case"PayLoading":return i.c`<w3m-pay-loading-view></w3m-pay-loading-view>`;case"PayQuote":return i.c`<w3m-pay-quote-view></w3m-pay-quote-view>`;case"FundWallet":return i.c`<w3m-fund-wallet-view></w3m-fund-wallet-view>`;case"PayWithExchange":return i.c`<w3m-deposit-from-exchange-view></w3m-deposit-from-exchange-view>`;case"PayWithExchangeSelectAsset":return i.c`<w3m-deposit-from-exchange-select-asset-view></w3m-deposit-from-exchange-select-asset-view>`;case"UsageExceeded":return i.c`<w3m-usage-exceeded-view></w3m-usage-exceeded-view>`;case"SmartAccountSettings":return i.c`<w3m-smart-account-settings-view></w3m-smart-account-settings-view>`}}};w.styles=[h],m([(0,r.f)()],w.prototype,"viewState",void 0),m([(0,r.f)()],w.prototype,"history",void 0),w=m([(0,a.f)("w3m-router")],w),e.s(["W3mRouter",0,w],465487)},225416,803596,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(56350),o=e.i(82283);e.i(404041);var a=e.i(645975);e.i(62238),e.i(249536);var n=t;e.i(852634),e.i(839009),e.i(73944);var s=e.i(459088),c=e.i(162611);let l=c.m`
   .reown-logo {
     height: 24px;
   }
@@ -156,19 +156,19 @@
     `:null}howDoesItWorkTemplate(){return i.c` <wui-link @click=${this.onWhatIsBuy.bind(this)}>
       <wui-icon size="xs" color="accent-primary" slot="iconLeft" name="helpCircle"></wui-icon>
       How does it work?
-    </wui-link>`}onWhatIsBuy(){o.f.sendEvent({type:"track",event:"SELECT_WHAT_IS_A_BUY",properties:{isSmartAccount:(0,s.P)(r.f.state.activeChain)===l.P.ACCOUNT_TYPES.SMART_ACCOUNT}}),n.f.push("WhatIsABuy")}};p.styles=[u],p=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n}([(0,c.f)("w3m-onramp-providers-footer")],p),e.s([],550230)},741611,748449,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119),o=e.i(56350),a=e.i(803468),n=e.i(221728),s=e.i(365801),c=e.i(742710),l=e.i(592279);let d=(0,s.s)({message:"",open:!1,triggerRect:{width:0,height:0,top:0,left:0},variant:"shade"}),u=(0,l.O)({state:d,subscribe:e=>(0,s.i)(d,()=>e(d)),subscribeKey:(e,t)=>(0,c.T)(d,e,t),showTooltip({message:e,triggerRect:t,variant:i}){d.open=!0,d.message=e,d.triggerRect=t,d.variant=i},hide(){d.open=!1,d.message="",d.triggerRect={width:0,height:0,top:0,left:0}}});e.i(404041);var p=e.i(645975),h=e.i(315193);let w=h.m`
+    </wui-link>`}onWhatIsBuy(){o.f.sendEvent({type:"track",event:"SELECT_WHAT_IS_A_BUY",properties:{isSmartAccount:(0,s.P)(r.f.state.activeChain)===l.P.ACCOUNT_TYPES.SMART_ACCOUNT}}),n.f.push("WhatIsABuy")}};p.styles=[u],p=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n}([(0,c.f)("w3m-onramp-providers-footer")],p),e.s([],550230)},741611,748449,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119),o=e.i(56350),a=e.i(803468),n=e.i(221728),s=e.i(365801),c=e.i(742710),l=e.i(592279);let d=(0,s.s)({message:"",open:!1,triggerRect:{width:0,height:0,top:0,left:0},variant:"shade"}),u=(0,l.O)({state:d,subscribe:e=>(0,s.i)(d,()=>e(d)),subscribeKey:(e,t)=>(0,c.T)(d,e,t),showTooltip({message:e,triggerRect:t,variant:i}){d.open=!0,d.message=e,d.triggerRect=t,d.variant=i},hide(){d.open=!1,d.message="",d.triggerRect={width:0,height:0,top:0,left:0}}});e.i(404041);var p=e.i(645975),h=e.i(315193);let m=h.m`
   :host {
     width: 100%;
     display: block;
   }
-`;var m=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n};let g=class extends t.f{constructor(){super(),this.unsubscribe=[],this.text="",this.open=u.state.open,this.unsubscribe.push(n.f.subscribeKey("view",()=>{u.hide()}),a.f.subscribeKey("open",e=>{e||u.hide()}),u.subscribeKey("open",e=>{this.open=e}))}disconnectedCallback(){this.unsubscribe.forEach(e=>e()),u.hide()}render(){return i.c`
+`;var w=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n};let g=class extends t.f{constructor(){super(),this.unsubscribe=[],this.text="",this.open=u.state.open,this.unsubscribe.push(n.f.subscribeKey("view",()=>{u.hide()}),a.f.subscribeKey("open",e=>{e||u.hide()}),u.subscribeKey("open",e=>{this.open=e}))}disconnectedCallback(){this.unsubscribe.forEach(e=>e()),u.hide()}render(){return i.c`
       <div
         @pointermove=${this.onMouseEnter.bind(this)}
         @pointerleave=${this.onMouseLeave.bind(this)}
       >
         ${this.renderChildren()}
       </div>
-    `}renderChildren(){return i.c`<slot></slot> `}onMouseEnter(){let e=this.getBoundingClientRect();if(!this.open){let t=document.querySelector("w3m-modal"),i={width:e.width,height:e.height,left:e.left,top:e.top};if(t){let r=t.getBoundingClientRect();i.left=e.left-(window.innerWidth-r.width)/2,i.top=e.top-(window.innerHeight-r.height)/2}u.showTooltip({message:this.text,triggerRect:i,variant:"shade"})}}onMouseLeave(e){this.contains(e.relatedTarget)||u.hide()}};g.styles=[w],m([(0,r.f)()],g.prototype,"text",void 0),m([(0,o.f)()],g.prototype,"open",void 0),g=m([(0,p.f)("w3m-tooltip-trigger")],g),e.s([],741611);var f=t;e.i(62238),e.i(443452),e.i(249536);var v=e.i(162611);let b=v.m`
+    `}renderChildren(){return i.c`<slot></slot> `}onMouseEnter(){let e=this.getBoundingClientRect();if(!this.open){let t=document.querySelector("w3m-modal"),i={width:e.width,height:e.height,left:e.left,top:e.top};if(t){let r=t.getBoundingClientRect();i.left=e.left-(window.innerWidth-r.width)/2,i.top=e.top-(window.innerHeight-r.height)/2}u.showTooltip({message:this.text,triggerRect:i,variant:"shade"})}}onMouseLeave(e){this.contains(e.relatedTarget)||u.hide()}};g.styles=[m],w([(0,r.f)()],g.prototype,"text",void 0),w([(0,o.f)()],g.prototype,"open",void 0),g=w([(0,p.f)("w3m-tooltip-trigger")],g),e.s([],741611);var f=t;e.i(62238),e.i(443452),e.i(249536);var v=e.i(162611);let b=v.m`
   :host {
     pointer-events: none;
   }
@@ -255,7 +255,7 @@
     `,i.c`<wui-flex>
       <wui-icon data-placement="top" size="inherit" name="cursor"></wui-icon>
       <wui-text color="primary" variant="sm-regular">${this.message}</wui-text>
-    </wui-flex>`}};x.styles=[b],y([(0,o.f)()],x.prototype,"open",void 0),y([(0,o.f)()],x.prototype,"message",void 0),y([(0,o.f)()],x.prototype,"triggerRect",void 0),y([(0,o.f)()],x.prototype,"variant",void 0),x=y([(0,p.f)("w3m-tooltip")],x),e.s([],748449)},542904,e=>{var t=e.i(247167);let i={ACCOUNT_TABS:[{label:"Tokens"},{label:"Activity"}],SECURE_SITE_ORIGIN:(void 0!==t.default&&void 0!==t.default.env?t.default.env.NEXT_PUBLIC_SECURE_SITE_ORIGIN:void 0)||"https://secure.walletconnect.org",VIEW_DIRECTION:{Next:"next",Prev:"prev"},ANIMATION_DURATIONS:{HeaderText:120,ModalHeight:150,ViewTransition:150},VIEWS_WITH_LEGAL_FOOTER:["Connect","ConnectWallets","OnRampTokenSelect","OnRampFiatSelect","OnRampProviders"],VIEWS_WITH_DEFAULT_FOOTER:["Networks"]};e.s(["f",0,i])},305840,e=>{var t=e.i(401564),i=e.i(82283),r=e.i(221728),o=e.i(542904);e.s(["f",0,{getTabsByNamespace:e=>e&&e===t.f.CHAIN.EVM?i.f.state.remoteFeatures?.activity===!1?o.f.ACCOUNT_TABS.filter(e=>"Activity"!==e.label):o.f.ACCOUNT_TABS:[],isValidReownName:e=>/^[a-zA-Z0-9]+$/gu.test(e),isValidEmail:e=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/gu.test(e),validateReownName:e=>e.replace(/\^/gu,"").toLowerCase().replace(/[^a-zA-Z0-9]/gu,""),hasFooter(){let e=r.f.state.view;if(o.f.VIEWS_WITH_LEGAL_FOOTER.includes(e)){let{termsConditionsUrl:e,privacyPolicyUrl:t}=i.f.state,r=i.f.state.features?.legalCheckbox;return(!!e||!!t)&&!r}return o.f.VIEWS_WITH_DEFAULT_FOOTER.includes(e)}}])},534420,624947,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119);e.i(852634),e.i(383227),e.i(839009);var o=e.i(459088),a=e.i(645975),n=e.i(162611);let s=n.m`
+    </wui-flex>`}};x.styles=[b],y([(0,o.f)()],x.prototype,"open",void 0),y([(0,o.f)()],x.prototype,"message",void 0),y([(0,o.f)()],x.prototype,"triggerRect",void 0),y([(0,o.f)()],x.prototype,"variant",void 0),x=y([(0,p.f)("w3m-tooltip")],x),e.s([],748449)},534420,624947,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119);e.i(852634),e.i(383227),e.i(839009);var o=e.i(459088),a=e.i(645975),n=e.i(162611);let s=n.m`
   :host {
     width: var(--local-width);
   }
@@ -406,7 +406,41 @@
         </wui-text>
         <slot name="iconRight"></slot>
       </button>
-    `}loadingTemplate(){if(this.loading){let e=d[this.size],t="neutral-primary"===this.variant||"accent-primary"===this.variant?"invert":"primary";return i.c`<wui-loading-spinner color=${t} size=${e}></wui-loading-spinner>`}return null}};u.styles=[o.e,o.j,s],c([(0,r.f)()],u.prototype,"size",void 0),c([(0,r.f)({type:Boolean})],u.prototype,"disabled",void 0),c([(0,r.f)({type:Boolean})],u.prototype,"fullWidth",void 0),c([(0,r.f)({type:Boolean})],u.prototype,"loading",void 0),c([(0,r.f)()],u.prototype,"variant",void 0),c([(0,r.f)()],u.prototype,"textVariant",void 0),u=c([(0,a.f)("wui-button")],u),e.s([],624947),e.s([],534420)},907170,695553,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119);e.i(852634);var o=e.i(459088),a=e.i(645975),n=e.i(162611);let s=n.m`
+    `}loadingTemplate(){if(this.loading){let e=d[this.size],t="neutral-primary"===this.variant||"accent-primary"===this.variant?"invert":"primary";return i.c`<wui-loading-spinner color=${t} size=${e}></wui-loading-spinner>`}return null}};u.styles=[o.e,o.j,s],c([(0,r.f)()],u.prototype,"size",void 0),c([(0,r.f)({type:Boolean})],u.prototype,"disabled",void 0),c([(0,r.f)({type:Boolean})],u.prototype,"fullWidth",void 0),c([(0,r.f)({type:Boolean})],u.prototype,"loading",void 0),c([(0,r.f)()],u.prototype,"variant",void 0),c([(0,r.f)()],u.prototype,"textVariant",void 0),u=c([(0,a.f)("wui-button")],u),e.s([],624947),e.s([],534420)},62238,112699,73944,249536,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119),o=e.i(459088);let a={getSpacingStyles:(e,t)=>Array.isArray(e)?e[t]?`var(--apkt-spacing-${e[t]})`:void 0:"string"==typeof e?`var(--apkt-spacing-${e})`:void 0,getFormattedDate:e=>new Intl.DateTimeFormat("en-US",{month:"short",day:"numeric"}).format(e),formatCurrency(e=0,t={}){let i=Number(e);return isNaN(i)?"$0.00":new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",minimumFractionDigits:2,maximumFractionDigits:2,...t}).format(i)},getHostName(e){try{return new URL(e).hostname}catch(e){return""}},getTruncateString:({string:e,charsStart:t,charsEnd:i,truncate:r})=>e.length<=t+i?e:"end"===r?`${e.substring(0,t)}...`:"start"===r?`...${e.substring(e.length-i)}`:`${e.substring(0,Math.floor(t))}...${e.substring(e.length-Math.floor(i))}`,generateAvatarColors(e){let t=e.toLowerCase().replace(/^0x/iu,"").replace(/[^a-f0-9]/gu,"").substring(0,6).padEnd(6,"0"),i=this.hexToRgb(t),r=getComputedStyle(document.documentElement).getPropertyValue("--w3m-border-radius-master"),o=100-3*Number(r?.replace("px","")),a=`${o}% ${o}% at 65% 40%`,n=[];for(let e=0;e<5;e+=1){let t=this.tintColor(i,.15*e);n.push(`rgb(${t[0]}, ${t[1]}, ${t[2]})`)}return`
+    --local-color-1: ${n[0]};
+    --local-color-2: ${n[1]};
+    --local-color-3: ${n[2]};
+    --local-color-4: ${n[3]};
+    --local-color-5: ${n[4]};
+    --local-radial-circle: ${a}
+   `},hexToRgb(e){let t=parseInt(e,16);return[t>>16&255,t>>8&255,255&t]},tintColor(e,t){let[i,r,o]=e;return[Math.round(i+(255-i)*t),Math.round(r+(255-r)*t),Math.round(o+(255-o)*t)]},isNumber:e=>/^[0-9]+$/u.test(e),getColorTheme:e=>e?e:"u">typeof window&&window.matchMedia&&"function"==typeof window.matchMedia?window.matchMedia("(prefers-color-scheme: dark)")?.matches?"dark":"light":"dark",splitBalance(e){let t=e.split(".");return 2===t.length?[t[0],t[1]]:["0","00"]},roundNumber:(e,t,i)=>e.toString().length>=t?Number(e).toFixed(i):e,cssDurationToNumber:e=>e.endsWith("s")?1e3*Number(e.replace("s","")):e.endsWith("ms")?Number(e.replace("ms","")):0,maskInput({value:e,decimals:t,integers:i}){if("."===(e=e.replace(",",".")))return"0.";let[r="",o]=e.split(".").map(e=>e.replace(/[^0-9]/gu,"")),a=i?r.substring(0,i):r,n=2===a.length?String(Number(a)):a,s="number"==typeof t?o?.substring(0,t):o;return("string"==typeof s&&("number"!=typeof t||t>0)?[n,s].join("."):n)??""},capitalize:e=>e?e.charAt(0).toUpperCase()+e.slice(1):""};e.s(["f",0,a],112699);var n=e.i(645975),s=e.i(315193);let c=s.m`
+  :host {
+    display: flex;
+    width: inherit;
+    height: inherit;
+    box-sizing: border-box;
+  }
+`;var l=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n};let d=class extends t.f{render(){return this.style.cssText=`
+      flex-direction: ${this.flexDirection};
+      flex-wrap: ${this.flexWrap};
+      flex-basis: ${this.flexBasis};
+      flex-grow: ${this.flexGrow};
+      flex-shrink: ${this.flexShrink};
+      align-items: ${this.alignItems};
+      justify-content: ${this.justifyContent};
+      column-gap: ${this.columnGap&&`var(--apkt-spacing-${this.columnGap})`};
+      row-gap: ${this.rowGap&&`var(--apkt-spacing-${this.rowGap})`};
+      gap: ${this.gap&&`var(--apkt-spacing-${this.gap})`};
+      padding-top: ${this.padding&&a.getSpacingStyles(this.padding,0)};
+      padding-right: ${this.padding&&a.getSpacingStyles(this.padding,1)};
+      padding-bottom: ${this.padding&&a.getSpacingStyles(this.padding,2)};
+      padding-left: ${this.padding&&a.getSpacingStyles(this.padding,3)};
+      margin-top: ${this.margin&&a.getSpacingStyles(this.margin,0)};
+      margin-right: ${this.margin&&a.getSpacingStyles(this.margin,1)};
+      margin-bottom: ${this.margin&&a.getSpacingStyles(this.margin,2)};
+      margin-left: ${this.margin&&a.getSpacingStyles(this.margin,3)};
+      width: ${this.width};
+    `,i.c`<slot></slot>`}};d.styles=[o.e,c],l([(0,r.f)()],d.prototype,"flexDirection",void 0),l([(0,r.f)()],d.prototype,"flexWrap",void 0),l([(0,r.f)()],d.prototype,"flexBasis",void 0),l([(0,r.f)()],d.prototype,"flexGrow",void 0),l([(0,r.f)()],d.prototype,"flexShrink",void 0),l([(0,r.f)()],d.prototype,"alignItems",void 0),l([(0,r.f)()],d.prototype,"justifyContent",void 0),l([(0,r.f)()],d.prototype,"columnGap",void 0),l([(0,r.f)()],d.prototype,"rowGap",void 0),l([(0,r.f)()],d.prototype,"gap",void 0),l([(0,r.f)()],d.prototype,"padding",void 0),l([(0,r.f)()],d.prototype,"margin",void 0),l([(0,r.f)()],d.prototype,"width",void 0),d=l([(0,n.f)("wui-flex")],d),e.s([],73944),e.s([],62238),e.i(839009),e.s([],249536)},907170,695553,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119);e.i(852634);var o=e.i(459088),a=e.i(645975),n=e.i(162611);let s=n.m`
   button {
     background-color: transparent;
     padding: ${({spacing:e})=>e[1]};
@@ -482,74 +516,83 @@
           name=${this.icon}
         ></wui-icon>
       </button>
-    `}};l.styles=[o.e,o.j,s],c([(0,r.f)()],l.prototype,"size",void 0),c([(0,r.f)({type:Boolean})],l.prototype,"disabled",void 0),c([(0,r.f)()],l.prototype,"icon",void 0),c([(0,r.f)()],l.prototype,"iconColor",void 0),c([(0,r.f)()],l.prototype,"variant",void 0),l=c([(0,a.f)("wui-icon-link")],l),e.s([],695553),e.s([],907170)},443452,e=>{e.i(852634),e.s([])},210380,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119);e.i(852634),e.i(839009);var o=e.i(459088),a=e.i(645975),n=e.i(162611);let s=n.m`
+    `}};l.styles=[o.e,o.j,s],c([(0,r.f)()],l.prototype,"size",void 0),c([(0,r.f)({type:Boolean})],l.prototype,"disabled",void 0),c([(0,r.f)()],l.prototype,"icon",void 0),c([(0,r.f)()],l.prototype,"iconColor",void 0),c([(0,r.f)()],l.prototype,"variant",void 0),l=c([(0,a.f)("wui-icon-link")],l),e.s([],695553),e.s([],907170)},443452,e=>{e.i(852634),e.s([])},143053,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119);e.i(234051);var o=e.i(829389);e.i(383227),e.i(839009);var a=e.i(459088),n=e.i(645975),s=e.i(162611);let c=s.m`
+  :host {
+    width: 100%;
+  }
+
+  :host([data-type='primary']) > button {
+    background-color: ${({tokens:e})=>e.theme.backgroundPrimary};
+  }
+
+  :host([data-type='secondary']) > button {
+    background-color: ${({tokens:e})=>e.theme.foregroundPrimary};
+  }
+
   button {
-    border: none;
-    background: transparent;
-    height: 20px;
-    padding: ${({spacing:e})=>e[2]};
-    column-gap: ${({spacing:e})=>e[1]};
-    border-radius: ${({borderRadius:e})=>e[1]};
-    padding: 0 ${({spacing:e})=>e[1]};
-    border-radius: ${({spacing:e})=>e[1]};
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: ${({spacing:e})=>e[3]};
+    width: 100%;
+    border-radius: ${({borderRadius:e})=>e[4]};
+    transition:
+      background-color ${({durations:e})=>e.lg}
+        ${({easings:e})=>e["ease-out-power-2"]},
+      scale ${({durations:e})=>e.lg} ${({easings:e})=>e["ease-out-power-2"]};
+    will-change: background-color, scale;
   }
 
-  /* -- Variants --------------------------------------------------------- */
-  button[data-variant='accent'] {
-    color: ${({tokens:e})=>e.core.textAccentPrimary};
+  wui-text {
+    text-transform: capitalize;
   }
 
-  button[data-variant='secondary'] {
-    color: ${({tokens:e})=>e.theme.textSecondary};
+  wui-image {
+    color: ${({tokens:e})=>e.theme.textPrimary};
   }
 
-  /* -- Focus states --------------------------------------------------- */
-  button:focus-visible:enabled {
-    box-shadow: 0px 0px 0px 4px rgba(9, 136, 240, 0.2);
+  @media (hover: hover) {
+    :host([data-type='primary']) > button:hover:enabled {
+      background-color: ${({tokens:e})=>e.theme.foregroundPrimary};
+    }
+
+    :host([data-type='secondary']) > button:hover:enabled {
+      background-color: ${({tokens:e})=>e.theme.foregroundSecondary};
+    }
   }
 
-  button[data-variant='accent']:focus-visible:enabled {
-    background-color: ${({tokens:e})=>e.core.foregroundAccent010};
-  }
-
-  button[data-variant='secondary']:focus-visible:enabled {
-    background-color: ${({tokens:e})=>e.theme.foregroundSecondary};
-  }
-
-  /* -- Hover & Active states ----------------------------------------------------------- */
-  button[data-variant='accent']:hover:enabled {
-    background-color: ${({tokens:e})=>e.core.foregroundAccent010};
-  }
-
-  button[data-variant='secondary']:hover:enabled {
-    background-color: ${({tokens:e})=>e.theme.foregroundSecondary};
-  }
-
-  button[data-variant='accent']:focus-visible {
-    background-color: ${({tokens:e})=>e.core.foregroundAccent010};
-  }
-
-  button[data-variant='secondary']:focus-visible {
-    background-color: ${({tokens:e})=>e.theme.foregroundSecondary};
-    box-shadow: 0px 0px 0px 4px rgba(9, 136, 240, 0.2);
-  }
-
-  button[disabled] {
+  button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
-`;var c=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n};let l={sm:"sm-medium",md:"md-medium"},d={accent:"accent-primary",secondary:"secondary"},u=class extends t.f{constructor(){super(...arguments),this.size="md",this.disabled=!1,this.variant="accent",this.icon=void 0}render(){return i.c`
-      <button ?disabled=${this.disabled} data-variant=${this.variant}>
-        <slot name="iconLeft"></slot>
-        <wui-text
-          color=${d[this.variant]}
-          variant=${l[this.size]}
-        >
-          <slot></slot>
-        </wui-text>
-        ${this.iconTemplate()}
+`;var l=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n};let d=class extends t.f{constructor(){super(...arguments),this.type="primary",this.imageSrc="google",this.imageSize=void 0,this.loading=!1,this.boxColor="foregroundPrimary",this.disabled=!1,this.rightIcon=!0,this.boxed=!0,this.rounded=!1,this.fullSize=!1}render(){return this.dataset.rounded=this.rounded?"true":"false",this.dataset.type=this.type,i.c`
+      <button
+        ?disabled=${!!this.loading||!!this.disabled}
+        data-loading=${this.loading}
+        tabindex=${(0,o.f)(this.tabIdx)}
+      >
+        <wui-flex gap="2" alignItems="center">
+          ${this.templateLeftIcon()}
+          <wui-flex gap="1">
+            <slot></slot>
+          </wui-flex>
+        </wui-flex>
+        ${this.templateRightIcon()}
       </button>
-    `}iconTemplate(){return this.icon?i.c`<wui-icon name=${this.icon} size="sm"></wui-icon>`:null}};u.styles=[o.e,o.j,s],c([(0,r.f)()],u.prototype,"size",void 0),c([(0,r.f)({type:Boolean})],u.prototype,"disabled",void 0),c([(0,r.f)()],u.prototype,"variant",void 0),c([(0,r.f)()],u.prototype,"icon",void 0),u=c([(0,a.f)("wui-link")],u),e.s([],210380)},987789,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119);e.i(234051);var o=e.i(829389);e.i(852634),e.i(839009),e.i(912190);var a=e.i(459088),n=e.i(645975),s=t;e.i(720226);var c=e.i(162611);let l=c.m`
+    `}templateLeftIcon(){return this.icon?i.c`<wui-image
+        icon=${this.icon}
+        iconColor=${(0,o.f)(this.iconColor)}
+        ?boxed=${this.boxed}
+        ?rounded=${this.rounded}
+        boxColor=${this.boxColor}
+      ></wui-image>`:i.c`<wui-image
+      ?boxed=${this.boxed}
+      ?rounded=${this.rounded}
+      ?fullSize=${this.fullSize}
+      size=${(0,o.f)(this.imageSize)}
+      src=${this.imageSrc}
+      boxColor=${this.boxColor}
+    ></wui-image>`}templateRightIcon(){return this.rightIcon?this.loading?i.c`<wui-loading-spinner size="md" color="accent-primary"></wui-loading-spinner>`:i.c`<wui-icon name="chevronRight" size="lg" color="default"></wui-icon>`:null}};d.styles=[a.e,a.j,c],l([(0,r.f)()],d.prototype,"type",void 0),l([(0,r.f)()],d.prototype,"imageSrc",void 0),l([(0,r.f)()],d.prototype,"imageSize",void 0),l([(0,r.f)()],d.prototype,"icon",void 0),l([(0,r.f)()],d.prototype,"iconColor",void 0),l([(0,r.f)({type:Boolean})],d.prototype,"loading",void 0),l([(0,r.f)()],d.prototype,"tabIdx",void 0),l([(0,r.f)()],d.prototype,"boxColor",void 0),l([(0,r.f)({type:Boolean})],d.prototype,"disabled",void 0),l([(0,r.f)({type:Boolean})],d.prototype,"rightIcon",void 0),l([(0,r.f)({type:Boolean})],d.prototype,"boxed",void 0),l([(0,r.f)({type:Boolean})],d.prototype,"rounded",void 0),l([(0,r.f)({type:Boolean})],d.prototype,"fullSize",void 0),d=l([(0,n.f)("wui-list-item")],d),e.s([],143053)},987789,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119);e.i(234051);var o=e.i(829389);e.i(852634),e.i(839009),e.i(912190);var a=e.i(459088),n=e.i(645975),s=t;e.i(720226);var c=e.i(162611);let l=c.m`
   :host {
     position: relative;
     border-radius: ${({borderRadius:e})=>e[2]};
@@ -649,7 +692,7 @@
   wui-flex.namespace-icon:not(:first-child) {
     margin-left: -4px;
   }
-`;var h=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n};let w={eip155:"ethereum",solana:"solana",bip122:"bitcoin",polkadot:void 0,cosmos:void 0,sui:void 0,stacks:void 0,ton:"ton",tron:"tron",stellar:void 0},m=class extends t.f{constructor(){super(...arguments),this.walletImages=[],this.imageSrc="",this.name="",this.size="md",this.tabIdx=void 0,this.namespaces=[],this.disabled=!1,this.showAllWallets=!1,this.loading=!1,this.loadingSpinnerColor="accent-100"}render(){return this.dataset.size=this.size,i.c`
+`;var h=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n};let m={eip155:"ethereum",solana:"solana",bip122:"bitcoin",polkadot:void 0,cosmos:void 0,sui:void 0,stacks:void 0,ton:"ton",tron:"tron",stellar:void 0},w=class extends t.f{constructor(){super(...arguments),this.walletImages=[],this.imageSrc="",this.name="",this.size="md",this.tabIdx=void 0,this.namespaces=[],this.disabled=!1,this.showAllWallets=!1,this.loading=!1,this.loadingSpinnerColor="accent-100"}render(){return this.dataset.size=this.size,i.c`
       <button
         ?disabled=${this.disabled}
         data-all-wallets=${this.showAllWallets}
@@ -671,7 +714,7 @@
               class="namespace-icon"
             >
               <wui-icon
-                name=${(0,o.f)(w[e])}
+                name=${(0,o.f)(m[e])}
                 size="sm"
                 color="default"
               ></wui-icon>
@@ -680,7 +723,7 @@
         size=${(0,o.f)("sm"===this.size?"sm":"md")}
         imageSrc=${this.imageSrc}
         name=${this.name}
-      ></wui-wallet-image>`:this.showAllWallets||this.imageSrc?null:i.c`<wui-wallet-image size="sm" name=${this.name}></wui-wallet-image>`}templateStatus(){return this.loading?i.c`<wui-loading-spinner size="lg" color="accent-primary"></wui-loading-spinner>`:this.tagLabel&&this.tagVariant?i.c`<wui-tag size="sm" variant=${this.tagVariant}>${this.tagLabel}</wui-tag>`:null}};m.styles=[a.e,a.j,p],h([(0,r.f)({type:Array})],m.prototype,"walletImages",void 0),h([(0,r.f)()],m.prototype,"imageSrc",void 0),h([(0,r.f)()],m.prototype,"name",void 0),h([(0,r.f)()],m.prototype,"size",void 0),h([(0,r.f)()],m.prototype,"tagLabel",void 0),h([(0,r.f)()],m.prototype,"tagVariant",void 0),h([(0,r.f)()],m.prototype,"walletIcon",void 0),h([(0,r.f)()],m.prototype,"tabIdx",void 0),h([(0,r.f)({type:Array})],m.prototype,"namespaces",void 0),h([(0,r.f)({type:Boolean})],m.prototype,"disabled",void 0),h([(0,r.f)({type:Boolean})],m.prototype,"showAllWallets",void 0),h([(0,r.f)({type:Boolean})],m.prototype,"loading",void 0),h([(0,r.f)({type:String})],m.prototype,"loadingSpinnerColor",void 0),m=h([(0,n.f)("wui-list-wallet")],m),e.s([],987789)},421147,e=>{e.i(383227),e.s([])},774339,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119),o=e.i(116275),a=e.i(252157);let n=i.V`
+      ></wui-wallet-image>`:this.showAllWallets||this.imageSrc?null:i.c`<wui-wallet-image size="sm" name=${this.name}></wui-wallet-image>`}templateStatus(){return this.loading?i.c`<wui-loading-spinner size="lg" color="accent-primary"></wui-loading-spinner>`:this.tagLabel&&this.tagVariant?i.c`<wui-tag size="sm" variant=${this.tagVariant}>${this.tagLabel}</wui-tag>`:null}};w.styles=[a.e,a.j,p],h([(0,r.f)({type:Array})],w.prototype,"walletImages",void 0),h([(0,r.f)()],w.prototype,"imageSrc",void 0),h([(0,r.f)()],w.prototype,"name",void 0),h([(0,r.f)()],w.prototype,"size",void 0),h([(0,r.f)()],w.prototype,"tagLabel",void 0),h([(0,r.f)()],w.prototype,"tagVariant",void 0),h([(0,r.f)()],w.prototype,"walletIcon",void 0),h([(0,r.f)()],w.prototype,"tabIdx",void 0),h([(0,r.f)({type:Array})],w.prototype,"namespaces",void 0),h([(0,r.f)({type:Boolean})],w.prototype,"disabled",void 0),h([(0,r.f)({type:Boolean})],w.prototype,"showAllWallets",void 0),h([(0,r.f)({type:Boolean})],w.prototype,"loading",void 0),h([(0,r.f)({type:String})],w.prototype,"loadingSpinnerColor",void 0),w=h([(0,n.f)("wui-list-wallet")],w),e.s([],987789)},774339,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119),o=e.i(116275),a=e.i(252157);let n=i.V`
   <svg fill="none" viewBox="0 0 36 40">
     <path
       d="M15.4 2.1a5.21 5.21 0 0 1 5.2 0l11.61 6.7a5.21 5.21 0 0 1 2.61 4.52v13.4c0 1.87-1 3.59-2.6 4.52l-11.61 6.7c-1.62.93-3.6.93-5.22 0l-11.6-6.7a5.21 5.21 0 0 1-2.61-4.51v-13.4c0-1.87 1-3.6 2.6-4.52L15.4 2.1Z"
@@ -847,119 +890,7 @@
   <path
     d="M43.4605 10.7248L28.0485 1.61089C25.5438 0.129705 22.4562 0.129705 19.9515 1.61088L4.53951 10.7248C2.03626 12.2051 0.5 14.9365 0.5 17.886V36.1139C0.5 39.0635 2.03626 41.7949 4.53951 43.2752L19.9515 52.3891C22.4562 53.8703 25.5438 53.8703 28.0485 52.3891L43.4605 43.2752C45.9637 41.7949 47.5 39.0635 47.5 36.114V17.8861C47.5 14.9365 45.9637 12.2051 43.4605 10.7248Z"
   />
-</svg>`;e.s(["f",0,i])},864380,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119);e.i(234051);var o=e.i(829389),a=e.i(459088),n=e.i(645975),s=e.i(162611);let c=s.m`
-  :host {
-    display: block;
-    width: var(--local-width);
-    height: var(--local-height);
-  }
-
-  img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    border-radius: inherit;
-    user-select: none;
-    user-drag: none;
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-  }
-
-  :host([data-boxed='true']) {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: ${({tokens:e})=>e.theme.foregroundPrimary};
-    border-radius: ${({borderRadius:e})=>e[2]};
-  }
-
-  :host([data-boxed='true']) img {
-    width: 20px;
-    height: 20px;
-    border-radius: ${({borderRadius:e})=>e[16]};
-  }
-
-  :host([data-full='true']) img {
-    width: 100%;
-    height: 100%;
-  }
-
-  :host([data-boxed='true']) wui-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  :host([data-icon='error']) {
-    background-color: ${({tokens:e})=>e.core.backgroundError};
-  }
-
-  :host([data-rounded='true']) {
-    border-radius: ${({borderRadius:e})=>e[16]};
-  }
-`;var l=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n};let d=class extends t.f{constructor(){super(...arguments),this.src="./path/to/image.jpg",this.alt="Image",this.size=void 0,this.boxed=!1,this.rounded=!1,this.fullSize=!1}render(){let e={inherit:"inherit",xxs:"2",xs:"3",sm:"4",md:"4",mdl:"5",lg:"5",xl:"6",xxl:"7","3xl":"8","4xl":"9","5xl":"10"};return(this.style.cssText=`
-      --local-width: ${this.size?`var(--apkt-spacing-${e[this.size]});`:"100%"};
-      --local-height: ${this.size?`var(--apkt-spacing-${e[this.size]});`:"100%"};
-      `,this.dataset.boxed=this.boxed?"true":"false",this.dataset.rounded=this.rounded?"true":"false",this.dataset.full=this.fullSize?"true":"false",this.dataset.icon=this.iconColor||"inherit",this.icon)?i.c`<wui-icon
-        color=${this.iconColor||"inherit"}
-        name=${this.icon}
-        size="lg"
-      ></wui-icon> `:this.logo?i.c`<wui-icon size="lg" color="inherit" name=${this.logo}></wui-icon> `:i.c`<img src=${(0,o.f)(this.src)} alt=${this.alt} @error=${this.handleImageError} />`}handleImageError(){this.dispatchEvent(new CustomEvent("onLoadError",{bubbles:!0,composed:!0}))}};d.styles=[a.e,c],l([(0,r.f)()],d.prototype,"src",void 0),l([(0,r.f)()],d.prototype,"logo",void 0),l([(0,r.f)()],d.prototype,"icon",void 0),l([(0,r.f)()],d.prototype,"iconColor",void 0),l([(0,r.f)()],d.prototype,"alt",void 0),l([(0,r.f)()],d.prototype,"size",void 0),l([(0,r.f)({type:Boolean})],d.prototype,"boxed",void 0),l([(0,r.f)({type:Boolean})],d.prototype,"rounded",void 0),l([(0,r.f)({type:Boolean})],d.prototype,"fullSize",void 0),d=l([(0,n.f)("wui-image")],d),e.s([],864380)},383227,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119),o=e.i(162611),a=e.i(459088),n=e.i(645975),s=e.i(315193);let c=s.m`
-  :host {
-    display: flex;
-  }
-
-  :host([data-size='sm']) > svg {
-    width: 12px;
-    height: 12px;
-  }
-
-  :host([data-size='md']) > svg {
-    width: 16px;
-    height: 16px;
-  }
-
-  :host([data-size='lg']) > svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  :host([data-size='xl']) > svg {
-    width: 32px;
-    height: 32px;
-  }
-
-  svg {
-    animation: rotate 1.4s linear infinite;
-    color: var(--local-color);
-  }
-
-  :host([data-size='md']) > svg > circle {
-    stroke-width: 6px;
-  }
-
-  :host([data-size='sm']) > svg > circle {
-    stroke-width: 8px;
-  }
-
-  @keyframes rotate {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-`;var l=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n};let d=class extends t.f{constructor(){super(...arguments),this.color="primary",this.size="lg"}render(){let e={primary:o.i.tokens.theme.textPrimary,secondary:o.i.tokens.theme.textSecondary,tertiary:o.i.tokens.theme.textTertiary,invert:o.i.tokens.theme.textInvert,error:o.i.tokens.core.textError,warning:o.i.tokens.core.textWarning,"accent-primary":o.i.tokens.core.textAccentPrimary};return this.style.cssText=`
-      --local-color: ${"inherit"===this.color?"inherit":e[this.color]};
-      `,this.dataset.size=this.size,i.c`<svg viewBox="0 0 16 17" fill="none">
-      <path
-        d="M8.75 2.65625V4.65625C8.75 4.85516 8.67098 5.04593 8.53033 5.18658C8.38968 5.32723 8.19891 5.40625 8 5.40625C7.80109 5.40625 7.61032 5.32723 7.46967 5.18658C7.32902 5.04593 7.25 4.85516 7.25 4.65625V2.65625C7.25 2.45734 7.32902 2.26657 7.46967 2.12592C7.61032 1.98527 7.80109 1.90625 8 1.90625C8.19891 1.90625 8.38968 1.98527 8.53033 2.12592C8.67098 2.26657 8.75 2.45734 8.75 2.65625ZM14 7.90625H12C11.8011 7.90625 11.6103 7.98527 11.4697 8.12592C11.329 8.26657 11.25 8.45734 11.25 8.65625C11.25 8.85516 11.329 9.04593 11.4697 9.18658C11.6103 9.32723 11.8011 9.40625 12 9.40625H14C14.1989 9.40625 14.3897 9.32723 14.5303 9.18658C14.671 9.04593 14.75 8.85516 14.75 8.65625C14.75 8.45734 14.671 8.26657 14.5303 8.12592C14.3897 7.98527 14.1989 7.90625 14 7.90625ZM11.3588 10.9544C11.289 10.8846 11.2062 10.8293 11.115 10.7915C11.0239 10.7538 10.9262 10.7343 10.8275 10.7343C10.7288 10.7343 10.6311 10.7538 10.54 10.7915C10.4488 10.8293 10.366 10.8846 10.2963 10.9544C10.2265 11.0241 10.1711 11.107 10.1334 11.1981C10.0956 11.2893 10.0762 11.387 10.0762 11.4856C10.0762 11.5843 10.0956 11.682 10.1334 11.7731C10.1711 11.8643 10.2265 11.9471 10.2963 12.0169L11.7106 13.4312C11.8515 13.5721 12.0426 13.6513 12.2419 13.6513C12.4411 13.6513 12.6322 13.5721 12.7731 13.4312C12.914 13.2904 12.9932 13.0993 12.9932 12.9C12.9932 12.7007 12.914 12.5096 12.7731 12.3687L11.3588 10.9544ZM8 11.9062C7.80109 11.9062 7.61032 11.9853 7.46967 12.1259C7.32902 12.2666 7.25 12.4573 7.25 12.6562V14.6562C7.25 14.8552 7.32902 15.0459 7.46967 15.1866C7.61032 15.3272 7.80109 15.4062 8 15.4062C8.19891 15.4062 8.38968 15.3272 8.53033 15.1866C8.67098 15.0459 8.75 14.8552 8.75 14.6562V12.6562C8.75 12.4573 8.67098 12.2666 8.53033 12.1259C8.38968 11.9853 8.19891 11.9062 8 11.9062ZM4.64125 10.9544L3.22688 12.3687C3.08598 12.5096 3.00682 12.7007 3.00682 12.9C3.00682 13.0993 3.08598 13.2904 3.22688 13.4312C3.36777 13.5721 3.55887 13.6513 3.75813 13.6513C3.95738 13.6513 4.14848 13.5721 4.28937 13.4312L5.70375 12.0169C5.84465 11.876 5.9238 11.6849 5.9238 11.4856C5.9238 11.2864 5.84465 11.0953 5.70375 10.9544C5.56285 10.8135 5.37176 10.7343 5.1725 10.7343C4.97324 10.7343 4.78215 10.8135 4.64125 10.9544ZM4.75 8.65625C4.75 8.45734 4.67098 8.26657 4.53033 8.12592C4.38968 7.98527 4.19891 7.90625 4 7.90625H2C1.80109 7.90625 1.61032 7.98527 1.46967 8.12592C1.32902 8.26657 1.25 8.45734 1.25 8.65625C1.25 8.85516 1.32902 9.04593 1.46967 9.18658C1.61032 9.32723 1.80109 9.40625 2 9.40625H4C4.19891 9.40625 4.38968 9.32723 4.53033 9.18658C4.67098 9.04593 4.75 8.85516 4.75 8.65625ZM4.2875 3.88313C4.1466 3.74223 3.95551 3.66307 3.75625 3.66307C3.55699 3.66307 3.3659 3.74223 3.225 3.88313C3.0841 4.02402 3.00495 4.21512 3.00495 4.41438C3.00495 4.61363 3.0841 4.80473 3.225 4.94562L4.64125 6.35813C4.78215 6.49902 4.97324 6.57818 5.1725 6.57818C5.37176 6.57818 5.56285 6.49902 5.70375 6.35813C5.84465 6.21723 5.9238 6.02613 5.9238 5.82688C5.9238 5.62762 5.84465 5.43652 5.70375 5.29563L4.2875 3.88313Z"
-        fill="currentColor"
-      />
-    </svg>`}};d.styles=[a.e,c],l([(0,r.f)()],d.prototype,"color",void 0),l([(0,r.f)()],d.prototype,"size",void 0),d=l([(0,n.f)("wui-loading-spinner")],d),e.s([],383227)},864576,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119),o=e.i(645975),a=e.i(162611);let n=a.m`
+</svg>`;e.s(["f",0,i])},864576,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119),o=e.i(645975),a=e.i(162611);let n=a.m`
   :host {
     display: block;
     background: linear-gradient(
@@ -1072,68 +1003,7 @@
   }
 `;var l=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n};let d=class extends t.f{constructor(){super(...arguments),this.icon="copy",this.size="md",this.padding="1",this.color="default"}render(){return this.dataset.padding=this.padding,this.dataset.color=this.color,i.c`
       <wui-icon size=${(0,o.f)(this.size)} name=${this.icon} color="inherit"></wui-icon>
-    `}};d.styles=[a.e,a.j,c],l([(0,r.f)()],d.prototype,"icon",void 0),l([(0,r.f)()],d.prototype,"size",void 0),l([(0,r.f)()],d.prototype,"padding",void 0),l([(0,r.f)()],d.prototype,"color",void 0),d=l([(0,n.f)("wui-icon-box")],d),e.s([],912190)},630352,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119);e.i(852634),e.i(839009);var o=e.i(459088),a=e.i(645975),n=e.i(162611);let s=n.m`
-  :host {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: ${({spacing:e})=>e[1]};
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  :host([data-variant='accent']) {
-    background-color: ${({tokens:e})=>e.core.foregroundAccent010};
-    color: ${({tokens:e})=>e.core.textAccentPrimary};
-  }
-
-  :host([data-variant='info']) {
-    background-color: ${({tokens:e})=>e.theme.foregroundSecondary};
-    color: ${({tokens:e})=>e.theme.textSecondary};
-  }
-
-  :host([data-variant='success']) {
-    background-color: ${({tokens:e})=>e.core.backgroundSuccess};
-    color: ${({tokens:e})=>e.core.textSuccess};
-  }
-
-  :host([data-variant='warning']) {
-    background-color: ${({tokens:e})=>e.core.backgroundWarning};
-    color: ${({tokens:e})=>e.core.textWarning};
-  }
-
-  :host([data-variant='error']) {
-    background-color: ${({tokens:e})=>e.core.backgroundError};
-    color: ${({tokens:e})=>e.core.textError};
-  }
-
-  :host([data-variant='certified']) {
-    background-color: ${({tokens:e})=>e.theme.foregroundSecondary};
-    color: ${({tokens:e})=>e.theme.textSecondary};
-  }
-
-  :host([data-size='md']) {
-    height: 30px;
-    padding: 0 ${({spacing:e})=>e[2]};
-    border-radius: ${({borderRadius:e})=>e[2]};
-  }
-
-  :host([data-size='sm']) {
-    height: 20px;
-    padding: 0 ${({spacing:e})=>e[1]};
-    border-radius: ${({borderRadius:e})=>e[1]};
-  }
-`;var c=function(e,t,i,r){var o,a=arguments.length,n=a<3?t:null===r?r=Object.getOwnPropertyDescriptor(t,i):r;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,i,r);else for(var s=e.length-1;s>=0;s--)(o=e[s])&&(n=(a<3?o(n):a>3?o(t,i,n):o(t,i))||n);return a>3&&n&&Object.defineProperty(t,i,n),n};let l=class extends t.f{constructor(){super(...arguments),this.variant="accent",this.size="md",this.icon=void 0}render(){this.dataset.variant=this.variant,this.dataset.size=this.size;let e="md"===this.size?"md-medium":"sm-medium",t="md"===this.size?"md":"sm";return i.c`
-      ${this.icon?i.c`<wui-icon size=${t} name=${this.icon}></wui-icon>`:null}
-      <wui-text
-        display="inline"
-        data-variant=${this.variant}
-        variant=${e}
-        color="inherit"
-      >
-        <slot></slot>
-      </wui-text>
-    `}};l.styles=[o.e,s],c([(0,r.f)()],l.prototype,"variant",void 0),c([(0,r.f)()],l.prototype,"size",void 0),c([(0,r.f)()],l.prototype,"icon",void 0),l=c([(0,a.f)("wui-tag")],l),e.s([],630352)},720226,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119);e.i(852634),e.i(864380);var o=e.i(459088),a=e.i(645975);e.i(912190);var n=e.i(162611);let s=n.m`
+    `}};d.styles=[a.e,a.j,c],l([(0,r.f)()],d.prototype,"icon",void 0),l([(0,r.f)()],d.prototype,"size",void 0),l([(0,r.f)()],d.prototype,"padding",void 0),l([(0,r.f)()],d.prototype,"color",void 0),d=l([(0,n.f)("wui-icon-box")],d),e.s([],912190)},720226,e=>{e.i(812207);var t=e.i(108285),i=e.i(654479);e.i(374576);var r=e.i(120119);e.i(852634),e.i(864380);var o=e.i(459088),a=e.i(645975);e.i(912190);var n=e.i(162611);let s=n.m`
   :host {
     position: relative;
     background-color: ${({tokens:e})=>e.theme.foregroundTertiary};
