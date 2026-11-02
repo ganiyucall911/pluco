@@ -1,13 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { MotionProvider } from "@/components/motion-provider";
 import { WalletProvider } from "@/components/wallet-provider";
 
-const body = Inter({ subsets: ["latin"], variable: "--font-body" });
-const heading = Space_Grotesk({ subsets: ["latin"], variable: "--font-heading" });
+const body = localFont({
+  src: "../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
+  variable: "--font-body",
+  weight: "100 900",
+});
+const heading = localFont({
+  src: "../node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2",
+  variable: "--font-heading",
+  weight: "300 700",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ganiyucall911.github.io/pluco"),
