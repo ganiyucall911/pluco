@@ -3,9 +3,9 @@
 /**
  * Wallet state for PLUCO.
  *
- * Every wallet connection goes through Reown AppKit (WalletConnect): the browser
- * extension on desktop, the mobile app by QR or deeplink, and Solana wallets, all
- * behind one modal. There is no separate injected or MetaMask-only path.
+ * Every wallet connection goes through Reown AppKit (WalletConnect) on Base
+ * mainnet: the browser extension on desktop, the mobile app by QR or deeplink.
+ * There is no separate injected path, and no other chain is offered.
  */
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
@@ -25,10 +25,9 @@ import {
 
 export const BASE_CHAIN_ID = 8453;
 export const BASE_CHAIN_HEX = "0x2105";
-export const BASE_SEPOLIA_CHAIN_ID = 84532;
 
-/** Chain namespaces PLUCO can sign in with, all through Reown AppKit. */
-export type Namespace = "eip155" | "solana" | "bip122";
+/** Base mainnet is the only chain PLUCO signs in with. */
+export type Namespace = "eip155";
 
 type Eth = {
   request: (args: { method: string; params?: unknown[] | object }) => Promise<unknown>;
@@ -123,13 +122,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     if (!restored) return;
     setAccount(restored.address);
     setNamespace(restored.namespace);
-    setActiveName(
-      restored.namespace === "eip155"
-        ? REOWN_NAME
-        : restored.namespace === "solana"
-          ? "Solana"
-          : "Bitcoin",
-    );
+    setActiveName(REOWN_NAME);
     setEmail(getEmail());
     if (restored.namespace === "eip155") {
       const eth = getReown()?.getWalletProvider() as unknown as Eth | undefined;
@@ -210,7 +203,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       setError(null);
       setAccount(address);
       setNamespace(ns);
-      setActiveName(label ?? (ns === "eip155" ? REOWN_NAME : ns === "solana" ? "Solana" : "Bitcoin"));
+      setActiveName(label ?? REOWN_NAME);
       try {
         localStorage.setItem(STORAGE_KEY, "1");
         localStorage.setItem(NAME_KEY, REOWN_NAME);
@@ -220,7 +213,6 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       // AppKit fills the user record a moment after the account connects.
       window.setTimeout(() => setEmail(getEmail()), 400);
 
-      if (ns !== "eip155") return;
       const eth = getReown()?.getWalletProvider() as unknown as Eth | undefined;
       if (!eth) return;
       attach(eth);
@@ -254,12 +246,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     openEmailLogin();
     window.setTimeout(() => {
       const appKit = getReown();
-      const connected = appKit
-        ? ["eip155", "solana", "bip122"].some((ns) => {
-            const account = appKit.getAccount(ns as "eip155");
-            return Boolean(account?.isConnected);
-          })
-        : false;
+      const connected = appKit ? Boolean(appKit.getAccount("eip155")?.isConnected) : false;
       if (connected) return;
       setError(
         "Couldn't send the code. Email sign-in may not be enabled for this Reown project, or this site isn't an allowed origin in it.",

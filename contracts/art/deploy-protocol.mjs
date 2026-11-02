@@ -1,6 +1,6 @@
 // Deploy the PLUCO art protocol to Base: registry + marketplace, wired together.
 // Usage:
-//   PRIVATE_KEY=0x... node deploy-protocol.mjs [--network base|base-sepolia] [--fee 250]
+//   PRIVATE_KEY=0x... node deploy-protocol.mjs [--fee 250]   (Base mainnet)
 //   PRIVATE_KEY=0x... TREASURY=0x... node deploy-protocol.mjs --network base
 import fs from "node:fs";
 import path from "node:path";
@@ -13,12 +13,12 @@ const arg = (name, fallback) => {
   return i === -1 ? fallback : args[i + 1];
 };
 
+// Base mainnet is the only target.
 const NETWORKS = {
-  "base-sepolia": { chainId: 84532, rpc: "https://sepolia.base.org", explorer: "https://sepolia.basescan.org" },
   base: { chainId: 8453, rpc: "https://mainnet.base.org", explorer: "https://basescan.org" },
 };
 
-const networkName = arg("network", process.env.NETWORK || "base-sepolia");
+const networkName = arg("network", process.env.NETWORK || "base");
 const net = NETWORKS[networkName];
 if (!net) throw new Error("unknown network " + networkName);
 

@@ -3,10 +3,9 @@
 /**
  * Per-wallet connect buttons on top of Reown AppKit's wallet-button SDK.
  *
- * Each button connects its own namespace through AppKit: MetaMask on EVM (eip155),
- * Phantom on Solana and Leather on Bitcoin (bip122). WalletConnect opens the QR /
- * deeplink modal for any other wallet. Nothing is wire-format specific here — the
- * AppKit client in lib/reown.ts owns the session and this only asks for one.
+ * Base mainnet only. MetaMask and any other EVM wallet connect through eip155;
+ * WalletConnect opens the QR / deeplink modal for the rest. The AppKit client in
+ * lib/reown.ts owns the session and this only asks for one.
  */
 
 import { useCallback, useState } from "react";
@@ -14,7 +13,7 @@ import { useAppKitWallet } from "@reown/appkit-wallet-button/react";
 import { ArrowRight, Loader2, QrCode, Wallet } from "lucide-react";
 import type { Namespace } from "./wallet-provider";
 
-type WalletId = "metamask" | "phantom" | "leather" | "walletConnect";
+type WalletId = "metamask" | "walletConnect";
 
 type Props = {
   onConnected: (address: string, namespace: Namespace, label: string) => void;
@@ -24,10 +23,8 @@ type Props = {
 };
 
 const ROWS: { id: WalletId; label: string; namespace: Namespace; hint: string }[] = [
-  { id: "metamask", label: "MetaMask", namespace: "eip155", hint: "EVM · Base" },
-  { id: "phantom", label: "Phantom", namespace: "solana", hint: "Solana" },
-  { id: "leather", label: "Leather", namespace: "bip122", hint: "Bitcoin" },
-  { id: "walletConnect", label: "WalletConnect", namespace: "eip155", hint: "QR / any wallet" },
+  { id: "metamask", label: "MetaMask", namespace: "eip155", hint: "Base mainnet" },
+  { id: "walletConnect", label: "WalletConnect", namespace: "eip155", hint: "QR / any EVM wallet" },
 ];
 
 function message(e: Error) {
@@ -53,35 +50,10 @@ export function WalletButtons({ onConnected, onError, disabled = false, classNam
     },
   });
 
-  const solana = useAppKitWallet({
-    namespace: "solana",
-    onSuccess: (data) => {
-      settle();
-      onConnected(data.address, "solana", "Solana wallet");
-    },
-    onError: (e) => {
-      settle();
-      onError(message(e));
-    },
-  });
-
-  const bitcoin = useAppKitWallet({
-    namespace: "bip122",
-    onSuccess: (data) => {
-      settle();
-      onConnected(data.address, "bip122", "Bitcoin wallet");
-    },
-    onError: (e) => {
-      settle();
-      onError(message(e));
-    },
-  });
-
   function pick(row: (typeof ROWS)[number]) {
     onError("");
     setPending(row.id);
-    const hook = row.namespace === "solana" ? solana : row.namespace === "bip122" ? bitcoin : evm;
-    hook
+    evm
       .connect(row.id as never)
       .catch((e: unknown) => {
         setPending(null);

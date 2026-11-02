@@ -103,7 +103,7 @@ export function WalletButton({ className = "" }: { className?: string }) {
         <div className="absolute right-0 top-[52px] z-50 w-[248px] border border-line-strong bg-surface p-2 shadow-[0_24px_70px_rgba(0,0,0,.45)]">
           <p className="px-3 pb-2 pt-1 text-[10px] uppercase tracking-[.2em] text-faint">
             {activeName || "Wallet"} ·{" "}
-            {namespace === "solana" ? "Solana" : namespace === "bip122" ? "Bitcoin" : onBase ? "Base" : "Wrong network"}
+            {onBase ? "Base" : "Wrong network"}
           </p>
           {namespace === "eip155" && !onBase && (
             <button

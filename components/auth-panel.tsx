@@ -17,7 +17,6 @@ const COPY: Record<Mode, string> = {
 
 const CHAINS: Record<number, string> = {
   8453: "Base",
-  84532: "Base Sepolia",
 };
 
 function seenKey(address: string) {
@@ -91,20 +90,9 @@ export function AuthPanel() {
 
   if (account) {
     const initials = account.slice(2, 4).toUpperCase();
-    const chain = chainId
-      ? CHAINS[chainId] || "Chain " + chainId
-      : namespace === "solana"
-        ? "Solana"
-        : namespace === "bip122"
-          ? "Bitcoin"
-          : "—";
-    const explorer =
-      namespace === "solana"
-        ? "https://solscan.io/account/" + account
-        : namespace === "bip122"
-          ? "https://mempool.space/address/" + account
-          : "https://basescan.org/address/" + account;
-    const explorerName = namespace === "solana" ? "Solscan" : namespace === "bip122" ? "mempool.space" : "BaseScan";
+    const chain = chainId ? CHAINS[chainId] || "Chain " + chainId : "—";
+    const explorer = "https://basescan.org/address/" + account;
+    const explorerName = "BaseScan";
 
     return (
       <div className="border border-line bg-surface p-8 sm:p-10">
@@ -252,9 +240,9 @@ export function AuthPanel() {
       </div>
 
       <p className="mt-4 text-[12px] leading-6 text-faint">
-        MetaMask signs on Base, Phantom on Solana, Leather on Bitcoin; WalletConnect opens a QR
-        or the wallet app for anything else. With email, a 6-digit code is sent to your inbox
-        and you type it in the same window.
+        Everything runs on Base mainnet. MetaMask or WalletConnect opens your wallet — by
+        extension, QR or the wallet app. With email, a 6-digit code is sent to your inbox and
+        you type it in the same window.
       </p>
 
       {error && <p className="mt-4 text-[12px] leading-6 text-gold">{error}</p>}
