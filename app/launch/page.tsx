@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { useWallet } from "@/components/wallet-provider";
-import { BASE_MAINNET, BASE_SEPOLIA, isAddress, networkFor, parseEth } from "@/lib/chain-config";
+import { BASE_MAINNET, isAddress, networkFor, parseEth } from "@/lib/chain-config";
 
 const WORD = 64;
 
@@ -61,7 +61,7 @@ const TREASURY_DEFAULT = "0xcaEC37D3AdcE9a141BF5d78895cb3074Fae77AD9";
 export default function LaunchPage() {
   const { account, provider, connect, switchChain, connecting } = useWallet();
   const [artifact, setArtifact] = useState<Artifact | null>(null);
-  const [chainId, setChainId] = useState<number>(BASE_SEPOLIA);
+  const chainId = BASE_MAINNET;
   const [name, setName] = useState("PLUCO Originals");
   const [symbol, setSymbol] = useState("PLUCO");
   const [supply, setSupply] = useState("100");
@@ -297,23 +297,10 @@ export default function LaunchPage() {
               </label>
             </div>
 
-            <div className="mt-6 flex gap-2">
-              {[
-                [BASE_SEPOLIA, "Base Sepolia"],
-                [BASE_MAINNET, "Base mainnet"],
-              ].map(([id, label]) => (
-                <button
-                  key={String(id)}
-                  onClick={() => setChainId(Number(id))}
-                  className={
-                    "focus-ring rounded-full border px-4 py-2 text-xs transition " +
-                    (chainId === Number(id) ? "border-paper bg-paper text-ink" : "border-line text-body hover:text-paper")
-                  }
-                >
-                  {String(label)}
-                </button>
-              ))}
-            </div>
+            <p className="mt-6 text-xs leading-6 text-faint">
+              Deploys to Base mainnet (chain 8453). Mainnet gas is real ETH, so check the
+              price and royalty below before you sign.
+            </p>
 
             <button
               onClick={deploy}
@@ -391,7 +378,8 @@ export default function LaunchPage() {
               </div>
             ) : (
               <p className="mt-8 text-xs leading-5 text-faint">
-                Test on {networkFor(BASE_SEPOLIA).name} first — the gas is free and the addresses behave exactly like mainnet.
+                Everything you deploy from this page goes live on Base mainnet. Double-check the
+                price, royalty and treasury address before signing.
               </p>
             )}
           </div>

@@ -1,5 +1,5 @@
 // Deploy PlucoOriginals. Usage:
-//   RPC_URL=... PRIVATE_KEY=0x... node deploy.mjs [--network base-sepolia|base] [--supply 100] [--price 0.005] [--per-wallet 3]
+//   RPC_URL=... PRIVATE_KEY=0x... node deploy.mjs [--supply 100] [--price 0.005] [--per-wallet 3]   (Base mainnet)
 // Price is in the chain's native currency (ETH on Base). Everything is overridable by env.
 import fs from "node:fs";
 import path from "node:path";
@@ -12,12 +12,12 @@ const arg = (name, fallback) => {
   return i === -1 ? fallback : args[i + 1];
 };
 
+// Base mainnet is the only target.
 const NETWORKS = {
-  "base-sepolia": { chainId: 84532, rpc: "https://sepolia.base.org", explorer: "https://sepolia.basescan.org" },
   base: { chainId: 8453, rpc: "https://mainnet.base.org", explorer: "https://basescan.org" },
 };
 
-const networkName = arg("network", process.env.NETWORK || "base-sepolia");
+const networkName = arg("network", process.env.NETWORK || "base");
 const net = NETWORKS[networkName];
 if (!net) throw new Error("unknown network " + networkName);
 

@@ -11,7 +11,7 @@ PLUCO is an open art market on Base: anyone can register a collection, mint a pi
 ## Features
 
 - **Light and dark themes** driven by `prefers-color-scheme`, no toggle required and no flash on load
-- **Wallet connect** via EIP-6963 multi-wallet discovery on Base mainnet (chain 8453), with account change, network switch and disconnect handling
+- **Wallet connect** on Base mainnet only (chain 8453): MetaMask through EIP-6963 discovery plus WalletConnect for any other EVM wallet, with account change, network switch to Base and disconnect handling. No other chains are configured
 - **Responsive** from 360px to wide desktop, with a single shared content frame across pages
 - Editorial pages: collections, creators, marketplace, explore, mint, sell, protocol, verification, dashboard, community, brand, about, contact, legal
 - SEO: per-page titles, Open Graph and Twitter metadata, canonical URLs, `sitemap.xml` and `robots.txt`
@@ -70,7 +70,7 @@ docs/         # remediation and fee notes
 
 The site deploys collections itself — no server, no key handling:
 
-1. Open /launch, connect a wallet, pick Base Sepolia first.
+1. Open /launch and connect a wallet. It deploys to Base mainnet (chain 8453) only.
 2. Set name, symbol, supply, price, per-wallet limit and the mint fee.
 3. Sign once. The page shows the address, opens the sale, and prints the config.
 

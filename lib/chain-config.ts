@@ -6,7 +6,6 @@ export type ChainConfig = {
 };
 
 export const BASE_MAINNET = 8453;
-export const BASE_SEPOLIA = 84532;
 
 export type Network = {
   name: string;
@@ -16,16 +15,8 @@ export type Network = {
   rpc: string;
 };
 
-export function networkFor(chainId: number): Network {
-  if (chainId === BASE_SEPOLIA) {
-    return {
-      name: "Base Sepolia",
-      short: "Base Sepolia",
-      currency: "test ETH",
-      explorer: "https://sepolia.basescan.org",
-      rpc: "https://sepolia.base.org",
-    };
-  }
+export function networkFor(_chainId?: number): Network {
+  // Base mainnet is the only network PLUCO runs on.
   return {
     name: "Base",
     short: "Base",

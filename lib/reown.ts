@@ -3,8 +3,9 @@
 /**
  * Reown AppKit (WalletConnect) for PLUCO.
  *
- * One modal for every wallet: the injected extension on desktop, the mobile app by
- * deeplink or QR, and Solana wallets, over a single multichain session.
+ * Base mainnet only. One modal for every EVM wallet: the injected extension on
+ * desktop, the mobile app by deeplink or QR. No other chains are configured, so a
+ * wallet that is pointed elsewhere is asked to switch to Base (chain 8453).
  *
  * Requires NEXT_PUBLIC_REOWN_PROJECT_ID from https://dashboard.reown.com — the
  * button is hidden when it is missing, so the app keeps working without it.
@@ -13,9 +14,7 @@
 import { createAppKit } from "@reown/appkit";
 import type { AppKit } from "@reown/appkit";
 import { EthersAdapter } from "@reown/appkit-adapter-ethers";
-import { SolanaAdapter } from "@reown/appkit-adapter-solana";
-import { BitcoinAdapter } from "@reown/appkit-adapter-bitcoin";
-import { base, baseSepolia, solana, bitcoin, bitcoinTestnet } from "@reown/appkit/networks";
+import { base } from "@reown/appkit/networks";
 import { ChainController, RouterController } from "@reown/appkit-controllers";
 
 export const REOWN_ID = "reown";
@@ -44,8 +43,8 @@ export function getReown(): AppKit | null {
   if (!reownConfigured() || typeof window === "undefined") return null;
   if (!modal) {
     modal = createAppKit({
-          adapters: [new EthersAdapter(), new SolanaAdapter(), new BitcoinAdapter()],
-          networks: [base, baseSepolia, solana, bitcoin, bitcoinTestnet],
+          adapters: [new EthersAdapter()],
+          networks: [base],
       defaultNetwork: base,
       metadata: metadata(),
           projectId: PROJECT_ID,
@@ -111,11 +110,11 @@ export async function restoreReown(): Promise<Connected | null> {
   return null;
 }
 
-export function switchReownNetwork(chainId: number) {
+/** Base is the only chain PLUCO supports, so this always targets mainnet. */
+export function switchReownNetwork(_chainId?: number) {
   const appKit = getReown();
   if (!appKit) return Promise.resolve();
-  const target = chainId === baseSepolia.id ? baseSepolia : base;
-  return appKit.switchNetwork(target, { throwOnFailure: false }).catch(() => undefined);
+  return appKit.switchNetwork(base, { throwOnFailure: false }).catch(() => undefined);
 }
 
 /** Open AppKit on its account view (send, receive, network, disconnect). */
@@ -151,7 +150,7 @@ export function getEmail(): string | null {
   }
 }
 
-export type ReownNamespace = "eip155" | "solana" | "bip122";
+export type ReownNamespace = "eip155";
 
 export async function disconnectReown(namespace: ReownNamespace = "eip155") {
   const appKit = getReown();
@@ -163,15 +162,13 @@ export async function disconnectReown(namespace: ReownNamespace = "eip155") {
   }
 }
 
-/** Pick up a session AppKit restored from storage, in any namespace. */
+/** Pick up a session AppKit restored from storage. */
 export function restoreAnyReown(): { address: string; namespace: ReownNamespace } | null {
   const appKit = getReown();
   if (!appKit) return null;
-  for (const namespace of ["eip155", "solana", "bip122"] as ReownNamespace[]) {
-    const account = appKit.getAccount(namespace);
-    if (account?.isConnected && account.address) {
-      return { address: account.address, namespace };
-    }
+  const account = appKit.getAccount("eip155");
+  if (account?.isConnected && account.address) {
+    return { address: account.address, namespace: "eip155" };
   }
   return null;
 }
