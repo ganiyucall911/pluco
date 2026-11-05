@@ -9,3 +9,8 @@ build/
 .next-env.d.ts
 *.tsbuildinfo
 next-env.d.ts
+
+# foundry
+contracts/art/out/
+contracts/art/cache/
+contracts/art/broadcast/
