@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { Button } from "@/components/button";
+import { LiveListings } from "@/components/live-listings";
 
 export const metadata: Metadata = { title: "Marketplace" };
 
@@ -32,21 +33,13 @@ export default function MarketplacePage() {
           <p className="num text-[12px] text-faint">0 listings</p>
         </div>
 
-        <div className="mt-16 flex flex-col items-start gap-6 border border-line bg-surface p-10 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="eyebrow">Empty</p>
-            <h2 className="mt-3 text-[22px]">No listings yet.</h2>
-            <p className="mt-2 max-w-[420px] text-[13px] leading-6 text-mute">
-              The marketplace contract is not deployed on Base yet. Once it is, every listing is
-              read directly from the chain — no imported or demo data.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Button href="/mint">Mint a piece</Button>
-            <Button href="/protocol" variant="secondary">
-              Protocol status
-            </Button>
-          </div>
+        <LiveListings max={24} />
+
+        <div className="mt-10 flex flex-wrap gap-3">
+          <Button href="/mint">Mint a piece</Button>
+          <Button href="/protocol" variant="secondary">
+            Protocol status
+          </Button>
         </div>
       </section>
     </main>

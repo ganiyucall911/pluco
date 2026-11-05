@@ -3,15 +3,20 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "PLUCO Originals — 1-of-1 digital art ERC-721 with EIP-2981 royalties",
+  "description": "PLUCO Originals \u2014 1-of-1 digital art ERC-721 with EIP-2981 royalties",
   "scripts": {
     "compile": "node compile.mjs",
     "deploy:base-sepolia": "node compile.mjs && node deploy.mjs --network base-sepolia",
-    "deploy:base": "node compile.mjs && node deploy.mjs --network base"
+    "deploy:base": "node compile.mjs && node deploy.mjs --network base",
+    "test": "forge test",
+    "test:verbose": "forge test -vvv --gas-report"
   },
   "dependencies": {
     "@openzeppelin/contracts": "5.1.0",
     "ethers": "6.13.4",
     "solc": "0.8.26"
+  },
+  "devDependencies": {
+    "forge-std": "n/a"
   }
 }
