@@ -3,4 +3,4 @@
 :HL["/pluco/_next/static/media/space_grotesk_latin_wght_normal-s.p.092gko6h6levo.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"collections","h":64,"c":"$Q2"}]]
-0:{"b":"Tkg9Z4aXIEEc612i1ok0i","t":{"t":{"s":"","h":20,"c":"$Q1"}}}
+0:{"b":"ySscvtx9zBwgl69P0Yn8_","t":{"t":{"s":"","h":20,"c":"$Q1"}}}
