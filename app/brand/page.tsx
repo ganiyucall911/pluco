@@ -1,8 +1,13 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Brand" };
+export const metadata = pageMeta({
+  title: "Brand",
+  description:
+    "PLUCO brand assets: logo, wordmark, colour palette and usage guidance for partners and press.",
+  path: "/brand",
+});
 
 const swatches = [
   { name: "Obsidian", value: "#050505" },

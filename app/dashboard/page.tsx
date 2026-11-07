@@ -1,8 +1,13 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { BuildStatus } from "@/components/build-status";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Dashboard" };
+export const metadata = pageMeta({
+  title: "Dashboard",
+  description:
+    "Your PLUCO dashboard: collections, listings, sales and royalties in one place.",
+  path: "/dashboard",
+});
 
 export default function DashboardPage() {
   return (

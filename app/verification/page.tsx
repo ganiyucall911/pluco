@@ -1,13 +1,15 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Button } from "@/components/button";
 import { Verified } from "@/components/verified";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Verification",
-  description: "What PLUCO verifies, and the exact requirements a creator must meet.",
-};
+  description:
+    "What PLUCO verifies, and the exact requirements a creator must meet.",
+  path: "/verification",
+});
 
 const requirements = [
   ["Registered name", "A single creator name, used on every listing and mint. No aliases, no studio suffixes."],

@@ -1,9 +1,14 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { ProtocolStats } from "@/components/protocol-stats";
 import { Button } from "@/components/button";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Protocol" };
+export const metadata = pageMeta({
+  title: "Protocol",
+  description:
+    "How the PLUCO protocol works: registry, marketplace, royalties and the 2.5% fee capped at 5%.",
+  path: "/protocol",
+});
 
 const REGISTRY = process.env.NEXT_PUBLIC_PLUCO_REGISTRY || "";
 const MARKETPLACE = process.env.NEXT_PUBLIC_PLUCO_MARKETPLACE || "";

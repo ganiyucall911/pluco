@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { SectionTitle } from "@/components/section-title";
@@ -7,8 +6,14 @@ import Image from "next/image";
 import { asset } from "@/lib/asset";
 import { CollectionCard } from "@/components/collection-card";
 import { collections, creators, communities } from "@/lib/data";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Explore" };
+export const metadata = pageMeta({
+  title: "Explore",
+  description:
+    "Explore art on PLUCO: browse collections and pieces minted on Base.",
+  path: "/explore",
+});
 
 export default function ExplorePage() {
   return (

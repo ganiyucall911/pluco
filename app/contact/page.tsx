@@ -1,8 +1,13 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { Button } from "@/components/button";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Contact" };
+export const metadata = pageMeta({
+  title: "Contact",
+  description:
+    "Get in touch with the PLUCO team about creator onboarding, partnerships and press.",
+  path: "/contact",
+});
 
 const channels = [
   ["Repository", "github.com/ganiyucall911/pluco", "https://github.com/ganiyucall911/pluco"],

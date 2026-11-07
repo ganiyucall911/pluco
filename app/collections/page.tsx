@@ -1,10 +1,15 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
 import { CollectionCard } from "@/components/collection-card";
 import { collections } from "@/lib/data";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Collections" };
+export const metadata = pageMeta({
+  title: "Collections",
+  description:
+    "Every collection registered on PLUCO, read from the onchain registry on Base.",
+  path: "/collections",
+});
 
 export default function CollectionsPage() {
   return (

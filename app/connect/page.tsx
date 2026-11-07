@@ -1,9 +1,14 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { Button } from "@/components/button";
 import { AuthPanel } from "@/components/auth-panel";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Create account or log in" };
+export const metadata = pageMeta({
+  title: "Create account or log in",
+  description:
+    "Create a PLUCO account or log in with your wallet to mint, list and collect on Base.",
+  path: "/connect",
+});
 
 export default function ConnectPage() {
   return (

@@ -1,12 +1,17 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/button";
 import { Art } from "@/components/art";
 import { SectionTitle } from "@/components/section-title";
 import { communities } from "@/lib/data";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Community" };
+export const metadata = pageMeta({
+  title: "Community",
+  description:
+    "Where PLUCO artists, collectors and builders gather: channels, guidelines and how to get involved.",
+  path: "/community",
+});
 
 const stats = [
   { label: "Rooms", value: "03" },

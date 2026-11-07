@@ -4,6 +4,7 @@ import { Art } from "@/components/art";
 import { Button } from "@/components/button";
 import { SectionTitle } from "@/components/section-title";
 import { collections } from "@/lib/data";
+import { pageMeta } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -14,7 +15,12 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const item = collections.find((c) => c.slug === slug);
-  return { title: item?.name ?? "Collection" };
+  if (!item) return { title: "Collection" };
+  return pageMeta({
+    title: item.name,
+    description: `${item.name} by ${item.creator} — ${item.description}`,
+    path: `/collections/${item.slug}`,
+  });
 }
 
 export default async function CollectionPage({ params }: Props) {

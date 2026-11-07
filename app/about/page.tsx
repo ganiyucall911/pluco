@@ -1,9 +1,14 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/button";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = { title: "About" };
+export const metadata = pageMeta({
+  title: "About",
+  description:
+    "PLUCO is a registry and a marketplace for art on Base: open by default, explicit ownership, and contracts you can read.",
+  path: "/about",
+});
 
 const principles = [
   {

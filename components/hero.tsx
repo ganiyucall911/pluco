@@ -9,7 +9,7 @@ export function Hero() {
       <div className="grid-noise absolute inset-0 opacity-80" />
       <div className="pointer-events-none absolute right-[-15%] top-[5%] h-[420px] w-[420px] rounded-full bg-surface-2/35 blur-[120px] sm:h-[760px] sm:w-[760px]" />
       <div className="relative mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1.08fr_.92fr] lg:gap-16">
-        <motion.div initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+        <div className="hero-in">
           <p className="mb-6 text-[10px] font-semibold uppercase tracking-[.3em] text-paper sm:text-xs">
             The NFT Ownership Network
           </p>
@@ -32,7 +32,7 @@ export function Hero() {
           <p className="mt-6 text-[10px] uppercase tracking-[.15em] text-faint sm:mt-7 sm:text-xs">
             Curated demo content · no live sales
           </p>
-        </motion.div>
+        </div>
         <div className="relative mx-auto hidden aspect-square w-full max-w-[560px] sm:block">
           <motion.div
             className="absolute inset-[5%] rounded-full border border-paper/20"

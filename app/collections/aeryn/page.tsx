@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHero } from "@/components/page-hero";
 import { Button } from "@/components/button";
 import { Reveal } from "@/components/reveal";
 import { asset } from "@/lib/asset";
 import { VerifiedName } from "@/components/verified";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "AERYN GEM MT",
   description: "AERYN GEM MT by PLUCO — graded-card artwork issued on Base.",
-};
+  path: "/collections/aeryn",
+});
 
 const CONTRACT = "0xb51639e0489cbd7d5dfb60c552db3ba6ce6e6992";
 const COLLECTION = "https://opensea.io/collection/aeryn-gem-mt-10-slab-552734664";

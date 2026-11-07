@@ -1,8 +1,13 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { Button } from "@/components/button";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Marketplace" };
+export const metadata = pageMeta({
+  title: "Marketplace",
+  description:
+    "Buy and sell art on the PLUCO marketplace on Base. Royalties pay the artist on every resale.",
+  path: "/marketplace",
+});
 
 export default function MarketplacePage() {
   return (

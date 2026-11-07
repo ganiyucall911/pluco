@@ -1,5 +1,13 @@
 import { PageHero } from "@/components/page-hero";
 import { Button } from "@/components/button";
+import { pageMeta } from "@/lib/site";
+
+export const metadata = pageMeta({
+  title: "Sell",
+  description:
+    "List a piece for sale on PLUCO. You keep the token until it sells, and royalties pay the artist on every resale.",
+  path: "/sell",
+});
 
 const steps = [
   ["Your art stays yours", "List a piece without sending it anywhere. The token stays in your wallet until someone pays."],

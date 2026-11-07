@@ -112,6 +112,69 @@ main { display: block; padding-top: 64px; }
   opacity: 0.6;
 }
 
-.edge-fade {
-  background: linear-gradient(to bottom, var(--edge), transparent);
-}
+    .edge-fade {
+      background: linear-gradient(to bottom, var(--edge), transparent);
+    }
+
+    /* Skip link: hidden until focused, then a real, visible control. */
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 100;
+      transform: translateY(-200%);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+    .skip-link:focus-visible {
+      transform: translateY(0);
+      outline: 2px solid var(--paper);
+      outline-offset: 3px;
+    }
+
+    /* Reveal: visible by default, animated only when JS opts in. */
+    .reveal-pending {
+      opacity: 0;
+      transform: translateY(26px);
+    }
+    .reveal-in {
+      opacity: 1;
+      transform: none;
+      transition:
+        opacity 0.65s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .hero-in {
+      animation: hero-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+    @keyframes hero-in {
+      from {
+        opacity: 0;
+        transform: translateY(26px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal-pending {
+        opacity: 1;
+        transform: none;
+      }
+    }

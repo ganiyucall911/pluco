@@ -1,7 +1,12 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Legal" };
+export const metadata = pageMeta({
+  title: "Legal",
+  description:
+    "PLUCO terms, privacy and protocol disclosures.",
+  path: "/legal",
+});
 
 const sections = [
   {

@@ -1,12 +1,17 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
 import { Verified } from "@/components/verified";
 import { Reveal } from "@/components/reveal";
 import Image from "next/image";
 import { asset } from "@/lib/asset";
 import { ArrowUpRight } from "lucide-react";
+import { pageMeta } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Creator" };
+export const metadata = pageMeta({
+  title: "Creators",
+  description:
+    "Meet the artists and studios publishing collections on PLUCO.",
+  path: "/creators",
+});
 
 const LINKS = [
   { label: "OpenSea", href: "https://opensea.io/pluco" },
