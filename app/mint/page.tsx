@@ -5,6 +5,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { useWallet } from "@/components/wallet-provider";
 import { formatEth, loadChainConfig, networkFor, short, type ChainConfig } from "@/lib/chain-config";
+import { PLUCO_OPENSEA, PLUCO_OPENSEA_CREATED, openseaContractSearch } from "@/lib/opensea";
 
 const MINT_SELECTOR = "0xd85d3d27"; // mint(string)
 const READS: Record<string, string> = {
@@ -136,7 +137,16 @@ export default function MintPage() {
               </div>
             </div>
             <p className="mt-6 text-sm leading-6 text-body">
-              Price and per-wallet limit are fixed in the contract, so nobody can change them mid-drop.
+                  Every piece PLUCO mints is listed on the{" "}
+                  <a
+                    className="link-underline text-paper"
+                    href={PLUCO_OPENSEA}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    PLUCO page on OpenSea
+                  </a>
+                  . Price and per-wallet limit are fixed in the contract, so nobody can change them mid-drop.
               {contract && net ? (
                 <>
                   {" "}Contract{" "}
@@ -177,7 +187,18 @@ export default function MintPage() {
                 {connecting ? "Connecting…" : "Log in"} 
               </button>
             ) : soldOut ? (
-              <p className="text-sm text-body">Sold out. Secondary listings live on OpenSea and Rarible.</p>
+                  <p className="text-sm leading-6 text-body">
+                    Sold out. Every piece lives on the{" "}
+                    <a
+                      className="link-underline text-paper"
+                      href={PLUCO_OPENSEA}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      PLUCO page on OpenSea
+                    </a>
+                    , where secondary listings are made.
+                  </p>
             ) : (
               <>
                 <label className="block">
@@ -215,22 +236,30 @@ export default function MintPage() {
                 <a className="link-underline text-body hover:text-paper" href={net.explorer + "/tx/" + txHash} target="_blank" rel="noreferrer">
                   View transaction
                 </a>
-                <a
-                  className="link-underline text-body hover:text-paper"
-                  href={"https://opensea.io/search?query=" + contract + "&type=item"}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Find on OpenSea
-                </a>
-              </div>
-            ) : null}
-            {txHash ? (
-              <p className="mt-2 text-[11px] leading-5 text-faint">
-                OpenSea indexes a contract a few hours after its first mint. Until it does, the search above returns nothing —
-                the piece exists onchain regardless.
-              </p>
-            ) : null}
+                    <a
+                      className="link-underline text-body hover:text-paper"
+                      href={PLUCO_OPENSEA_CREATED}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      PLUCO on OpenSea
+                    </a>
+                    <a
+                      className="link-underline text-body hover:text-paper"
+                      href={openseaContractSearch(contract)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      This contract
+                    </a>
+                  </div>
+                ) : null}
+                {txHash ? (
+                  <p className="mt-2 text-[11px] leading-5 text-faint">
+                    The token is in your wallet now. OpenSea indexes a contract a few hours after its first mint, after
+                    which it appears under PLUCO on OpenSea. Nothing is minted outside the PLUCO account.
+                  </p>
+                ) : null}
           </div>
         </div>
       </section>

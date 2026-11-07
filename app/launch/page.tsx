@@ -5,6 +5,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { useWallet } from "@/components/wallet-provider";
 import { BASE_MAINNET, isAddress, networkFor, parseEth } from "@/lib/chain-config";
+import { PLUCO_OPENSEA, openseaContractSearch } from "@/lib/opensea";
 
 const WORD = 64;
 
@@ -372,9 +373,34 @@ export default function LaunchPage() {
                 <pre className="mt-4 overflow-x-auto rounded-lg border border-line bg-ink p-4 text-[11px] leading-5 text-body">
                   {configSnippet}
                 </pre>
-                <p className="mt-3 text-[11px] leading-5 text-faint">
-                  Paste that into public/config.json (or send it to me) and the mint page picks the contract up without a rebuild.
-                </p>
+                    <p className="mt-3 text-[11px] leading-5 text-faint">
+                      Paste that into public/config.json (or send it to me) and the mint page picks the contract up without a rebuild.
+                    </p>
+                    <div className="mt-5 rounded-lg border border-line p-4">
+                      <p className="eyebrow">On OpenSea</p>
+                      <p className="mt-3 text-[13px] leading-6 text-body">
+                        The contract carries an EIP-7572 collection URI, so OpenSea lists it under PLUCO. Deploy from the
+                        PLUCO wallet and every mint from it appears on one page.
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[13px]">
+                        <a
+                          className="link-underline text-body hover:text-paper"
+                          href={PLUCO_OPENSEA}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          PLUCO on OpenSea
+                        </a>
+                        <a
+                          className="link-underline text-body hover:text-paper"
+                          href={openseaContractSearch(address)}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          This contract
+                        </a>
+                      </div>
+                    </div>
               </div>
             ) : (
               <p className="mt-8 text-xs leading-5 text-faint">

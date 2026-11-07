@@ -20,7 +20,12 @@ contract PlucoOriginals is ERC721, ERC721URIStorage, ERC2981, Ownable, Reentranc
 
     uint256 public totalMinted;
     bool public saleOpen;
-    string public provenance;
+        string public provenance;
+
+        /// @notice EIP-7572 collection metadata. OpenSea reads this to render the
+        ///         collection and to credit PLUCO as its creator.
+        string public collectionMetadataURI;
+        event CollectionMetadataSet(string uri);
 
     /// @notice PLUCO's cut of every primary mint, paid out immediately to the treasury.
     address public treasury;
@@ -61,7 +66,8 @@ contract PlucoOriginals is ERC721, ERC721URIStorage, ERC2981, Ownable, Reentranc
         maxSupply = maxSupply_;
         mintPrice = mintPrice_;
         maxPerWallet = maxPerWallet_ == 0 ? maxSupply_ : maxPerWallet_;
-        _setDefaultRoyalty(royaltyReceiver_, 750); // 7.5%
+            _setDefaultRoyalty(royaltyReceiver_, 750); // 7.5%
+            collectionMetadataURI = "https://ganiyucall911.github.io/pluco/pluco-collection.json";
     }
 
     /// @notice Mint one piece. Each token gets its own metadata URI.
@@ -99,7 +105,18 @@ contract PlucoOriginals is ERC721, ERC721URIStorage, ERC2981, Ownable, Reentranc
         emit SaleToggled(open);
     }
 
-    /// @notice Freeze a hash of the artwork files so buyers can verify nothing was swapped.
+        /// @notice Point marketplaces at the current collection metadata document.
+        function setCollectionMetadataURI(string calldata uri) external onlyOwner {
+            collectionMetadataURI = uri;
+            emit CollectionMetadataSet(uri);
+        }
+
+        /// @notice OpenSea and Rarible call this to read collection-level metadata.
+        function contractURI() external view returns (string memory) {
+            return collectionMetadataURI;
+        }
+
+        /// @notice Freeze a hash of the artwork files so buyers can verify nothing was swapped.
     function setProvenance(string calldata provenanceHash) external onlyOwner {
         provenance = provenanceHash;
         emit ProvenanceSet(provenanceHash);

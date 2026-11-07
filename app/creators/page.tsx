@@ -5,6 +5,7 @@ import Image from "next/image";
 import { asset } from "@/lib/asset";
 import { ArrowUpRight } from "lucide-react";
 import { pageMeta } from "@/lib/site";
+import { PLUCO_OPENSEA } from "@/lib/opensea";
 
 export const metadata = pageMeta({
   title: "Creators",
@@ -14,7 +15,7 @@ export const metadata = pageMeta({
 });
 
 const LINKS = [
-  { label: "OpenSea", href: "https://opensea.io/pluco" },
+  { label: "OpenSea", href: PLUCO_OPENSEA },
   { label: "GitHub", href: "https://github.com/ganiyucall911/pluco" },
 ];
 

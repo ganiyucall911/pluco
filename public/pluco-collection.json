@@ -1,0 +1,8 @@
+{
+  "name": "PLUCO Originals",
+  "description": "One-of-one digital artwork by PLUCO, issued on Base. Every piece is a single ERC-721 token with its own metadata and a 7.5% royalty that follows it on every resale. Minted work is traded on the PLUCO page on OpenSea.",
+  "image": "https://ganiyucall911.github.io/pluco/brand/pluco-white.png",
+  "external_link": "https://opensea.io/pluco",
+  "seller_fee_basis_points": 750,
+  "fee_recipient": "0xcaEC37D3AdcE9a141BF5d78895cb3074Fae77AD9"
+}
