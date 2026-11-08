@@ -9,6 +9,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ExternalLink, Loader2 } from "lucide-react";
+import { BuyListing } from "./buy-listing";
 import { ChainListing, readListings, shortAddress } from "@/lib/onchain";
 
 export function LiveListings({ max = 24 }: { max?: number }) {
@@ -19,6 +20,8 @@ export function LiveListings({ max = 24 }: { max?: number }) {
     error: null,
   });
 
+  const [refresh, setRefresh] = useState(0);
+
   useEffect(() => {
     let live = true;
     readListings(max).then((result) => {
@@ -28,7 +31,9 @@ export function LiveListings({ max = 24 }: { max?: number }) {
     return () => {
       live = false;
     };
-  }, [max]);
+  }, [max, refresh]);
+
+  const refreshButton = <button type="button" className="btn btn-secondary mt-6" onClick={() => setRefresh((n) => n + 1)}>Refresh listings</button>;
 
   if (state.loading) {
     return (
@@ -55,7 +60,7 @@ export function LiveListings({ max = 24 }: { max?: number }) {
   }
 
   if (state.error) {
-    return <div className="mt-10 border border-line bg-surface px-5 py-4 text-[13px] text-gold">{state.error}</div>;
+    return <div><div className="mt-10 border border-line bg-surface px-5 py-4 text-[13px] text-gold">{state.error}</div>{refreshButton}</div>;
   }
 
   if (state.rows.length === 0) {
@@ -64,25 +69,28 @@ export function LiveListings({ max = 24 }: { max?: number }) {
         <p className="eyebrow">Live</p>
         <h2 className="mt-3 text-[22px]">No listings right now.</h2>
         <p className="mt-2 max-w-[440px] text-[13px] leading-6 text-mute">
-          The marketplace is live and empty. The moment someone lists a registered piece, it
+          No active listings were found among the latest records. When someone lists a registered piece, it
           appears here — read from Base, not from a cache.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link href="/mint" className="btn">Mint a piece</Link>
+          <Link href="/sell" className="btn">Sell a piece</Link>
           <Link href="/collections" className="btn btn-secondary">Browse collections</Link>
         </div>
+        {refreshButton}
       </div>
     );
   }
 
   return (
+    <div>
+    {refreshButton}
     <ul className="mt-10 divide-y divide-line border border-line">
       {state.rows.map((row) => (
         <li key={`${row.collection}-${row.tokenId}`} className="flex flex-wrap items-center gap-4 px-5 py-4">
           <div className="min-w-[180px] flex-1">
             <p className="text-[13px] font-medium text-paper">{row.collectionName}</p>
             <p className="mt-1 font-mono text-[11px] text-faint">
-              #{row.tokenId} · seller {shortAddress(row.seller)}
+              #{row.tokenId} · listing {row.listingId} · seller {shortAddress(row.seller)}
             </p>
           </div>
           <p className="num text-[13px] text-paper">{row.priceEth} ETH</p>
@@ -106,8 +114,10 @@ export function LiveListings({ max = 24 }: { max?: number }) {
               </a>
             ) : null}
           </div>
+          <BuyListing listing={row} onConfirmed={() => setRefresh((n) => n + 1)} />
         </li>
       ))}
     </ul>
+    </div>
   );
 }

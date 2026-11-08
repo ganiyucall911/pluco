@@ -6,6 +6,8 @@ import { PageHero } from "@/components/page-hero";
 import { useWallet } from "@/components/wallet-provider";
 import { BASE_MAINNET, isAddress, networkFor, parseEth } from "@/lib/chain-config";
 
+import { assertWallet, waitForReceipt } from "@/lib/transactions";
+
 const WORD = 64;
 
 function hex(n: bigint) {
@@ -156,6 +158,8 @@ export default function LaunchPage() {
     try {
       setStatus("Switching your wallet to " + net.name + "…");
       await switchChain(chainId);
+      if (!provider) throw new Error("Connect a wallet first.");
+      await assertWallet(provider, account);
       setStatus("Confirm the deployment in your wallet…");
       const data =
         artifact.bytecode +
@@ -193,16 +197,19 @@ export default function LaunchPage() {
   }
 
   async function toggleSale(open: boolean) {
-    if (!provider || !address) return;
+    if (!provider || !address || !account) return;
     setBusy(true);
     try {
+      await switchChain(chainId);
+      await assertWallet(provider, account);
       const data = "0xaf979f25" + hex(open ? BigInt(1) : BigInt(0));
       const hash = (await provider.request({
         method: "eth_sendTransaction",
         params: [{ from: account, to: address, data }],
       })) as string;
+      setTxHash(hash);
       setStatus((open ? "Opening" : "Closing") + " the sale — transaction " + hash.slice(0, 10) + "…");
-      await waitFor(hash);
+      await waitForReceipt(provider, hash);
       setSaleOpen(open);
       setStatus(open ? "Sale is open. The mint page will take payments now." : "Sale closed.");
     } catch (error) {

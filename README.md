@@ -16,7 +16,7 @@ PLUCO is an open art market on Base: anyone can register a collection, mint a pi
 - Editorial pages: collections, creators, marketplace, explore, mint, sell, protocol, verification, dashboard, community, brand, about, contact, legal
 - SEO: per-page titles, Open Graph and Twitter metadata, canonical URLs, `sitemap.xml` and `robots.txt`
 
-Wallet connection is read-only: it reports the address, network and balance. No PLUCO contracts are deployed yet, so nothing on this site transfers funds.
+Wallet actions can deploy collections, mint, register, approve a token, list, reprice, cancel, buy, and withdraw proceeds using real ETH on Base mainnet. The committed `public/config.json` contains empty contract addresses; configure verified deployments before trading is available. Build-time `NEXT_PUBLIC_*` address overrides also apply. No mainnet deployment or transaction is verified by this repository alone.
 
 ## Requirements
 
@@ -66,6 +66,16 @@ contracts/    # Solidity sources
 docs/         # remediation and fee notes
 ```
 
+## Trading and confirmation
+
+`/sell` provides collection registration, single-token approval, listing, repricing, cancellation and withdrawal controls. `/marketplace` provides purchase and proceeds-withdrawal controls. Each write requires an explicit wallet action. Approvals authorize only the specified token, not all tokens in a collection. Network gas is required even where the platform charges no fee.
+
+Marketplace sale proceeds, royalties and fees are credited to their recipients and require a separate `withdraw()` transaction. Primary mint fees are forwarded immediately; remaining primary proceeds are withdrawn by the collection owner.
+
+Transaction hashes are displayed as submitted; success is reported only after a receipt with successful status. Confirmation timeout means unknown/pending, not a failed transaction: inspect the linked BaseScan transaction before retrying.
+
+Run `node scripts/check-transactions.mjs` for focused mocked-RPC checks of the transaction boundary, then `npx tsc --noEmit`, `npm run lint` and `npm run build`. These do not verify real wallet behavior or live settlement. Before launch, verify the complete register → mint → approve → list → buy → withdraw flow on an authorized preview and have the contracts independently reviewed. No contract changes or deployment are included in these frontend changes.
+
 ## Launching a collection
 
 The site deploys collections itself — no server, no key handling:
@@ -87,7 +97,7 @@ public/contracts/PlucoOriginals.json, written by npm run compile in contracts/ar
 
 - one-of-one tokens, each with its own metadata URI
 - price, supply and wallet limit fixed at deploy
-- 7.5% EIP-2981 royalty on every resale
+- default 7.5% EIP-2981 royalty, owner-changeable and honored by supporting marketplaces
 - primary mint fee to treasury, hard-capped at 10%
 - owner reserve minting without payment
 
