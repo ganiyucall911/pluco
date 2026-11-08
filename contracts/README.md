@@ -14,7 +14,7 @@ network, not the whole product: the chain, wallet and indexer come next.
 ## Build
 
 ```bash
-cd contracts/art
+cd contracts
 npm install
 npm run compile        # writes ABI + bytecode to ./artifacts
 ```
