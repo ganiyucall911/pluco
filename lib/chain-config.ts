@@ -1,5 +1,6 @@
 export type ChainConfig = {
   chainId: number;
+  reownProjectId: string;
   originals: string;
   registry: string;
   marketplace: string;
@@ -28,6 +29,7 @@ export function networkFor(_chainId?: number): Network {
 
 const FALLBACK: ChainConfig = {
   chainId: Number(process.env.NEXT_PUBLIC_PLUCO_CHAIN_ID || BASE_MAINNET),
+  reownProjectId: process.env.NEXT_PUBLIC_REOWN_PROJECT_ID || "",
   originals: process.env.NEXT_PUBLIC_PLUCO_ART_CONTRACT || "",
   registry: process.env.NEXT_PUBLIC_PLUCO_REGISTRY || "",
   marketplace: process.env.NEXT_PUBLIC_PLUCO_MARKETPLACE || "",
@@ -51,6 +53,7 @@ export function loadChainConfig(): Promise<ChainConfig> {
       const file = (await res.json()) as Partial<ChainConfig>;
       return {
         chainId: Number(file.chainId || FALLBACK.chainId),
+        reownProjectId: FALLBACK.reownProjectId || file.reownProjectId || "",
         originals: FALLBACK.originals || file.originals || "",
         registry: FALLBACK.registry || file.registry || "",
         marketplace: FALLBACK.marketplace || file.marketplace || "",

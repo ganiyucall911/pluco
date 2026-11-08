@@ -19,9 +19,11 @@ import {
   openAccountView,
   openEmailLogin,
   reownConfigured,
+  setReownProjectId,
   restoreAnyReown,
   switchReownNetwork,
 } from "@/lib/reown";
+import { loadChainConfig } from "@/lib/chain-config";
 
 export const BASE_CHAIN_ID = 8453;
 export const BASE_CHAIN_HEX = "0x2105";
@@ -84,6 +86,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   const [activeName, setActiveName] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [namespace, setNamespace] = useState<Namespace | null>(null);
+  const [, setConfigReady] = useState(false);
 
   const attach = useCallback((eth: Eth) => {
     setProvider(eth);
@@ -112,6 +115,20 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     } catch {
       /* ignore */
     }
+  }, []);
+
+  // A Reown project id in public/config.json takes effect without a rebuild.
+  useEffect(() => {
+    if (typeof window === "undefined" || reownConfigured()) return;
+    let live = true;
+    loadChainConfig().then((config) => {
+      if (!live || !config.reownProjectId) return;
+      setReownProjectId(config.reownProjectId);
+      setConfigReady(true);
+    });
+    return () => {
+      live = false;
+    };
   }, []);
 
   // AppKit restores its own WalletConnect session on reload.

@@ -20,11 +20,20 @@ import { ChainController, RouterController } from "@reown/appkit-controllers";
 export const REOWN_ID = "reown";
 export const REOWN_NAME = "WalletConnect / more wallets";
 
-const PROJECT_ID = process.env.NEXT_PUBLIC_REOWN_PROJECT_ID ?? "";
+let projectId = process.env.NEXT_PUBLIC_REOWN_PROJECT_ID ?? "";
+
+/**
+ * Let the project id arrive at runtime from public/config.json. A Reown project id
+ * is public by design (it ships in the client bundle), so this keeps the deployed
+ * site configurable without a rebuild or a build-time secret.
+ */
+export function setReownProjectId(id: string | undefined | null) {
+  if (id && !projectId) projectId = id;
+}
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export function reownConfigured() {
-  return Boolean(PROJECT_ID);
+  return Boolean(projectId);
 }
 
 function metadata() {
@@ -47,7 +56,7 @@ export function getReown(): AppKit | null {
           networks: [base],
       defaultNetwork: base,
       metadata: metadata(),
-          projectId: PROJECT_ID,
+          projectId,
           allWallets: "SHOW",
           themeMode: "dark",
               features: {
