@@ -1,6 +1,7 @@
 {
   "chainId": 8453,
-  "originals": "",
-  "registry": "",
-  "marketplace": ""
+  "originals": "0x1f49c091da217f73493a5b517f490865dbabe15d",
+  "registry": "0x9218b355bb2e69a0f53e072c697e74e1ad63f9ff",
+  "marketplace": "0x0bbdc74bd7144a32f29196753fd7727995df8e3c",
+  "reownProjectId": "399fb0ee03b4e2afa8d1682f56a11788"
 }
