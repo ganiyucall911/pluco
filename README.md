@@ -4,9 +4,37 @@
 [![Deploy](https://github.com/ganiyucall911/pluco/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/ganiyucall911/pluco/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-**Live:** https://ganiyucall911.github.io/pluco/
+**Live:** https://pluco-dev.github.io/pluco/
 
 PLUCO is an open art market on Base: anyone can register a collection, mint a piece or buy one. This repository is the marketing site and product surface built with Next.js 16 (App Router), React 19, Tailwind CSS 4 and Framer Motion, exported as a fully static site.
+
+## Live contracts
+
+Base mainnet, deployed 2026-11-08. Owner, treasury and royalty receiver are
+`0xcaEC37D3AdcE9a141BF5d78895cb3074Fae77AD9`.
+
+| Contract | Address |
+| --- | --- |
+| PlucoRegistry | `0x9218b355bb2e69a0f53e072c697e74e1ad63f9ff` |
+| PlucoOriginals | `0x1f49c091da217f73493a5b517f490865dbabe15d` |
+| PlucoMarketplace | `0x0bbdc74bd7144a32f29196753fd7727995df8e3c` |
+
+`public/config.json` points at them, so the gallery and marketplace read live chain
+state. Every hash from the deploy through the first settlement is in
+`contracts/art/deployments/base.json`.
+
+## Tests
+
+65 Foundry tests across the registry, originals and marketplace contracts:
+
+```bash
+cd contracts/art && forge test
+```
+
+They cover registration and impersonation rules, the 7.5% royalty and 2.5% fee split,
+non-custodial sale re-checks, pull-payment withdrawals, fee caps, and a fuzz test that
+the sale split always sums to the price. CI does not run them yet, see
+`docs/contracts-ci.md`.
 
 ## Features
 
