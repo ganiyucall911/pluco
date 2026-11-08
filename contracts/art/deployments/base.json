@@ -1,0 +1,30 @@
+{
+  "chainId": 8453,
+  "network": "Base mainnet",
+  "deployedAt": "2026-11-08",
+  "owner": "0xcaEC37D3AdcE9a141BF5d78895cb3074Fae77AD9",
+  "treasury": "0xcaEC37D3AdcE9a141BF5d78895cb3074Fae77AD9",
+  "royaltyReceiver": "0xcaEC37D3AdcE9a141BF5d78895cb3074Fae77AD9",
+  "contracts": {
+    "registry": "0x9218b355bb2e69a0f53e072c697e74e1ad63f9ff",
+    "originals": "0x1f49c091da217f73493a5b517f490865dbabe15d",
+    "marketplace": "0x0bbdc74bd7144a32f29196753fd7727995df8e3c"
+  },
+  "settings": {
+    "marketplaceFeeBps": 250,
+    "royaltyBps": 750,
+    "mintFeeBps": 250,
+    "maxSupply": 10,
+    "mintPriceEth": "0.0005"
+  },
+  "transactions": {
+    "deployRegistry": "0x8e4a2a3b8ba48342e279a612448c17649f4c82848992d7c57302084adeddeb07",
+    "deployOriginals": "0xbe4806cc63d1cc01f2269301a058230b60bd58691f62cd6f9e4f8a90ae275521",
+    "deployMarketplace": "0x033edeeb4b1ccd930b2518a8da3eae020e7b016aa0d159b86aa1d0fa8ef0c28a",
+    "register": "0xf9840ff0d70f053299c762b1052c8ce1ab9d2faeb1b42879a3fad0a70fe3e34e",
+    "mint": "0x9dd5c515cb94630ae11d6e650db76321628d02ed610ac6f491152eda578376dc",
+    "list": "0x64df9833c1db5a601900ed8564e15c526c2b12151818c5652342fcffb800df56",
+    "buy": "0x5c1505b0fdd7281006b595648e03a659cbf6e65b4f7707f52766a20f98b4140a",
+    "withdraw": "0x42eab1b0c3b4d9957009ca77a3e92b4a79e5eb4f27f897b3951aa0be0a0ff10d"
+  }
+}
