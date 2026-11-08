@@ -1,10 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { useWallet } from "@/components/wallet-provider";
 import { formatEth, loadChainConfig, networkFor, short, type ChainConfig } from "@/lib/chain-config";
+
+import { getProvider } from "@/lib/onchain";
+import { assertWallet, waitForReceipt } from "@/lib/transactions";
 
 const MINT_SELECTOR = "0xd85d3d27"; // mint(string)
 const READS: Record<string, string> = {
@@ -23,6 +26,7 @@ function encodeMint(uri: string): string {
 
 export default function MintPage() {
   const { account, provider, connect, switchChain, connecting, error } = useWallet();
+  const lock = useRef(false);
   const [config, setConfig] = useState<ChainConfig | null>(null);
   const [uri, setUri] = useState("");
   const [busy, setBusy] = useState(false);
@@ -42,14 +46,11 @@ export default function MintPage() {
   }, []);
 
   const readChain = useCallback(async () => {
-    if (!provider || !contract) return;
+    if (!contract) return;
     try {
       const results = await Promise.all(
         Object.values(READS).map((data) =>
-          provider.request({
-            method: "eth_call",
-            params: [{ to: contract, data }, "latest"],
-          }),
+          getProvider().call({ to: contract, data }),
         ),
       );
       setMinted(Number(BigInt(results[0] as string)));
@@ -58,25 +59,30 @@ export default function MintPage() {
       setPriceWei(BigInt(results[3] as string));
       setPriceLoaded(true);
     } catch {
-      // Contract not deployed on this network yet.
+      setPriceLoaded(false);
+      setStatus("Could not read the collection on Base. Reload to retry before minting.");
     }
-  }, [provider, contract]);
+  }, [contract]);
 
   useEffect(() => {
     readChain();
   }, [readChain]);
 
   async function mint() {
-    if (!provider || !account || !contract || !config) return;
+    if (lock.current || !provider || !account || !contract || !config) return;
+    if (!priceLoaded) { setStatus("Wait for the collection price to load on Base before minting."); return; }
     const target = uri.trim();
     if (!target) {
       setStatus("Add the metadata URI for this piece first.");
       return;
     }
+    lock.current = true;
     setBusy(true);
+    setTxHash(null);
     setStatus("Confirm the transaction in your wallet…");
     try {
       await switchChain(config.chainId);
+      await assertWallet(provider, account);
       const hash = (await provider.request({
         method: "eth_sendTransaction",
         params: [
@@ -89,13 +95,16 @@ export default function MintPage() {
         ],
       })) as string;
       setTxHash(hash);
+      setStatus("Submitted. Waiting for confirmation…");
+      await waitForReceipt(provider, hash);
       setUri("");
-      setStatus("Minted. It confirms in a few seconds.");
+      setStatus("Mint confirmed on Base.");
       await readChain();
     } catch (e) {
       const code = (e as { code?: number }).code;
       setStatus(code === 4001 ? "Request rejected in the wallet." : e instanceof Error ? e.message : "Mint failed.");
     } finally {
+      lock.current = false;
       setBusy(false);
     }
   }
@@ -107,7 +116,7 @@ export default function MintPage() {
       <PageHero
         eyebrow="PLUCO"
         title="One-of-one digital art, on-chain."
-        body="Every piece is a single ERC-721 token with its own metadata and a 7.5% royalty that follows it forever. No editions, no reruns."
+        body="Every piece is a single ERC-721 token with its own metadata and a default 7.5% royalty, changeable by the owner and honored by supporting marketplaces. No editions, no reruns."
       />
 
       <section className="wrap py-16">
@@ -191,7 +200,7 @@ export default function MintPage() {
                 </label>
                 <button
                   onClick={mint}
-                  disabled={busy || open === false || !uri.trim()}
+                  disabled={busy || !priceLoaded || open !== true || soldOut || !uri.trim()}
                   className="focus-ring mt-4 w-full rounded-full bg-paper px-6 py-4 text-sm font-semibold text-ink disabled:opacity-50"
                 >
                   {busy

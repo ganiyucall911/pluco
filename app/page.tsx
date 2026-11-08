@@ -17,7 +17,7 @@ const steps = [
   {
     n: "03",
     title: "Get paid",
-    copy: "Sellers are paid onchain the moment a sale settles. Nothing is held back.",
+    copy: "A sale credits your proceeds onchain. Withdraw them to your wallet in a separate transaction.",
   },
 ];
 
@@ -25,13 +25,13 @@ const facts = [
   ["Chain", "Base"],
   ["Settlement", "ETH"],
   ["Registry fee", "0"],
-  ["Market fee", "2.5%"],
+  ["Default market fee", "2.5%"],
 ];
 
 const fees = [
-  ["Mint a piece", "Free — gas only", "Paid to the network, not to PLUCO"],
-  ["Primary sale", "2.5%", "Deducted from the sale, paid in ETH"],
-  ["Resale royalty", "Set per collection", "Goes to the artist on every resale"],
+  ["Mint a piece", "Collection price + gas", "Primary mint fee is set per collection, capped at 10%"],
+  ["Marketplace sale", "Default 2.5%", "Owner-configurable up to 5%, deducted from the sale"],
+  ["Resale royalty", "Set per collection", "Paid when the selling marketplace honors EIP-2981"],
 ];
 
 const reasons = [
@@ -142,8 +142,8 @@ export default function HomePage() {
             stated up front.
           </h2>
           <p className="mt-5 max-w-[340px] text-[13px] leading-6 text-mute">
-            Every fee is native ETH on Base, paid out directly to the treasury address. No platform
-            balance, no withdrawal step.
+            Every fee is native ETH on Base. Primary mint fees are forwarded immediately; marketplace
+            proceeds and fees are credited onchain and require a separate withdrawal.
           </p>
           <div className="mt-8">
             <Button href="/protocol" variant="secondary">
