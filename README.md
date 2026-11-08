@@ -21,20 +21,36 @@ Base mainnet, deployed 2026-11-08. Owner, treasury and royalty receiver are
 
 `public/config.json` points at them, so the gallery and marketplace read live chain
 state. Every hash from the deploy through the first settlement is in
-`contracts/art/deployments/base.json`.
+`contracts/deployments/base.json`.
 
 ## Tests
 
 65 Foundry tests across the registry, originals and marketplace contracts:
 
 ```bash
-cd contracts/art && forge test
+cd contracts && forge test
 ```
 
 They cover registration and impersonation rules, the 7.5% royalty and 2.5% fee split,
 non-custodial sale re-checks, pull-payment withdrawals, fee caps, and a fuzz test that
 the sale split always sums to the price. CI does not run them yet, see
 `docs/contracts-ci.md`.
+
+## Project structure
+
+```
+app/                  Next.js routes (App Router): collections, marketplace, mint, launch, dashboard
+components/           Shared UI, including the live gallery and listing views
+lib/                  Chain config, onchain reads, Reown setup, content data
+contracts/            Foundry project: src, test, script, deployments, vendored lib
+contracts/tools ->    compile.mjs, deploy*.mjs (solc-js and ethers path for ABI export)
+public/               Static assets and config.json (chain id, contract addresses, Reown id)
+docs/                 Fees, remediation history, contract CI notes
+scripts/              deploy.sh, the Pages publish wrapper
+```
+
+Foundry is the canonical way to compile, test and deploy; the node scripts in
+`contracts/` remain for ABI export and ethers-based deploys.
 
 ## Features
 
@@ -109,7 +125,7 @@ only needs that one file updated — no rebuild, no redeploy of the site:
 
 NEXT_PUBLIC_PLUCO_ART_CONTRACT and friends still override it at build time. The launch
 page encodes the constructor call itself, so the bytecode comes from
-public/contracts/PlucoOriginals.json, written by npm run compile in contracts/art.
+public/contracts/PlucoOriginals.json, written by npm run compile in contracts.
 
 ### What the contract enforces
 

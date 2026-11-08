@@ -13,7 +13,7 @@ Add this job to `.github/workflows/build.yml` (or drop it in as its own
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: contracts/art
+        working-directory: contracts
     steps:
       - uses: actions/checkout@v4
         with:
@@ -29,7 +29,7 @@ Two details that will bite if they are missed:
 
 - `submodules: recursive` is required. Both `lib/forge-std` and
   `lib/openzeppelin-contracts` are git submodules, and a plain checkout leaves them empty.
-- `working-directory: contracts/art` matters. `foundry.toml` lives there, so running
+- `working-directory: contracts` matters. `foundry.toml` lives there, so running
   `forge test` from the repository root finds no project.
 
-Locally the same command is `cd contracts/art && forge test`.
+Locally the same command is `cd contracts && forge test`.
