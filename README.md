@@ -74,7 +74,7 @@ Marketplace sale proceeds, royalties and fees are credited to their recipients a
 
 Transaction hashes are displayed as submitted; success is reported only after a receipt with successful status. Confirmation timeout means unknown/pending, not a failed transaction: inspect the linked BaseScan transaction before retrying.
 
-Run `node scripts/check-transactions.mjs` for focused mocked-RPC checks of the transaction boundary, then `npx tsc --noEmit`, `npm run lint` and `npm run build`. These do not verify real wallet behavior or live settlement. Before launch, verify the complete register → mint → approve → list → buy → withdraw flow on an authorized preview and have the contracts independently reviewed. No contract changes or deployment are included in these frontend changes.
+Run `node scripts/check-transactions.mjs` for live checks of the transaction boundary against real Base mainnet RPC nodes — real chain id, real mined and reverted receipts, real reverts and real node rejections, no mocks — then `npx tsc --noEmit`, `npm run lint` and `npm run build`. These are read-only and do not move funds; live wallet settlement still needs a funded wallet. Before launch, verify the complete register → mint → approve → list → buy → withdraw flow on an authorized preview and have the contracts independently reviewed. No contract changes or deployment are included in these frontend changes.
 
 ## Launching a collection
 

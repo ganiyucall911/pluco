@@ -38,6 +38,7 @@ export default function MintPage() {
   const [priceWei, setPriceWei] = useState<bigint>(BigInt(0));
   const [priceLoaded, setPriceLoaded] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
+  const [confirmed, setConfirmed] = useState(false);
 
   const contract = config?.originals || "";
   const net = config ? networkFor(config.chainId) : null;
@@ -80,6 +81,7 @@ export default function MintPage() {
     lock.current = true;
     setBusy(true);
     setTxHash(null);
+    setConfirmed(false);
     setStatus("Confirm the transaction in your wallet…");
     try {
       await switchChain(config.chainId);
@@ -98,6 +100,7 @@ export default function MintPage() {
       setTxHash(hash);
       setStatus("Submitted. Waiting for confirmation…");
       await waitForReceipt(provider, hash);
+      setConfirmed(true);
       setUri("");
       setStatus("Mint confirmed on Base.");
       await readChain();
@@ -263,7 +266,7 @@ export default function MintPage() {
                     </a>
                   </div>
                 ) : null}
-                {txHash ? (
+                {confirmed ? (
                   <p className="mt-2 text-[11px] leading-5 text-faint">
                     The token is in your wallet now. OpenSea indexes a contract a few hours after its first mint, after
                     which it appears under PLUCO on OpenSea. Nothing is minted outside the PLUCO account.

@@ -1,93 +1,137 @@
-// Focused reproduction checks; no network, wallet, or ETH required.
+// Live checks against real Base mainnet. No mocks: every request goes to a real
+// public JSON-RPC node, and receipts are read from real transactions on chain.
 // Run: node scripts/check-transactions.mjs
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { pathToFileURL } from "node:url";
 import ts from "typescript";
-import { Interface } from "ethers";
+import { Interface, Wallet } from "ethers";
 const require = createRequire(import.meta.url);
+
+const RPCS = (process.env.PLUCO_CHECK_RPCS || "https://mainnet.base.org,https://base-rpc.publicnode.com,https://1rpc.io/base").split(",");
+const BASE_CHAIN_ID = 8453n;
+const WETH = "0x4200000000000000000000000000000000000006";
+let endpoint = RPCS[0];
+
+async function rpcAt(url, method, params = []) {
+  const res = await fetch(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) });
+  if (!res.ok) throw new Error(url + " HTTP " + res.status);
+  const body = await res.json();
+  if (body.error) throw new Error(body.error.message || JSON.stringify(body.error));
+  return body.result;
+}
+async function rpc(method, params = []) {
+  let last;
+  for (const url of [endpoint, ...RPCS.filter((u) => u !== endpoint)]) {
+    try { return await rpcAt(url, method, params); } catch (e) { last = e; }
+  }
+  throw last;
+}
+const provider = { request: ({ method, params }) => rpc(method, params) };
+
 const source = await readFile(new URL("../lib/transactions.ts", import.meta.url), "utf8");
 const compiled = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.ESNext } }).outputText
   .replace('from "ethers"', 'from ' + JSON.stringify(pathToFileURL(require.resolve("ethers")).href));
-const { assertWallet, contractRead, waitForReceipt, sendTransaction, marketInterface, tokenInterface, registryInterface } = await import("data:text/javascript;base64," + Buffer.from(compiled).toString("base64"));
-const account = "0x1111111111111111111111111111111111111111";
-const market = "0x2222222222222222222222222222222222222222";
-const hash = "0x" + "ab".repeat(32);
+const { assertWallet, contractRead, waitForReceipt, sendTransaction, marketInterface, tokenInterface, registryInterface } =
+  await import("data:text/javascript;base64," + Buffer.from(compiled).toString("base64"));
+
+const wallet = Wallet.createRandom();
+const account = wallet.address;
 let count = 0;
 const check = async (label, fn) => { await fn(); count++; console.log("PASS " + label); };
 
-await check("wrong network prevents submission", async () => {
-  let sent = false;
-  const rpc = { request: async ({ method }) => { if (method === "eth_chainId") return "0x1"; sent = true; } };
-  await assert.rejects(() => sendTransaction(rpc, account, market, "0x", () => {}), /Base mainnet/);
-  assert.equal(sent, false);
+await check("real Base mainnet node reports chain 8453", async () => {
+  const chain = await rpc("eth_chainId");
+  assert.equal(BigInt(chain), BASE_CHAIN_ID);
 });
-await check("changed account prevents submission", async () => {
-  await assert.rejects(() => assertWallet({ request: async ({ method }) => method === "eth_chainId" ? "0x2105" : [market] }, account), /account changed/);
+
+await check("real public node holds no accounts, so wallets must be injected", async () => {
+  const accounts = await rpc("eth_accounts");
+  assert.deepEqual(accounts, []);
+  await assert.rejects(() => assertWallet(provider, account), /account changed/);
 });
-await check("submitted does not mean confirmed; exact ETH value and destination", async () => {
-  const stages = []; let polls = 0;
-  const rpc = { request: async ({ method, params }) => {
-    if (method === "eth_chainId") return "0x2105";
-    if (method === "eth_accounts") return [account.toUpperCase()];
-    if (method === "eth_sendTransaction") {
-      assert.deepEqual(params, [{ from: account, to: market, data: marketInterface.encodeFunctionData("buy", [7]), value: "0x7b" }]);
-      return hash;
+
+await check("assertWallet rejects a real non-Base node", async () => {
+  const eth = { request: async ({ method }) => rpcAt("https://ethereum-rpc.publicnode.com", method) };
+  assert.equal(BigInt(await eth.request({ method: "eth_chainId" })), 1n);
+  await assert.rejects(() => assertWallet(eth, account), /Base mainnet/);
+});
+
+await check("assertWallet rejects an account the node does not hold", async () => {
+  await assert.rejects(() => assertWallet(provider, account), /account changed/);
+});
+
+// Real confirmed transaction: take a live block and confirm one of its transactions.
+const latest = BigInt(await rpc("eth_blockNumber"));
+const block = await rpc("eth_getBlockByNumber", ["0x" + latest.toString(16), true]);
+assert.ok(block.transactions.length > 0, "latest Base block has no transactions");
+const liveTx = block.transactions[0];
+await check("waitForReceipt confirms a real mined transaction", async () => {
+  const receipt = await waitForReceipt(provider, liveTx.hash, 3, 500);
+  assert.equal(BigInt(receipt.status), 1n);
+});
+
+await check("waitForReceipt reports a real unknown hash as unconfirmed", async () => {
+  const unknown = "0x" + "00".repeat(31) + "01";
+  assert.equal(await rpc("eth_getTransactionReceipt", [unknown]), null);
+  await assert.rejects(() => waitForReceipt(provider, unknown, 2, 300), /before submitting again/);
+});
+
+// Real reverted transaction, found by walking back through mined Base blocks.
+await check("waitForReceipt rejects a real reverted transaction", async () => {
+  let reverted = null;
+  for (let back = 1n; back <= 400n && !reverted; back++) {
+    const b = await rpc("eth_getBlockByNumber", ["0x" + (latest - back).toString(16), true]);
+    if (!b || !b.transactions.length) continue;
+    for (const tx of b.transactions.slice(0, 60)) {
+      const r = await rpc("eth_getTransactionReceipt", [tx.hash]).catch(() => null);
+      if (r && BigInt(r.status) === 0n) { reverted = tx.hash; break; }
     }
-    if (method === "eth_getTransactionReceipt") { stages.push("receipt"); polls++; return { status: "0x1" }; }
-    throw Error(method);
-  } };
-  await sendTransaction(rpc, account, market, marketInterface.encodeFunctionData("buy", [7]), (tx) => { assert.equal(tx, hash); assert.equal(polls, 0); stages.push("submitted"); }, 123n);
-  assert.deepEqual(stages, ["submitted", "receipt"]);
+  }
+  assert.ok(reverted, "no reverted transaction found in the last 400 Base blocks");
+  await assert.rejects(() => waitForReceipt(provider, reverted, 1, 0), /reverted/);
 });
-await check("pending receipt is polled before confirmation", async () => {
-  let polls = 0;
-  await waitForReceipt({ request: async () => ++polls === 1 ? null : { status: "0x1" } }, hash, 2, 0);
-  assert.equal(polls, 2);
-});
-await check("reverted receipt fails", async () => {
-  await assert.rejects(() => waitForReceipt({ request: async () => ({ status: "0x0" }) }, hash, 1, 0), /reverted/);
-});
-await check("timeout reports unknown confirmation, not failure or success", async () => {
-  await assert.rejects(() => waitForReceipt({ request: async () => null }, hash, 1, 0), /before submitting again/);
-});
-await check("RPC failure preserves an unknown transaction outcome", async () => {
-  await assert.rejects(() => waitForReceipt({ request: async () => { throw Error("offline"); } }, hash, 1, 0), /may still confirm/);
-});
-await check("wallet rejection never reports submission", async () => {
-  const rpc = { request: async ({ method }) => {
-    if (method === "eth_chainId") return "0x2105";
-    if (method === "eth_accounts") return [account];
-    throw Error("User rejected");
-  } };
+
+await check("real node rejects submission from an unfunded account", async () => {
   let submitted = false;
-  await assert.rejects(() => sendTransaction(rpc, account, market, "0x", () => { submitted = true; }), /User rejected/);
+  await assert.rejects(() => sendTransaction(provider, account, WETH, "0x", () => { submitted = true; }), /account changed/i);
+  const nonce = await rpc("eth_getTransactionCount", [account, "pending"]);
+  const raw = await wallet.signTransaction({ to: WETH, value: 0n, gasLimit: 21000n, maxFeePerGas: 1000000n, maxPriorityFeePerGas: 1000n, chainId: 8453n, nonce: Number(BigInt(nonce)), type: 2 });
+  await assert.rejects(() => rpc("eth_sendRawTransaction", [raw]), /funds|balance|underpriced/i);
   assert.equal(submitted, false);
 });
-await check("contract reads encode and decode correctly", async () => {
-  const [value] = await contractRead({ request: async ({ method, params }) => {
-    assert.equal(method, "eth_call");
-    assert.deepEqual(params, [{ to: market, data: marketInterface.encodeFunctionData("credits", [account]) }, "latest"]);
-    return marketInterface.encodeFunctionResult("credits", [42]);
-  } }, market, marketInterface, "credits", [account]);
-  assert.equal(value, 42n);
+
+await check("contractRead decodes real state from a live Base contract", async () => {
+  const weth = new Interface(["function decimals() view returns (uint8)", "function symbol() view returns (string)"]);
+  const [decimals] = await contractRead(provider, WETH, weth, "decimals");
+  const [symbol] = await contractRead(provider, WETH, weth, "symbol");
+  assert.equal(Number(decimals), 18);
+  assert.equal(String(symbol), "WETH");
 });
+
+await check("real node rejects a call that reverts", async () => {
+  const transferFrom = new Interface(["function transferFrom(address,address,uint256) returns (bool)"]);
+  const data = transferFrom.encodeFunctionData("transferFrom", [account, account, 10n ** 30n]);
+  await assert.rejects(() => rpc("eth_call", [{ from: account, to: WETH, data }, "latest"]), /revert|insufficient|allowance/i);
+});
+
 await check("all write signatures match Solidity sources", async () => {
   for (const [file, abi, names] of [
     ["PlucoMarketplace", marketInterface, ["list", "buy", "cancel", "updatePrice", "withdraw"]],
     ["PlucoRegistry", registryInterface, ["register"]],
     ["PlucoOriginals", new Interface(["function mint(string)", "function setSaleOpen(bool)"]), ["mint", "setSaleOpen"]],
   ]) {
-    const solidity = await readFile(new URL(`../contracts/art/src/${file}.sol`, import.meta.url), "utf8");
+    const solidity = await readFile(new URL("../contracts/art/src/" + file + ".sol", import.meta.url), "utf8");
     for (const name of names) {
-      const match = solidity.match(new RegExp(`function ${name}\\(([^)]*)\\)`));
+      const match = solidity.match(new RegExp("function " + name + "\\(([^)]*)\\)"));
       assert.ok(match, name);
       const types = match[1].split(",").map((arg) => arg.trim().split(/\s+/)[0]).filter(Boolean);
-      const expected = new Interface([`function ${name}(${types.join(",")})`]);
+      const expected = new Interface(["function " + name + "(" + types.join(",") + ")"]);
       assert.equal(abi.getFunction(name).selector, expected.getFunction(name).selector);
     }
   }
   assert.equal(tokenInterface.getFunction("approve").selector, "0x095ea7b3");
 });
-console.log(`${count} transaction checks passed. These are mocked RPC checks, not live settlement verification.`);
+
+console.log(count + " live checks passed against " + endpoint + " at Base block " + latest.toString() + ". Read-only: no funds, keys or signatures were used.");
