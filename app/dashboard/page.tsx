@@ -19,7 +19,7 @@ export default function DashboardPage() {
             {[
               ["Required check", "build", "Branch protection on main requires the Build check before merge."],
               ["Workflow", "Build check", ".github/workflows/build.yml — npm ci, npm audit, npm run build."],
-              ["Repo", "ganiyucall911/vectolith", "Status is read straight from the GitHub Actions API."],
+              ["Repo", "vectolith/vectolith", "Status is read straight from the GitHub Actions API."],
             ].map(([k, v, d]) => (
               <div key={k} className="rounded-none border border-line p-5">
                 <p className="text-xs uppercase tracking-[.18em] text-faint">{k}</p>

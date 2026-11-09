@@ -5,8 +5,8 @@ import { Button } from "@/components/button";
 export const metadata: Metadata = { title: "Contact" };
 
 const channels = [
-  ["Repository", "github.com/ganiyucall911/vectolith", "https://github.com/ganiyucall911/vectolith"],
-  ["Issues", "github.com/ganiyucall911/vectolith/issues", "https://github.com/ganiyucall911/vectolith/issues"],
+  ["Repository", "github.com/vectolith/vectolith", "https://github.com/vectolith/vectolith"],
+  ["Issues", "github.com/vectolith/vectolith-network/issues", "https://github.com/vectolith/vectolith-network/issues"],
 ];
 
 export default function ContactPage() {

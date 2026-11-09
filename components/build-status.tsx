@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const REPO = "ganiyucall911/vectolith";
+const REPO = "vectolith/vectolith";
 const WORKFLOW = "build.yml";
 const POLL_MS = 30_000;
 const STALE_MS = 45 * 60_000;

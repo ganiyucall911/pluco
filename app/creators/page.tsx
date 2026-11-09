@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "Creator" };
 
 const LINKS = [
   { label: "OpenSea", href: "https://opensea.io/vectolith" },
-  { label: "GitHub", href: "https://github.com/ganiyucall911/vectolith" },
+  { label: "GitHub", href: "https://github.com/vectolith/vectolith" },
 ];
 
 export default function CreatorsPage() {
