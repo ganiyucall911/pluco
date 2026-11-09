@@ -9,8 +9,8 @@ import { ArrowUpRight } from "lucide-react";
 export const metadata: Metadata = { title: "Creator" };
 
 const LINKS = [
-  { label: "OpenSea", href: "https://opensea.io/pluco" },
-  { label: "GitHub", href: "https://github.com/pluco-dev/pluco" },
+  { label: "OpenSea", href: "https://opensea.io/vectolith" },
+  { label: "GitHub", href: "https://github.com/ganiyucall911/vectolith" },
 ];
 
 export default function CreatorsPage() {
@@ -18,7 +18,7 @@ export default function CreatorsPage() {
     <main>
       <PageHero
         eyebrow="Creator"
-        title="PLUCO."
+        title="VECTOLITH."
         body="One name, everywhere the work is minted or listed. Nothing else attached to it."
       />
       <section className="px-5 pb-24 pt-16 sm:px-6 sm:pt-20">
@@ -28,8 +28,8 @@ export default function CreatorsPage() {
               <div className="grid md:grid-cols-[380px_1fr]">
                       <div className="flex aspect-square items-center justify-center border-b border-line bg-[#0a0a0a] md:aspect-auto md:min-h-[380px] md:border-b-0 md:border-r">
                       <Image
-                        src={asset("/brand/pluco-white.png")}
-                        alt="PLUCO creator picture"
+                        src={asset("/brand/vectolith-white.png")}
+                        alt="VECTOLITH creator picture"
                         width={2946}
                         height={1474}
                         className="h-auto w-[64%] max-w-[220px] object-contain"
@@ -38,7 +38,7 @@ export default function CreatorsPage() {
                 <div className="flex flex-col p-8 sm:p-10">
                   <p className="text-[11px] uppercase tracking-[.28em] text-faint">Creator name</p>
                   <h2 className="mt-4 flex items-center gap-3 text-4xl font-semibold tracking-tight sm:text-5xl">
-                    <span className="leading-none">PLUCO</span>
+                    <span className="leading-none">VECTOLITH</span>
                     <Verified size={26} />
                   </h2>
                   <p className="mt-5 max-w-xl text-[15px] leading-7 text-body">

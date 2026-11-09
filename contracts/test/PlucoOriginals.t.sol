@@ -2,12 +2,12 @@
 pragma solidity 0.8.26;
 
 import {Test} from "forge-std/Test.sol";
-import {PlucoOriginals} from "../src/PlucoOriginals.sol";
+import {VectolithOriginals} from "../src/VectolithOriginals.sol";
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import {IERC2981} from "@openzeppelin/contracts/interfaces/IERC2981.sol";
 
-contract PlucoOriginalsTest is Test {
-    PlucoOriginals internal art;
+contract VectolithOriginalsTest is Test {
+    VectolithOriginals internal art;
 
     address internal owner = makeAddr("owner");
     address internal artist = makeAddr("artist");
@@ -21,9 +21,9 @@ contract PlucoOriginalsTest is Test {
     uint96 internal constant FEE_BPS = 250; // 2.5%
 
     function setUp() public {
-        art = new PlucoOriginals(
-            "PLUCO Originals",
-            "PLUCO",
+        art = new VectolithOriginals(
+            "VECTOLITH Originals",
+            "VECTOLITH",
             SUPPLY,
             PRICE,
             PER_WALLET,
@@ -40,8 +40,8 @@ contract PlucoOriginalsTest is Test {
 
     // ---- constructor ---------------------------------------------------
     function test_ConstructorStoresTerms() public view {
-        assertEq(art.name(), "PLUCO Originals");
-        assertEq(art.symbol(), "PLUCO");
+        assertEq(art.name(), "VECTOLITH Originals");
+        assertEq(art.symbol(), "VECTOLITH");
         assertEq(art.maxSupply(), SUPPLY);
         assertEq(art.mintPrice(), PRICE);
         assertEq(art.maxPerWallet(), PER_WALLET);
@@ -59,20 +59,20 @@ contract PlucoOriginalsTest is Test {
     }
 
     function test_ZeroMaxPerWalletMeansNoLimit() public {
-        PlucoOriginals unlimited = new PlucoOriginals(
+        VectolithOriginals unlimited = new VectolithOriginals(
             "U", "U", 3, 0, 0, owner, artist, treasury, 0
         );
         assertEq(unlimited.maxPerWallet(), 3, "defaults to the supply");
     }
 
     function test_RevertWhen_SupplyIsZero() public {
-        vm.expectRevert(PlucoOriginals.BadSupply.selector);
-        new PlucoOriginals("Z", "Z", 0, PRICE, 1, owner, artist, treasury, 0);
+        vm.expectRevert(VectolithOriginals.BadSupply.selector);
+        new VectolithOriginals("Z", "Z", 0, PRICE, 1, owner, artist, treasury, 0);
     }
 
     function test_RevertWhen_ConstructorFeeExceedsCap() public {
-        vm.expectRevert(PlucoOriginals.BadSupply.selector);
-        new PlucoOriginals("Z", "Z", 1, PRICE, 1, owner, artist, treasury, 1001);
+        vm.expectRevert(VectolithOriginals.BadSupply.selector);
+        new VectolithOriginals("Z", "Z", 1, PRICE, 1, owner, artist, treasury, 1001);
     }
 
     // ---- minting -------------------------------------------------------
@@ -114,14 +114,14 @@ contract PlucoOriginalsTest is Test {
         art.setSaleOpen(false);
 
         vm.prank(collector);
-        vm.expectRevert(PlucoOriginals.SaleClosed.selector);
+        vm.expectRevert(VectolithOriginals.SaleClosed.selector);
         art.mint{value: PRICE}("ipfs://piece-1");
     }
 
     function test_RevertWhen_PriceIsWrong() public {
         vm.prank(collector);
         vm.expectRevert(
-            abi.encodeWithSelector(PlucoOriginals.WrongPrice.selector, PRICE, PRICE - 1)
+            abi.encodeWithSelector(VectolithOriginals.WrongPrice.selector, PRICE, PRICE - 1)
         );
         art.mint{value: PRICE - 1}("ipfs://piece-1");
     }
@@ -131,7 +131,7 @@ contract PlucoOriginalsTest is Test {
         art.mint{value: PRICE}("ipfs://1");
         art.mint{value: PRICE}("ipfs://2");
         vm.expectRevert(
-            abi.encodeWithSelector(PlucoOriginals.WalletLimit.selector, PER_WALLET)
+            abi.encodeWithSelector(VectolithOriginals.WalletLimit.selector, PER_WALLET)
         );
         art.mint{value: PRICE}("ipfs://3");
         vm.stopPrank();
@@ -147,7 +147,7 @@ contract PlucoOriginalsTest is Test {
         assertEq(art.totalMinted(), SUPPLY);
 
         vm.prank(collector);
-        vm.expectRevert(PlucoOriginals.SoldOut.selector);
+        vm.expectRevert(VectolithOriginals.SoldOut.selector);
         art.mint{value: PRICE}("ipfs://one-too-many");
     }
 
@@ -170,7 +170,7 @@ contract PlucoOriginalsTest is Test {
     function test_RevertWhen_OwnerMintExceedsSupply() public {
         vm.startPrank(owner);
         for (uint256 i = 0; i < SUPPLY; i++) art.ownerMint(owner, "ipfs://a");
-        vm.expectRevert(PlucoOriginals.SoldOut.selector);
+        vm.expectRevert(VectolithOriginals.SoldOut.selector);
         art.ownerMint(owner, "ipfs://b");
         vm.stopPrank();
     }
@@ -195,7 +195,7 @@ contract PlucoOriginalsTest is Test {
 
     function test_RevertWhen_FeeAboveTenPercent() public {
         vm.prank(owner);
-        vm.expectRevert(PlucoOriginals.FeeTooHigh.selector);
+        vm.expectRevert(VectolithOriginals.FeeTooHigh.selector);
         art.setFeeBps(1001);
     }
 

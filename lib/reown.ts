@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Reown AppKit (WalletConnect) for PLUCO.
+ * Reown AppKit (WalletConnect) for VECTOLITH.
  *
  * Base mainnet only. One modal for every EVM wallet: the injected extension on
  * desktop, the mobile app by deeplink or QR. No other chains are configured, so a
@@ -37,12 +37,12 @@ export function reownConfigured() {
 }
 
 function metadata() {
-  const origin = typeof window !== "undefined" ? window.location.origin : "https://pluco-dev.github.io";
+  const origin = typeof window !== "undefined" ? window.location.origin : "https://ganiyucall911.github.io";
   return {
-    name: "PLUCO",
-    description: "PLUCO — register, mint and trade digital assets on Base.",
-    url: typeof window !== "undefined" ? window.location.href : "https://pluco-dev.github.io/pluco/",
-    icons: [`${origin}${BASE_PATH}/brand/pluco-mark.png`],
+    name: "VECTOLITH",
+    description: "VECTOLITH — register, mint and trade digital assets on Base.",
+    url: typeof window !== "undefined" ? window.location.href : "https://ganiyucall911.github.io/vectolith/",
+    icons: [`${origin}${BASE_PATH}/brand/vectolith-mark.png`],
   };
 }
 
@@ -119,7 +119,7 @@ export async function restoreReown(): Promise<Connected | null> {
   return null;
 }
 
-/** Base is the only chain PLUCO supports, so this always targets mainnet. */
+/** Base is the only chain VECTOLITH supports, so this always targets mainnet. */
 export function switchReownNetwork(_chainId?: number) {
   const appKit = getReown();
   if (!appKit) return Promise.resolve();

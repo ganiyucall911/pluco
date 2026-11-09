@@ -11,15 +11,15 @@ interface IOwnableLike {
 }
 
 /**
- * @title PlucoRegistry
- * @notice The open index that makes PLUCO a protocol instead of a single mint.
+ * @title VectolithRegistry
+ * @notice The open index that makes VECTOLITH a protocol instead of a single mint.
  *
  *         Any ERC-721 deployed by anyone on Base can be registered here. The registry
  *         does not custody art, take a fee or gate creativity: it records who the artist
- *         is, what the collection is, and whether it is currently shown on PLUCO.
+ *         is, what the collection is, and whether it is currently shown on VECTOLITH.
  *         Marketplaces, galleries and indexers read from this one contract.
  */
-contract PlucoRegistry is Ownable {
+contract VectolithRegistry is Ownable {
     struct Collection {
         address collection;
         address artist;

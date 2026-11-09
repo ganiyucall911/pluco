@@ -5,8 +5,8 @@ import { Button } from "@/components/button";
 export const metadata: Metadata = { title: "Contact" };
 
 const channels = [
-  ["Repository", "github.com/pluco-dev/pluco", "https://github.com/pluco-dev/pluco"],
-  ["Issues", "github.com/pluco-dev/pluco/issues", "https://github.com/pluco-dev/pluco/issues"],
+  ["Repository", "github.com/ganiyucall911/vectolith", "https://github.com/ganiyucall911/vectolith"],
+  ["Issues", "github.com/ganiyucall911/vectolith/issues", "https://github.com/ganiyucall911/vectolith/issues"],
 ];
 
 export default function ContactPage() {
@@ -28,7 +28,7 @@ export default function ContactPage() {
               Protocol
             </Button>
             <Button href="/about" variant="ghost">
-              About PLUCO
+              About VECTOLITH
             </Button>
           </div>
         </div>

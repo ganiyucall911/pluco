@@ -1,4 +1,4 @@
-// Deploy the PLUCO art protocol to Base: registry + marketplace, wired together.
+// Deploy the VECTOLITH art protocol to Base: registry + marketplace, wired together.
 // Usage:
 //   PRIVATE_KEY=0x... node deploy-protocol.mjs [--fee 250]   (Base mainnet)
 //   PRIVATE_KEY=0x... TREASURY=0x... node deploy-protocol.mjs --network base
@@ -35,16 +35,16 @@ const load = (name) => JSON.parse(fs.readFileSync(path.join(root, "artifacts", n
 console.log("network:", networkName, "deployer:", wallet.address);
 console.log("balance:", (await provider.getBalance(wallet.address)).toString());
 
-const registryArt = load("PlucoRegistry");
+const registryArt = load("VectolithRegistry");
 const registry = await new ContractFactory(registryArt.abi, registryArt.bytecode, wallet).deploy(wallet.address);
 await registry.waitForDeployment();
 const registryAddress = await registry.getAddress();
-console.log("PlucoRegistry:", registryAddress);
+console.log("VectolithRegistry:", registryAddress);
 
-// Fees are paid in native ETH on Base to the PLUCO treasury.
+// Fees are paid in native ETH on Base to the VECTOLITH treasury.
 const TREASURY = "0xcaEC37D3AdcE9a141BF5d78895cb3074Fae77AD9";
 const treasury = process.env.TREASURY || TREASURY;
-const marketArt = load("PlucoMarketplace");
+const marketArt = load("VectolithMarketplace");
 const market = await new ContractFactory(marketArt.abi, marketArt.bytecode, wallet).deploy(
   wallet.address,
   registryAddress,
@@ -53,11 +53,11 @@ const market = await new ContractFactory(marketArt.abi, marketArt.bytecode, wall
 );
 await market.waitForDeployment();
 const marketAddress = await market.getAddress();
-console.log("PlucoMarketplace:", marketAddress);
+console.log("VectolithMarketplace:", marketAddress);
 console.log("treasury:", treasury, "protocol fee bps:", feeBps);
 
 console.log("");
 console.log("Set these on the site (Vercel/hosting env):");
-console.log("NEXT_PUBLIC_PLUCO_REGISTRY=" + registryAddress);
-console.log("NEXT_PUBLIC_PLUCO_MARKETPLACE=" + marketAddress);
+console.log("NEXT_PUBLIC_VECTOLITH_REGISTRY=" + registryAddress);
+console.log("NEXT_PUBLIC_VECTOLITH_MARKETPLACE=" + marketAddress);
 console.log("Explorer:", net.explorer + "/address/" + registryAddress);

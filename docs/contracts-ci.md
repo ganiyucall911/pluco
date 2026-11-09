@@ -1,6 +1,6 @@
 # Running the contract tests in CI
 
-The repository has 65 Foundry tests but CI does not run them yet: `pluco-dev` has
+The repository has 65 Foundry tests but CI does not run them yet: `ganiyucall911` has
 OAuth App access restrictions, so workflow files cannot be updated by tooling and the
 change has to land through the GitHub UI or a token with `workflow` scope.
 

@@ -2,14 +2,14 @@
 pragma solidity 0.8.26;
 
 import {Test} from "forge-std/Test.sol";
-import {PlucoRegistry} from "../src/PlucoRegistry.sol";
-import {PlucoMarketplace} from "../src/PlucoMarketplace.sol";
-import {PlucoOriginals} from "../src/PlucoOriginals.sol";
+import {VectolithRegistry} from "../src/VectolithRegistry.sol";
+import {VectolithMarketplace} from "../src/VectolithMarketplace.sol";
+import {VectolithOriginals} from "../src/VectolithOriginals.sol";
 
-contract PlucoMarketplaceTest is Test {
-    PlucoRegistry internal registry;
-    PlucoMarketplace internal market;
-    PlucoOriginals internal art;
+contract VectolithMarketplaceTest is Test {
+    VectolithRegistry internal registry;
+    VectolithMarketplace internal market;
+    VectolithOriginals internal art;
 
     address internal admin = address(this);
     address internal artist = makeAddr("artist");
@@ -22,17 +22,17 @@ contract PlucoMarketplaceTest is Test {
     uint96 internal constant MARKET_FEE_BPS = 250; // 2.5%
 
     function setUp() public {
-        registry = new PlucoRegistry(admin);
-        art = new PlucoOriginals(
-            "PLUCO Originals", "PLUCO", 10, 0, 0, artist, artist, treasury, 0
+        registry = new VectolithRegistry(admin);
+        art = new VectolithOriginals(
+            "VECTOLITH Originals", "VECTOLITH", 10, 0, 0, artist, artist, treasury, 0
         );
-        market = new PlucoMarketplace(admin, registry, treasury, MARKET_FEE_BPS);
+        market = new VectolithMarketplace(admin, registry, treasury, MARKET_FEE_BPS);
 
         // artist mints a piece to the seller, then registers the collection
         vm.prank(artist);
         art.ownerMint(seller, "ipfs://piece-1");
         vm.prank(artist);
-        registry.register(address(art), "PLUCO Originals", "Digital Art", "");
+        registry.register(address(art), "VECTOLITH Originals", "Digital Art", "");
 
         vm.deal(buyer, 10 ether);
         vm.prank(seller);
@@ -58,13 +58,13 @@ contract PlucoMarketplaceTest is Test {
         registry.setActive(address(art), false);
 
         vm.prank(seller);
-        vm.expectRevert(PlucoMarketplace.NotRegistered.selector);
+        vm.expectRevert(VectolithMarketplace.NotRegistered.selector);
         market.list(address(art), 1, LIST_PRICE);
     }
 
     function test_RevertWhen_SellerDoesNotOwnTheToken() public {
         vm.prank(buyer);
-        vm.expectRevert(PlucoMarketplace.NotOwnerOfToken.selector);
+        vm.expectRevert(VectolithMarketplace.NotOwnerOfToken.selector);
         market.list(address(art), 1, LIST_PRICE);
     }
 
@@ -73,13 +73,13 @@ contract PlucoMarketplaceTest is Test {
         art.setApprovalForAll(address(market), false);
 
         vm.prank(seller);
-        vm.expectRevert(PlucoMarketplace.NotApproved.selector);
+        vm.expectRevert(VectolithMarketplace.NotApproved.selector);
         market.list(address(art), 1, LIST_PRICE);
     }
 
     function test_RevertWhen_PriceIsZero() public {
         vm.prank(seller);
-        vm.expectRevert(PlucoMarketplace.BadPrice.selector);
+        vm.expectRevert(VectolithMarketplace.BadPrice.selector);
         market.list(address(art), 1, 0);
     }
 
@@ -126,7 +126,7 @@ contract PlucoMarketplaceTest is Test {
         uint256 fee = (LIST_PRICE * MARKET_FEE_BPS) / 10_000;
 
         vm.expectEmit(true, true, false, true, address(market));
-        emit PlucoMarketplace.Sold(id, buyer, LIST_PRICE, royalty, fee);
+        emit VectolithMarketplace.Sold(id, buyer, LIST_PRICE, royalty, fee);
 
         vm.prank(buyer);
         market.buy{value: LIST_PRICE}(id);
@@ -138,7 +138,7 @@ contract PlucoMarketplaceTest is Test {
 
         vm.prank(buyer);
         vm.expectRevert(
-            abi.encodeWithSelector(PlucoMarketplace.WrongValue.selector, LIST_PRICE)
+            abi.encodeWithSelector(VectolithMarketplace.WrongValue.selector, LIST_PRICE)
         );
         market.buy{value: LIST_PRICE - 1}(id);
     }
@@ -150,7 +150,7 @@ contract PlucoMarketplaceTest is Test {
         market.cancel(id);
 
         vm.prank(buyer);
-        vm.expectRevert(PlucoMarketplace.Inactive.selector);
+        vm.expectRevert(VectolithMarketplace.Inactive.selector);
         market.buy{value: LIST_PRICE}(id);
     }
 
@@ -164,7 +164,7 @@ contract PlucoMarketplaceTest is Test {
         art.transferFrom(seller, artist, 1);
 
         vm.prank(buyer);
-        vm.expectRevert(PlucoMarketplace.NotOwnerOfToken.selector);
+        vm.expectRevert(VectolithMarketplace.NotOwnerOfToken.selector);
         market.buy{value: LIST_PRICE}(id);
     }
 
@@ -185,7 +185,7 @@ contract PlucoMarketplaceTest is Test {
         uint256 id = market.list(address(art), 1, LIST_PRICE);
 
         vm.prank(buyer);
-        vm.expectRevert(PlucoMarketplace.NotSeller.selector);
+        vm.expectRevert(VectolithMarketplace.NotSeller.selector);
         market.updatePrice(id, 0.5 ether);
     }
 
@@ -194,7 +194,7 @@ contract PlucoMarketplaceTest is Test {
         uint256 id = market.list(address(art), 1, LIST_PRICE);
 
         vm.prank(buyer);
-        vm.expectRevert(PlucoMarketplace.NotSeller.selector);
+        vm.expectRevert(VectolithMarketplace.NotSeller.selector);
         market.cancel(id);
     }
 
@@ -217,7 +217,7 @@ contract PlucoMarketplaceTest is Test {
 
     function test_RevertWhen_NothingToWithdraw() public {
         vm.prank(seller);
-        vm.expectRevert(PlucoMarketplace.NothingToWithdraw.selector);
+        vm.expectRevert(VectolithMarketplace.NothingToWithdraw.selector);
         market.withdraw();
     }
 
@@ -231,7 +231,7 @@ contract PlucoMarketplaceTest is Test {
         market.withdraw();
 
         vm.prank(seller);
-        vm.expectRevert(PlucoMarketplace.NothingToWithdraw.selector);
+        vm.expectRevert(VectolithMarketplace.NothingToWithdraw.selector);
         market.withdraw();
     }
 
@@ -256,13 +256,13 @@ contract PlucoMarketplaceTest is Test {
 
     // ---- admin ---------------------------------------------------------
     function test_RevertWhen_ConstructorFeeAboveFivePercent() public {
-        vm.expectRevert(PlucoMarketplace.FeeTooHigh.selector);
-        new PlucoMarketplace(admin, registry, treasury, 501);
+        vm.expectRevert(VectolithMarketplace.FeeTooHigh.selector);
+        new VectolithMarketplace(admin, registry, treasury, 501);
     }
 
     function test_RevertWhen_ConstructorRegistryIsZero() public {
-        vm.expectRevert(PlucoMarketplace.NotRegistered.selector);
-        new PlucoMarketplace(admin, PlucoRegistry(address(0)), treasury, 250);
+        vm.expectRevert(VectolithMarketplace.NotRegistered.selector);
+        new VectolithMarketplace(admin, VectolithRegistry(address(0)), treasury, 250);
     }
 
     function test_SetFeeAndTreasury() public {
@@ -271,7 +271,7 @@ contract PlucoMarketplaceTest is Test {
         market.setTreasury(buyer);
         assertEq(market.treasury(), buyer);
 
-        vm.expectRevert(PlucoMarketplace.FeeTooHigh.selector);
+        vm.expectRevert(VectolithMarketplace.FeeTooHigh.selector);
         market.setFee(501);
     }
 
@@ -282,7 +282,7 @@ contract PlucoMarketplaceTest is Test {
     }
 
     function test_SetRegistryPointsElsewhere() public {
-        PlucoRegistry other = new PlucoRegistry(admin);
+        VectolithRegistry other = new VectolithRegistry(admin);
         market.setRegistry(other);
         assertEq(address(market.registry()), address(other));
     }

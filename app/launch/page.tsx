@@ -62,8 +62,8 @@ export default function LaunchPage() {
   const { account, provider, connect, switchChain, connecting } = useWallet();
   const [artifact, setArtifact] = useState<Artifact | null>(null);
   const chainId = BASE_MAINNET;
-  const [name, setName] = useState("PLUCO Originals");
-  const [symbol, setSymbol] = useState("PLUCO");
+  const [name, setName] = useState("VECTOLITH Originals");
+  const [symbol, setSymbol] = useState("VECTOLITH");
   const [supply, setSupply] = useState("100");
   const [price, setPrice] = useState("0.005");
   const [perWallet, setPerWallet] = useState("3");
@@ -80,7 +80,7 @@ export default function LaunchPage() {
   const net = networkFor(chainId);
 
   useEffect(() => {
-    fetch((process.env.NEXT_PUBLIC_BASE_PATH || "") + "/contracts/PlucoOriginals.json")
+    fetch((process.env.NEXT_PUBLIC_BASE_PATH || "") + "/contracts/VectolithOriginals.json")
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => data && setArtifact(data))
       .catch(() => setArtifact(null));

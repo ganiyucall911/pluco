@@ -8,7 +8,7 @@ import { VerifiedName } from "@/components/verified";
 
 export const metadata: Metadata = {
   title: "AERYN GEM MT",
-  description: "AERYN GEM MT by PLUCO — graded-card artwork issued on Base.",
+  description: "AERYN GEM MT by VECTOLITH — graded-card artwork issued on Base.",
 };
 
 const CONTRACT = "0xb51639e0489cbd7d5dfb60c552db3ba6ce6e6992";
@@ -55,7 +55,7 @@ export default function AerynPage() {
       <PageHero
         eyebrow="Live on Base"
         title="AERYN GEM MT"
-        body="Graded-card artwork issued on Base by PLUCO. Five pieces exist today, each a single slab with its own grade and print side. Trade happens on OpenSea; PLUCO greys out the secondary market, not the work."
+        body="Graded-card artwork issued on Base by VECTOLITH. Five pieces exist today, each a single slab with its own grade and print side. Trade happens on OpenSea; VECTOLITH greys out the secondary market, not the work."
       />
 
       <section className="px-5 sm:px-6 pb-16">
@@ -134,7 +134,7 @@ export default function AerynPage() {
             </div>
             <div className="flex justify-between gap-6 border-b border-line pb-4">
               <dt className="text-faint">Creator</dt>
-              <dd><VerifiedName name="PLUCO" /></dd>
+              <dd><VerifiedName name="VECTOLITH" /></dd>
             </div>
             <div className="flex justify-between gap-6 border-b border-line pb-4">
               <dt className="text-faint">Contract</dt>

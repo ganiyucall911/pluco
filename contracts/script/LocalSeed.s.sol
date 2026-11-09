@@ -2,9 +2,9 @@
 pragma solidity 0.8.26;
 
 import {Script, console} from "forge-std/Script.sol";
-import {PlucoRegistry} from "../src/PlucoRegistry.sol";
-import {PlucoOriginals} from "../src/PlucoOriginals.sol";
-import {PlucoMarketplace} from "../src/PlucoMarketplace.sol";
+import {VectolithRegistry} from "../src/VectolithRegistry.sol";
+import {VectolithOriginals} from "../src/VectolithOriginals.sol";
+import {VectolithMarketplace} from "../src/VectolithMarketplace.sol";
 
 /// Local verification seed: deploys the protocol, registers a collection and lists
 /// one piece so the gallery read layer can be exercised end to end.
@@ -15,13 +15,13 @@ contract LocalSeed is Script {
         address deployer = vm.addr(pk);
 
         vm.startBroadcast(pk);
-        PlucoRegistry registry = new PlucoRegistry(deployer);
-        PlucoOriginals art = new PlucoOriginals(
-            "PLUCO Originals", "PLUCO", 10, 0.1 ether, 3, deployer, deployer, deployer, 250
+        VectolithRegistry registry = new VectolithRegistry(deployer);
+        VectolithOriginals art = new VectolithOriginals(
+            "VECTOLITH Originals", "VECTOLITH", 10, 0.1 ether, 3, deployer, deployer, deployer, 250
         );
-        PlucoMarketplace market = new PlucoMarketplace(deployer, registry, deployer, 250);
+        VectolithMarketplace market = new VectolithMarketplace(deployer, registry, deployer, 250);
 
-        registry.register(address(art), "PLUCO Originals", "Digital Art", "ipfs://collection.json");
+        registry.register(address(art), "VECTOLITH Originals", "Digital Art", "ipfs://collection.json");
         uint256 id = art.ownerMint(deployer, "ipfs://piece-1.json");
         art.setSaleOpen(true);
         art.setApprovalForAll(address(market), true);

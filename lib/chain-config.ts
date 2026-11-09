@@ -17,7 +17,7 @@ export type Network = {
 };
 
 export function networkFor(_chainId?: number): Network {
-  // Base mainnet is the only network PLUCO runs on.
+  // Base mainnet is the only network VECTOLITH runs on.
   return {
     name: "Base",
     short: "Base",
@@ -28,11 +28,11 @@ export function networkFor(_chainId?: number): Network {
 }
 
 const FALLBACK: ChainConfig = {
-  chainId: Number(process.env.NEXT_PUBLIC_PLUCO_CHAIN_ID || BASE_MAINNET),
+  chainId: Number(process.env.NEXT_PUBLIC_VECTOLITH_CHAIN_ID || BASE_MAINNET),
   reownProjectId: process.env.NEXT_PUBLIC_REOWN_PROJECT_ID || "",
-  originals: process.env.NEXT_PUBLIC_PLUCO_ART_CONTRACT || "",
-  registry: process.env.NEXT_PUBLIC_PLUCO_REGISTRY || "",
-  marketplace: process.env.NEXT_PUBLIC_PLUCO_MARKETPLACE || "",
+  originals: process.env.NEXT_PUBLIC_VECTOLITH_ART_CONTRACT || "",
+  registry: process.env.NEXT_PUBLIC_VECTOLITH_REGISTRY || "",
+  marketplace: process.env.NEXT_PUBLIC_VECTOLITH_MARKETPLACE || "",
 };
 
 let cached: Promise<ChainConfig> | null = null;

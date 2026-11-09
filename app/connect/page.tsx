@@ -11,7 +11,7 @@ export default function ConnectPage() {
       <PageHero
         eyebrow="Account"
         title="Create an account, or log in."
-        body="PLUCO has no email and no password. Your wallet address is the account: connecting creates it the first time, and opens it every time after. Nothing is signed, and nothing moves."
+        body="VECTOLITH has no email and no password. Your wallet address is the account: connecting creates it the first time, and opens it every time after. Nothing is signed, and nothing moves."
       />
       <section className="wrap grid gap-16 py-16 lg:grid-cols-[0.9fr_1.1fr]">
         <AuthPanel />
@@ -19,7 +19,7 @@ export default function ConnectPage() {
           {[
             ["Your wallet is the login", "MetaMask, Rabby, Coinbase Wallet, or any WalletConnect wallet — including on a phone. One connection, no account form."],
             ["Runs on Base", "The app asks for chain 8453. If Base is missing from the wallet, it offers to add it."],
-            ["Stays on this device", "The session is remembered locally until you sign out. PLUCO keeps no password, no email and no profile."],
+            ["Stays on this device", "The session is remembered locally until you sign out. VECTOLITH keeps no password, no email and no profile."],
           ].map(([t, c], i) => (
             <div key={t} className="grid grid-cols-[48px_1fr] gap-4 border-b border-line py-6">
               <span className="num text-[11px] tracking-[.18em] text-faint">

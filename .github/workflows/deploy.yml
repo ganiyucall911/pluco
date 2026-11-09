@@ -29,7 +29,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: /pluco
+          NEXT_PUBLIC_BASE_PATH: /vectolith
           # Optional: set these as repo secrets/variables to enable them at build time.
           NEXT_PUBLIC_INFURA_API_KEY: ${{ secrets.NEXT_PUBLIC_INFURA_API_KEY }}
           NEXT_PUBLIC_REOWN_PROJECT_ID: ${{ vars.NEXT_PUBLIC_REOWN_PROJECT_ID }}

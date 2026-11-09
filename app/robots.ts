@@ -5,6 +5,6 @@ export const dynamic = "force-static";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: { userAgent: "*", allow: "/" },
-    sitemap: "https://pluco-dev.github.io/pluco/sitemap.xml",
+    sitemap: "https://ganiyucall911.github.io/vectolith/sitemap.xml",
   };
 }

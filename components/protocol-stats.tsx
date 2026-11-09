@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-const REGISTRY = process.env.NEXT_PUBLIC_PLUCO_REGISTRY || "";
-const MARKETPLACE = process.env.NEXT_PUBLIC_PLUCO_MARKETPLACE || "";
+const REGISTRY = process.env.NEXT_PUBLIC_VECTOLITH_REGISTRY || "";
+const MARKETPLACE = process.env.NEXT_PUBLIC_VECTOLITH_MARKETPLACE || "";
 const CHAIN_ID = 8453; // Base mainnet only
 const RPC = "https://mainnet.base.org";
 

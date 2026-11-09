@@ -61,7 +61,7 @@ function View() {
         <p className="eyebrow">Not found</p>
         <h1 className="mt-4 text-3xl font-semibold">This collection isn&apos;t registered.</h1>
         <p className="mt-3 max-w-[480px] text-sm leading-6 text-body">
-          Nothing at that address is registered in the PLUCO registry on Base. If you just deployed
+          Nothing at that address is registered in the VECTOLITH registry on Base. If you just deployed
           it, register it first and it will appear here.
         </p>
         <Link href="/collections" className="link-underline mt-6 inline-block text-sm text-paper">

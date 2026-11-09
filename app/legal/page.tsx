@@ -6,15 +6,15 @@ export const metadata: Metadata = { title: "Legal" };
 const sections = [
   {
     h: "Software, as is",
-    p: "PLUCO is software. The contracts and this interface are provided as is, without warranty. You are responsible for the wallets and transactions you sign.",
+    p: "VECTOLITH is software. The contracts and this interface are provided as is, without warranty. You are responsible for the wallets and transactions you sign.",
   },
   {
     h: "Fees",
-    p: "A 2.5% protocol fee applies to secondary sales and is hard-capped at 5% in the contract. Minting and listing carry no PLUCO fee. Network gas is paid to Base, not to PLUCO.",
+    p: "A 2.5% protocol fee applies to secondary sales and is hard-capped at 5% in the contract. Minting and listing carry no VECTOLITH fee. Network gas is paid to Base, not to VECTOLITH.",
   },
   {
     h: "No custody",
-    p: "PLUCO never holds your tokens or your funds. Sellers keep the token until a sale settles, and payments route directly to the seller, the artist and the treasury.",
+    p: "VECTOLITH never holds your tokens or your funds. Sellers keep the token until a sale settles, and payments route directly to the seller, the artist and the treasury.",
   },
   {
     h: "Content",
@@ -32,7 +32,7 @@ export default function LegalPage() {
       <PageHero
         eyebrow="Legal"
         title="The fine print, plainly."
-        body="A short summary of what PLUCO is, what it charges and what it does not do."
+        body="A short summary of what VECTOLITH is, what it charges and what it does not do."
       />
       <section className="wrap grid gap-16 py-16 lg:grid-cols-[0.6fr_1.4fr]">
         <div>

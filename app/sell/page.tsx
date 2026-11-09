@@ -25,7 +25,7 @@ export default function SellPage() {
             no surprises.
           </h2>
           <p className="mt-5 max-w-[320px] text-[13px] leading-6 text-mute">
-            Everything settles in native ETH on Base. PLUCO takes 2.5% of a sale; listing and
+            Everything settles in native ETH on Base. VECTOLITH takes 2.5% of a sale; listing and
             cancelling are free.
           </p>
           <div className="mt-8">

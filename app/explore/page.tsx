@@ -40,7 +40,7 @@ export default function ExplorePage() {
             <div className="grid gap-4">
               {creators.map((c) => (
                 <Link key={c.name} href="/creators" className="focus-ring flex items-center gap-5 rounded-none border border-line bg-surface p-4 transition hover:border-paper/25">
-                  <div className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full border border-line bg-ink p-2"><Image src={asset("/brand/pluco-white.png")} alt="PLUCO" width={2946} height={1474} className="h-auto w-full object-contain" /></div>
+                  <div className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full border border-line bg-ink p-2"><Image src={asset("/brand/vectolith-white.png")} alt="VECTOLITH" width={2946} height={1474} className="h-auto w-full object-contain" /></div>
                   <div>
                     <p className="font-semibold">{c.name}</p>
                     <p className="mt-1 text-sm text-body">{c.role}</p>

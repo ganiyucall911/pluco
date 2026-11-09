@@ -5,8 +5,8 @@ import { Button } from "@/components/button";
 
 export const metadata: Metadata = { title: "Protocol" };
 
-const REGISTRY = process.env.NEXT_PUBLIC_PLUCO_REGISTRY || "";
-const MARKETPLACE = process.env.NEXT_PUBLIC_PLUCO_MARKETPLACE || "";
+const REGISTRY = process.env.NEXT_PUBLIC_VECTOLITH_REGISTRY || "";
+const MARKETPLACE = process.env.NEXT_PUBLIC_VECTOLITH_MARKETPLACE || "";
 const CHAIN_ID = 8453; // Base mainnet only
 const EXPLORER = "https://basescan.org";
 const NETWORK = "Base";
@@ -20,7 +20,7 @@ const layers = [
   {
     k: "02",
     t: "Collections",
-    d: "PlucoOriginals is the reference collection: one-of-one tokens, immutable supply, provenance hash and an owner reserve. Any artist can deploy their own or bring an existing contract.",
+    d: "VectolithOriginals is the reference collection: one-of-one tokens, immutable supply, provenance hash and an owner reserve. Any artist can deploy their own or bring an existing contract.",
   },
   {
     k: "03",
@@ -46,7 +46,7 @@ export default function ProtocolPage() {
       <PageHero
         eyebrow="Protocol"
         title="Art is the first thing on the chain, not the product."
-        body="PLUCO is being built as a network, and a network is only real when something runs on it. This is the first layer: an open art protocol on Base that anyone can plug into."
+        body="VECTOLITH is being built as a network, and a network is only real when something runs on it. This is the first layer: an open art protocol on Base that anyone can plug into."
       />
 
       <section className="wrap py-14">
@@ -103,8 +103,8 @@ export default function ProtocolPage() {
           <h2 className="mt-4 text-[28px] leading-[1.12] sm:text-[36px]">Verify, don&apos;t trust.</h2>
           <div className="mt-10 border-t border-line">
             {[
-              { name: "PlucoRegistry", addr: REGISTRY },
-              { name: "PlucoMarketplace", addr: MARKETPLACE },
+              { name: "VectolithRegistry", addr: REGISTRY },
+              { name: "VectolithMarketplace", addr: MARKETPLACE },
             ].map((c) => (
               <div
                 key={c.name}
@@ -127,7 +127,7 @@ export default function ProtocolPage() {
             ))}
           </div>
           <p className="mt-8 max-w-[620px] text-[13px] leading-6 text-mute">
-            PLUCO&apos;s own chain is a later step, and it will settle to Ethereum on the same OP
+            VECTOLITH&apos;s own chain is a later step, and it will settle to Ethereum on the same OP
             Stack spec Base uses. Until it has wallets and liquidity, Base is where the art lives.
           </p>
           <div className="mt-8">

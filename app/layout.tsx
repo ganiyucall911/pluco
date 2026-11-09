@@ -18,36 +18,36 @@ const heading = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://pluco-dev.github.io/pluco"),
+  metadataBase: new URL("https://ganiyucall911.github.io/vectolith"),
   title: {
-    default: "PLUCO | Mint, buy and sell art on Base",
-    template: "%s | PLUCO",
+    default: "VECTOLITH | Mint, buy and sell art on Base",
+    template: "%s | VECTOLITH",
   },
   description:
     "An open art market on Base. Anyone can register a collection, mint a piece or buy one.",
-  applicationName: "PLUCO",
+  applicationName: "VECTOLITH",
   openGraph: {
     type: "website",
-    siteName: "PLUCO",
-    title: "PLUCO | Mint, buy and sell art on Base",
+    siteName: "VECTOLITH",
+    title: "VECTOLITH | Mint, buy and sell art on Base",
     description:
       "An open art market on Base. Anyone can register a collection, mint a piece or buy one.",
     url: "/",
     images: [
       {
-        url: "https://pluco-dev.github.io/pluco/og/pluco.png",
+        url: "https://ganiyucall911.github.io/vectolith/og/vectolith.png",
         width: 1200,
         height: 630,
-        alt: "PLUCO — an open art market on Base",
+        alt: "VECTOLITH — an open art market on Base",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "PLUCO | Mint, buy and sell art on Base",
+    title: "VECTOLITH | Mint, buy and sell art on Base",
     description:
       "An open art market on Base. Anyone can register a collection, mint a piece or buy one.",
-    images: ["https://pluco-dev.github.io/pluco/og/pluco.png"],
+    images: ["https://ganiyucall911.github.io/vectolith/og/vectolith.png"],
   },
   alternates: { canonical: "/" },
 };

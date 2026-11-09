@@ -5,19 +5,19 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import {IERC2981} from "@openzeppelin/contracts/interfaces/IERC2981.sol";
-import {PlucoRegistry} from "./PlucoRegistry.sol";
+import {VectolithRegistry} from "./VectolithRegistry.sol";
 
 /**
- * @title PlucoMarketplace
- * @notice Settlement layer for art registered on PLUCO.
+ * @title VectolithMarketplace
+ * @notice Settlement layer for art registered on VECTOLITH.
  *
  *         - Non-custodial: the seller keeps the token and only approves this contract.
  *         - Royalties: reads EIP-2981 from the collection and pays the artist on every resale.
- *         - Protocol fee: capped at 5%, default 2.5%, paid to the PLUCO treasury.
+ *         - Protocol fee: capped at 5%, default 2.5%, paid to the VECTOLITH treasury.
  *         - Proceeds are credited, then withdrawn (pull pattern), so a hostile receiver
  *           can never block or re-enter a sale.
  */
-contract PlucoMarketplace is Ownable, ReentrancyGuard {
+contract VectolithMarketplace is Ownable, ReentrancyGuard {
     struct Listing {
         address seller;
         address collection;
@@ -26,7 +26,7 @@ contract PlucoMarketplace is Ownable, ReentrancyGuard {
         bool active;
     }
 
-    PlucoRegistry public registry;
+    VectolithRegistry public registry;
     address public treasury;
     uint96 public feeBps;
 
@@ -55,7 +55,7 @@ contract PlucoMarketplace is Ownable, ReentrancyGuard {
     error FeeTooHigh();
     error NothingToWithdraw();
 
-    constructor(address owner_, PlucoRegistry registry_, address treasury_, uint96 feeBps_) Ownable(owner_) {
+    constructor(address owner_, VectolithRegistry registry_, address treasury_, uint96 feeBps_) Ownable(owner_) {
         if (address(registry_) == address(0) || treasury_ == address(0)) revert NotRegistered();
         if (feeBps_ > 500) revert FeeTooHigh();
         registry = registry_;
@@ -147,7 +147,7 @@ contract PlucoMarketplace is Ownable, ReentrancyGuard {
         emit Withdrawn(msg.sender, amount);
     }
 
-    function setRegistry(PlucoRegistry registry_) external onlyOwner {
+    function setRegistry(VectolithRegistry registry_) external onlyOwner {
         registry = registry_;
         emit RegistrySet(address(registry_));
     }

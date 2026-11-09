@@ -8,12 +8,12 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
- * @title PlucoOriginals
- * @notice 1-of-1 digital art collection for PLUCO.
+ * @title VectolithOriginals
+ * @notice 1-of-1 digital art collection for VECTOLITH.
  *         Every token has its own metadata URI, so each piece stays unique.
  *         Royalties follow EIP-2981 and are honoured by OpenSea, Rarible and most marketplaces.
  */
-contract PlucoOriginals is ERC721, ERC721URIStorage, ERC2981, Ownable, ReentrancyGuard {
+contract VectolithOriginals is ERC721, ERC721URIStorage, ERC2981, Ownable, ReentrancyGuard {
     uint256 public immutable maxSupply;
     uint256 public immutable mintPrice;
     uint256 public immutable maxPerWallet;
@@ -22,7 +22,7 @@ contract PlucoOriginals is ERC721, ERC721URIStorage, ERC2981, Ownable, Reentranc
     bool public saleOpen;
     string public provenance;
 
-    /// @notice PLUCO's cut of every primary mint, paid out immediately to the treasury.
+    /// @notice VECTOLITH's cut of every primary mint, paid out immediately to the treasury.
     address public treasury;
     uint96 public feeBps;
 

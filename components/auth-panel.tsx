@@ -20,7 +20,7 @@ const CHAINS: Record<number, string> = {
 };
 
 function seenKey(address: string) {
-  return "pluco:known:" + address.toLowerCase();
+  return "vectolith:known:" + address.toLowerCase();
 }
 
 /** Whether this browser has signed in with this address before. */
@@ -107,7 +107,7 @@ export function AuthPanel() {
           </span>
           <div className="min-w-0">
             <h2 className="text-[22px] leading-[1.2]">
-              {justCreated ? "Welcome to PLUCO." : "Welcome back."}
+              {justCreated ? "Welcome to VECTOLITH." : "Welcome back."}
             </h2>
             <p className="mt-1 text-[12px] leading-5 text-mute">
               {justCreated
@@ -254,7 +254,7 @@ export function AuthPanel() {
       )}
 
       <p className="mt-6 border-t border-line pt-5 text-[12px] leading-6 text-faint">
-        No password to reset: the wallet signs, or the emailed code proves the address. PLUCO only
+        No password to reset: the wallet signs, or the emailed code proves the address. VECTOLITH only
         reads the address and the email you sign in with.
       </p>
     </div>

@@ -29,7 +29,7 @@ const facts = [
 ];
 
 const fees = [
-  ["Mint a piece", "Free — gas only", "Paid to the network, not to PLUCO"],
+  ["Mint a piece", "Free — gas only", "Paid to the network, not to VECTOLITH"],
   ["Primary sale", "2.5%", "Deducted from the sale, paid in ETH"],
   ["Resale royalty", "Set per collection", "Goes to the artist on every resale"],
 ];
@@ -61,8 +61,8 @@ export default function HomePage() {
           <div>
             <Reveal>
               <Image
-                src={asset("/brand/pluco-white.png")}
-                alt="PLUCO"
+                src={asset("/brand/vectolith-white.png")}
+                alt="VECTOLITH"
                 width={1200}
                 height={600}
                 priority
@@ -76,7 +76,7 @@ export default function HomePage() {
                 open to anyone.
               </h1>
               <p className="mt-7 max-w-[520px] text-[15px] leading-7 text-body">
-                PLUCO is a registry and marketplace on Base. Register a collection, mint a piece,
+                VECTOLITH is a registry and marketplace on Base. Register a collection, mint a piece,
                 set a price — or buy one. No gatekeeper, no application, no account.
               </p>
             </Reveal>

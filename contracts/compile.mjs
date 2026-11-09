@@ -1,4 +1,4 @@
-// Compile the PLUCO art protocol with solc-js and write ABI + bytecode to ./artifacts.
+// Compile the VECTOLITH art protocol with solc-js and write ABI + bytecode to ./artifacts.
 import solc from "solc";
 import fs from "node:fs";
 import path from "node:path";
@@ -39,7 +39,7 @@ if (errors.length) {
 }
 
 fs.mkdirSync(path.join(root, "artifacts"), { recursive: true });
-const wanted = ["PlucoOriginals", "PlucoRegistry", "PlucoMarketplace"];
+const wanted = ["VectolithOriginals", "VectolithRegistry", "VectolithMarketplace"];
 let written = 0;
 for (const [file, contracts] of Object.entries(out.contracts)) {
   for (const [name, c] of Object.entries(contracts)) {

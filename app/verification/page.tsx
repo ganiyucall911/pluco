@@ -6,7 +6,7 @@ import { Verified } from "@/components/verified";
 
 export const metadata: Metadata = {
   title: "Verification",
-  description: "What PLUCO verifies, and the exact requirements a creator must meet.",
+  description: "What VECTOLITH verifies, and the exact requirements a creator must meet.",
 };
 
 const requirements = [
@@ -30,7 +30,7 @@ export default function VerificationPage() {
       <section className="px-5 sm:px-6 pb-16">
         <div className="mx-auto max-w-[1132px] border border-line bg-surface p-8 md:p-12">
           <div className="flex flex-wrap items-center gap-4">
-            <span className="text-3xl font-semibold">PLUCO</span>
+            <span className="text-3xl font-semibold">VECTOLITH</span>
             <Verified size={22} />
             <span className="text-[10px] uppercase tracking-[.22em] text-faint">Verified creator</span>
           </div>
@@ -84,7 +84,7 @@ export default function VerificationPage() {
           </div>
         </div>
         <p className="mx-auto mt-10 max-w-7xl text-xs text-faint">
-          Questions about a specific listing? <Link className="link-underline text-paper" href="/contact">Contact PLUCO</Link>.
+          Questions about a specific listing? <Link className="link-underline text-paper" href="/contact">Contact VECTOLITH</Link>.
         </p>
       </section>
     </main>

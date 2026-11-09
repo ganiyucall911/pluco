@@ -1,12 +1,12 @@
-# PLUCO — The NFT Ownership Network
+# VECTOLITH — The NFT Ownership Network
 
-[![Build check](https://github.com/pluco-dev/pluco/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/pluco-dev/pluco/actions/workflows/build.yml)
-[![Deploy](https://github.com/pluco-dev/pluco/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/pluco-dev/pluco/actions/workflows/deploy.yml)
+[![Build check](https://github.com/ganiyucall911/vectolith/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/ganiyucall911/vectolith/actions/workflows/build.yml)
+[![Deploy](https://github.com/ganiyucall911/vectolith/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/ganiyucall911/vectolith/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-**Live:** https://pluco-dev.github.io/pluco/
+**Live:** https://ganiyucall911.github.io/vectolith/
 
-PLUCO is an open art market on Base: anyone can register a collection, mint a piece or buy one. This repository is the marketing site and product surface built with Next.js 16 (App Router), React 19, Tailwind CSS 4 and Framer Motion, exported as a fully static site.
+VECTOLITH is an open art market on Base: anyone can register a collection, mint a piece or buy one. This repository is the marketing site and product surface built with Next.js 16 (App Router), React 19, Tailwind CSS 4 and Framer Motion, exported as a fully static site.
 
 ## Live contracts
 
@@ -15,9 +15,9 @@ Base mainnet, deployed 2026-11-08. Owner, treasury and royalty receiver are
 
 | Contract | Address |
 | --- | --- |
-| PlucoRegistry | `0x9218b355bb2e69a0f53e072c697e74e1ad63f9ff` |
-| PlucoOriginals | `0x1f49c091da217f73493a5b517f490865dbabe15d` |
-| PlucoMarketplace | `0x0bbdc74bd7144a32f29196753fd7727995df8e3c` |
+| VectolithRegistry | `0x9218b355bb2e69a0f53e072c697e74e1ad63f9ff` |
+| VectolithOriginals | `0x1f49c091da217f73493a5b517f490865dbabe15d` |
+| VectolithMarketplace | `0x0bbdc74bd7144a32f29196753fd7727995df8e3c` |
 
 `public/config.json` points at them, so the gallery and marketplace read live chain
 state. Every hash from the deploy through the first settlement is in
@@ -60,7 +60,7 @@ Foundry is the canonical way to compile, test and deploy; the node scripts in
 - Editorial pages: collections, creators, marketplace, explore, mint, sell, protocol, verification, dashboard, community, brand, about, contact, legal
 - SEO: per-page titles, Open Graph and Twitter metadata, canonical URLs, `sitemap.xml` and `robots.txt`
 
-Wallet connection is read-only: it reports the address, network and balance. No PLUCO contracts are deployed yet, so nothing on this site transfers funds.
+Wallet connection is read-only: it reports the address, network and balance. No VECTOLITH contracts are deployed yet, so nothing on this site transfers funds.
 
 ## Requirements
 
@@ -70,8 +70,8 @@ Wallet connection is read-only: it reports the address, network and balance. No 
 ## Local development
 
 ```sh
-git clone https://github.com/pluco-dev/pluco.git
-cd pluco
+git clone https://github.com/ganiyucall911/vectolith.git
+cd vectolith
 npm ci        # exact versions from package-lock.json
 npm run dev   # http://localhost:3000
 ```
@@ -79,13 +79,13 @@ npm run dev   # http://localhost:3000
 To preview with the same base path as production:
 
 ```sh
-NEXT_PUBLIC_BASE_PATH=/pluco npm run dev
+NEXT_PUBLIC_BASE_PATH=/vectolith npm run dev
 ```
 
 ## Build and export
 
 ```sh
-NEXT_PUBLIC_BASE_PATH=/pluco npm run build   # prerenders every route into ./out
+NEXT_PUBLIC_BASE_PATH=/vectolith npm run build   # prerenders every route into ./out
 npx serve out                                # serve the export locally
 ```
 
@@ -123,9 +123,9 @@ only needs that one file updated — no rebuild, no redeploy of the site:
 
 { "chainId": 8453, "originals": "0x...", "registry": "", "marketplace": "" }
 
-NEXT_PUBLIC_PLUCO_ART_CONTRACT and friends still override it at build time. The launch
+NEXT_PUBLIC_VECTOLITH_ART_CONTRACT and friends still override it at build time. The launch
 page encodes the constructor call itself, so the bytecode comes from
-public/contracts/PlucoOriginals.json, written by npm run compile in contracts.
+public/contracts/VectolithOriginals.json, written by npm run compile in contracts.
 
 ### What the contract enforces
 

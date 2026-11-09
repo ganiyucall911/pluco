@@ -2,9 +2,9 @@
 pragma solidity 0.8.26;
 
 import {Script, console} from "forge-std/Script.sol";
-import {PlucoRegistry} from "../src/PlucoRegistry.sol";
-import {PlucoOriginals} from "../src/PlucoOriginals.sol";
-import {PlucoMarketplace} from "../src/PlucoMarketplace.sol";
+import {VectolithRegistry} from "../src/VectolithRegistry.sol";
+import {VectolithOriginals} from "../src/VectolithOriginals.sol";
+import {VectolithMarketplace} from "../src/VectolithMarketplace.sol";
 
 /**
  * Base mainnet deploy + live seed.
@@ -30,10 +30,10 @@ contract DeployMainnet is Script {
 
         vm.startBroadcast(pk);
 
-        PlucoRegistry registry = new PlucoRegistry(deployer);
-        PlucoOriginals art = new PlucoOriginals(
-            "PLUCO Originals",
-            "PLUCO",
+        VectolithRegistry registry = new VectolithRegistry(deployer);
+        VectolithOriginals art = new VectolithOriginals(
+            "VECTOLITH Originals",
+            "VECTOLITH",
             10,
             0.0005 ether,
             3,
@@ -42,13 +42,13 @@ contract DeployMainnet is Script {
             owner, // mint fee treasury
             250 // 2.5%
         );
-        PlucoMarketplace market = new PlucoMarketplace(deployer, registry, owner, 250);
+        VectolithMarketplace market = new VectolithMarketplace(deployer, registry, owner, 250);
 
-        registry.register(address(art), "PLUCO Originals", "Digital Art", "ipfs://pluco/originals.json");
+        registry.register(address(art), "VECTOLITH Originals", "Digital Art", "ipfs://vectolith/originals.json");
 
-        uint256 tokenId = art.ownerMint(deployer, "ipfs://pluco/piece-1.json");
+        uint256 tokenId = art.ownerMint(deployer, "ipfs://vectolith/piece-1.json");
         art.setSaleOpen(true);
-        art.setProvenance("pluco-originals-v1");
+        art.setProvenance("vectolith-originals-v1");
         art.setApprovalForAll(address(market), true);
 
         market.list(address(art), tokenId, 0.001 ether);

@@ -105,7 +105,7 @@ export default function MintPage() {
   return (
     <main>
       <PageHero
-        eyebrow="PLUCO"
+        eyebrow="VECTOLITH"
         title="One-of-one digital art, on-chain."
         body="Every piece is a single ERC-721 token with its own metadata and a 7.5% royalty that follows it forever. No editions, no reruns."
       />

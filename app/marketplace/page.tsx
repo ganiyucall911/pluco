@@ -11,7 +11,7 @@ export default function MarketplacePage() {
       <PageHero
         eyebrow="Marketplace"
         title="One market, every collection."
-        body="Listings settle onchain through the PLUCO marketplace on Base. The seller keeps the token until it sells, royalties pay the artist on every resale, and the protocol fee is fixed in the contract."
+        body="Listings settle onchain through the VECTOLITH marketplace on Base. The seller keeps the token until it sells, royalties pay the artist on every resale, and the protocol fee is fixed in the contract."
       />
       <section className="wrap py-16">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-4">

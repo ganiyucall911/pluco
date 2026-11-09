@@ -1,9 +1,9 @@
 {
-  "name": "@pluco/art-contracts",
+  "name": "@vectolith/art-contracts",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "PLUCO Originals \u2014 1-of-1 digital art ERC-721 with EIP-2981 royalties",
+  "description": "VECTOLITH Originals \u2014 1-of-1 digital art ERC-721 with EIP-2981 royalties",
   "scripts": {
     "compile": "node compile.mjs",
     "deploy:base-sepolia": "node compile.mjs && node deploy.mjs --network base-sepolia",

@@ -2,8 +2,8 @@
 pragma solidity 0.8.26;
 
 import {Test} from "forge-std/Test.sol";
-import {PlucoRegistry} from "../src/PlucoRegistry.sol";
-import {PlucoOriginals} from "../src/PlucoOriginals.sol";
+import {VectolithRegistry} from "../src/VectolithRegistry.sol";
+import {VectolithOriginals} from "../src/VectolithOriginals.sol";
 
 /// Minimal ERC-721 with no owner(): anyone may register it (community drops).
 contract NoOwnerERC721 {
@@ -25,9 +25,9 @@ contract NotAToken {
     }
 }
 
-contract PlucoRegistryTest is Test {
-    PlucoRegistry internal registry;
-    PlucoOriginals internal collection;
+contract VectolithRegistryTest is Test {
+    VectolithRegistry internal registry;
+    VectolithOriginals internal collection;
 
     address internal owner = address(this);
     address internal artist = makeAddr("artist");
@@ -35,10 +35,10 @@ contract PlucoRegistryTest is Test {
     address internal treasury = makeAddr("treasury");
 
     function setUp() public {
-        registry = new PlucoRegistry(owner);
-        collection = new PlucoOriginals(
-            "PLUCO Originals",
-            "PLUCO",
+        registry = new VectolithRegistry(owner);
+        collection = new VectolithOriginals(
+            "VECTOLITH Originals",
+            "VECTOLITH",
             10,
             0.01 ether,
             2,
@@ -52,12 +52,12 @@ contract PlucoRegistryTest is Test {
     // ---- registration -------------------------------------------------
     function test_RegisterRecordsTheCollection() public {
         vm.prank(artist);
-        registry.register(address(collection), "PLUCO Originals", "Digital Art", "ipfs://collection");
+        registry.register(address(collection), "VECTOLITH Originals", "Digital Art", "ipfs://collection");
 
-        PlucoRegistry.Collection memory c = registry.get(address(collection));
+        VectolithRegistry.Collection memory c = registry.get(address(collection));
         assertEq(c.collection, address(collection));
         assertEq(c.artist, artist, "artist is the caller");
-        assertEq(c.name, "PLUCO Originals");
+        assertEq(c.name, "VECTOLITH Originals");
         assertEq(c.category, "Digital Art");
         assertEq(c.metadataURI, "ipfs://collection");
         assertTrue(c.active, "active on registration");
@@ -70,39 +70,39 @@ contract PlucoRegistryTest is Test {
 
     function test_RegisterEmitsEvent() public {
         vm.expectEmit(true, true, false, true, address(registry));
-        emit PlucoRegistry.CollectionRegistered(address(collection), artist, "PLUCO Originals", "Digital Art");
+        emit VectolithRegistry.CollectionRegistered(address(collection), artist, "VECTOLITH Originals", "Digital Art");
 
         vm.prank(artist);
-        registry.register(address(collection), "PLUCO Originals", "Digital Art", "");
+        registry.register(address(collection), "VECTOLITH Originals", "Digital Art", "");
     }
 
     function test_RevertWhen_ZeroAddress() public {
         vm.prank(artist);
-        vm.expectRevert(PlucoRegistry.ZeroAddress.selector);
+        vm.expectRevert(VectolithRegistry.ZeroAddress.selector);
         registry.register(address(0), "x", "y", "");
     }
 
     function test_RevertWhen_NotERC721() public {
         NotAToken nope = new NotAToken();
         vm.prank(artist);
-        vm.expectRevert(PlucoRegistry.NotERC721.selector);
+        vm.expectRevert(VectolithRegistry.NotERC721.selector);
         registry.register(address(nope), "x", "y", "");
     }
 
     function test_RevertWhen_CallerIsNotTheCollectionOwner() public {
-        // PlucoOriginals exposes owner() = artist, so only the artist may register it.
+        // VectolithOriginals exposes owner() = artist, so only the artist may register it.
         vm.prank(stranger);
-        vm.expectRevert(PlucoRegistry.NotArtist.selector);
-        registry.register(address(collection), "PLUCO Originals", "Digital Art", "");
+        vm.expectRevert(VectolithRegistry.NotArtist.selector);
+        registry.register(address(collection), "VECTOLITH Originals", "Digital Art", "");
     }
 
     function test_RevertWhen_AlreadyRegistered() public {
         vm.prank(artist);
-        registry.register(address(collection), "PLUCO Originals", "Digital Art", "");
+        registry.register(address(collection), "VECTOLITH Originals", "Digital Art", "");
 
         vm.prank(artist);
         vm.expectRevert(
-            abi.encodeWithSelector(PlucoRegistry.AlreadyRegistered.selector, address(collection))
+            abi.encodeWithSelector(VectolithRegistry.AlreadyRegistered.selector, address(collection))
         );
         registry.register(address(collection), "Again", "Digital Art", "");
     }
@@ -118,7 +118,7 @@ contract PlucoRegistryTest is Test {
     // ---- status -------------------------------------------------------
     function test_ArtistCanDelistAndRelist() public {
         vm.prank(artist);
-        registry.register(address(collection), "PLUCO Originals", "Digital Art", "");
+        registry.register(address(collection), "VECTOLITH Originals", "Digital Art", "");
 
         vm.prank(artist);
         registry.setActive(address(collection), false);
@@ -131,7 +131,7 @@ contract PlucoRegistryTest is Test {
 
     function test_RegistryOwnerCanDelistOnBehalfOfArtist() public {
         vm.prank(artist);
-        registry.register(address(collection), "PLUCO Originals", "Digital Art", "");
+        registry.register(address(collection), "VECTOLITH Originals", "Digital Art", "");
 
         registry.setActive(address(collection), false);
         assertFalse(registry.isActive(address(collection)));
@@ -139,23 +139,23 @@ contract PlucoRegistryTest is Test {
 
     function test_RevertWhen_StrangerSetsActive() public {
         vm.prank(artist);
-        registry.register(address(collection), "PLUCO Originals", "Digital Art", "");
+        registry.register(address(collection), "VECTOLITH Originals", "Digital Art", "");
 
         vm.prank(stranger);
-        vm.expectRevert(PlucoRegistry.NotArtist.selector);
+        vm.expectRevert(VectolithRegistry.NotArtist.selector);
         registry.setActive(address(collection), false);
     }
 
     function test_RevertWhen_SetActiveOnUnknownCollection() public {
         vm.expectRevert(
-            abi.encodeWithSelector(PlucoRegistry.NotFound.selector, address(collection))
+            abi.encodeWithSelector(VectolithRegistry.NotFound.selector, address(collection))
         );
         registry.setActive(address(collection), false);
     }
 
     function test_ArtistCanUpdateMetadataURI() public {
         vm.prank(artist);
-        registry.register(address(collection), "PLUCO Originals", "Digital Art", "ipfs://old");
+        registry.register(address(collection), "VECTOLITH Originals", "Digital Art", "ipfs://old");
 
         vm.prank(artist);
         registry.setMetadataURI(address(collection), "ipfs://new");
@@ -165,16 +165,16 @@ contract PlucoRegistryTest is Test {
 
     function test_RevertWhen_StrangerUpdatesMetadata() public {
         vm.prank(artist);
-        registry.register(address(collection), "PLUCO Originals", "Digital Art", "ipfs://old");
+        registry.register(address(collection), "VECTOLITH Originals", "Digital Art", "ipfs://old");
 
         vm.prank(stranger);
-        vm.expectRevert(PlucoRegistry.NotArtist.selector);
+        vm.expectRevert(VectolithRegistry.NotArtist.selector);
         registry.setMetadataURI(address(collection), "ipfs://hijacked");
     }
 
     function test_ForceDelistIsOwnerOnly() public {
         vm.prank(artist);
-        registry.register(address(collection), "PLUCO Originals", "Digital Art", "");
+        registry.register(address(collection), "VECTOLITH Originals", "Digital Art", "");
 
         vm.prank(stranger);
         vm.expectRevert(); // OZ Ownable: OwnableUnauthorizedAccount
@@ -186,9 +186,9 @@ contract PlucoRegistryTest is Test {
 
     // ---- paging -------------------------------------------------------
     function _registerThree() internal returns (address a, address b, address c) {
-        a = address(new PlucoOriginals("A", "A", 1, 0, 0, artist, artist, treasury, 0));
-        b = address(new PlucoOriginals("B", "B", 1, 0, 0, artist, artist, treasury, 0));
-        c = address(new PlucoOriginals("C", "C", 1, 0, 0, artist, artist, treasury, 0));
+        a = address(new VectolithOriginals("A", "A", 1, 0, 0, artist, artist, treasury, 0));
+        b = address(new VectolithOriginals("B", "B", 1, 0, 0, artist, artist, treasury, 0));
+        c = address(new VectolithOriginals("C", "C", 1, 0, 0, artist, artist, treasury, 0));
 
         vm.startPrank(artist);
         registry.register(a, "A", "Digital Art", "");
@@ -200,12 +200,12 @@ contract PlucoRegistryTest is Test {
     function test_PageReturnsNewestFirst() public {
         (address a, address b, address c) = _registerThree();
 
-        PlucoRegistry.Collection[] memory page = registry.page(0, 2);
+        VectolithRegistry.Collection[] memory page = registry.page(0, 2);
         assertEq(page.length, 2);
         assertEq(page[0].collection, c, "newest first");
         assertEq(page[1].collection, b);
 
-        PlucoRegistry.Collection[] memory rest = registry.page(2, 2);
+        VectolithRegistry.Collection[] memory rest = registry.page(2, 2);
         assertEq(rest.length, 1);
         assertEq(rest[0].collection, a);
     }

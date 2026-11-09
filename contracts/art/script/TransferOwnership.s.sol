@@ -2,9 +2,9 @@
 pragma solidity 0.8.26;
 
 import {Script, console} from "forge-std/Script.sol";
-import {PlucoRegistry} from "../src/PlucoRegistry.sol";
-import {PlucoOriginals} from "../src/PlucoOriginals.sol";
-import {PlucoMarketplace} from "../src/PlucoMarketplace.sol";
+import {VectolithRegistry} from "../src/VectolithRegistry.sol";
+import {VectolithOriginals} from "../src/VectolithOriginals.sol";
+import {VectolithMarketplace} from "../src/VectolithMarketplace.sol";
 
 /**
  * Hand every contract to the owner after the live settlement sequence.
@@ -19,9 +19,9 @@ contract TransferOwnership is Script {
         uint256 pk = vm.envUint("DEPLOYER_KEY");
         address owner = vm.envAddress("OWNER");
 
-        PlucoRegistry registry = PlucoRegistry(vm.envAddress("REGISTRY"));
-        PlucoOriginals art = PlucoOriginals(payable(vm.envAddress("ORIGINALS")));
-        PlucoMarketplace market = PlucoMarketplace(payable(vm.envAddress("MARKETPLACE")));
+        VectolithRegistry registry = VectolithRegistry(vm.envAddress("REGISTRY"));
+        VectolithOriginals art = VectolithOriginals(payable(vm.envAddress("ORIGINALS")));
+        VectolithMarketplace market = VectolithMarketplace(payable(vm.envAddress("MARKETPLACE")));
 
         vm.startBroadcast(pk);
         registry.transferOwnership(owner);

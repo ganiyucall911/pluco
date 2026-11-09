@@ -33,7 +33,7 @@ export default function AboutPage() {
       <PageHero
         eyebrow="About"
         title="An open market for art on Base."
-        body="PLUCO is a registry and a marketplace, not a mint page. Art is the first thing the network carries; the protocol is what stays."
+        body="VECTOLITH is a registry and a marketplace, not a mint page. Art is the first thing the network carries; the protocol is what stays."
       />
 
       <section className="wrap py-16">

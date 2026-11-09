@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Wallet state for PLUCO.
+ * Wallet state for VECTOLITH.
  *
  * Every wallet connection goes through Reown AppKit (WalletConnect) on Base
  * mainnet: the browser extension on desktop, the mobile app by QR or deeplink.
@@ -28,7 +28,7 @@ import { loadChainConfig } from "@/lib/chain-config";
 export const BASE_CHAIN_ID = 8453;
 export const BASE_CHAIN_HEX = "0x2105";
 
-/** Base mainnet is the only chain PLUCO signs in with. */
+/** Base mainnet is the only chain VECTOLITH signs in with. */
 export type Namespace = "eip155";
 
 type Eth = {
@@ -71,8 +71,8 @@ type WalletState = {
 };
 
 const WalletContext = createContext<WalletState | null>(null);
-const STORAGE_KEY = "pluco.wallet";
-const NAME_KEY = "pluco.wallet.name";
+const STORAGE_KEY = "vectolith.wallet";
+const NAME_KEY = "vectolith.wallet.name";
 
 /** AppKit is the only wallet path, so it is the only option. */
 const OPTIONS: WalletOption[] = [{ id: REOWN_ID, name: REOWN_NAME }];

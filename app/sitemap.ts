@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export const dynamic = "force-static";
 
-const base = "https://pluco-dev.github.io/pluco";
+const base = "https://ganiyucall911.github.io/vectolith";
 
 const routes: { path: string; priority: number }[] = [
   { path: "/", priority: 1 },

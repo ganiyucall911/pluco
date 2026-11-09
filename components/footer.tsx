@@ -37,7 +37,7 @@ export function Footer() {
       </div>
 
       <div className="wrap flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-line py-6 text-[11px] uppercase tracking-[.18em] text-faint">
-        <span>© 2026 PLUCO</span>
+        <span>© 2026 VECTOLITH</span>
         <span>Base · Ethereum L2</span>
         <span>Settlement in ETH</span>
       </div>

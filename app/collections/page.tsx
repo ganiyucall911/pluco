@@ -40,7 +40,7 @@ export default function CollectionsPage() {
                 <div>
                   <p className="text-[11px] uppercase tracking-[.28em] text-faint">In preparation</p>
                   <h3 className="mt-4 text-2xl font-semibold">Next collection</h3>
-                  <p className="mt-2 text-sm text-body">by PLUCO</p>
+                  <p className="mt-2 text-sm text-body">by VECTOLITH</p>
                 </div>
                 <span className="border border-line-strong px-3 py-1 text-[10px] uppercase tracking-[.2em] text-body">
                   Not minted
