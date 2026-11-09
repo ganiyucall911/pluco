@@ -1,7 +1,7 @@
-# VECTOLITH — The NFT Ownership Network
+# PLUCO Network — The NFT Ownership Protocol by Vectolith
 
-[![Build check](https://github.com/vectolith/vectolith-network/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/vectolith/vectolith-network/actions/workflows/build.yml)
-[![Deploy](https://github.com/vectolith/vectolith-network/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/vectolith/vectolith-network/actions/workflows/deploy.yml)
+[![Build check](https://github.com/vectolith/pluco-network/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/vectolith/pluco-network/actions/workflows/build.yml)
+[![Deploy](https://github.com/vectolith/pluco-network/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/vectolith/pluco-network/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 **Live:** https://ganiyucall911.github.io/vectolith/

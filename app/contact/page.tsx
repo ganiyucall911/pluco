@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: "Contact" };
 
 const channels = [
   ["Repository", "github.com/vectolith/vectolith", "https://github.com/vectolith/vectolith"],
-  ["Issues", "github.com/vectolith/vectolith-network/issues", "https://github.com/vectolith/vectolith-network/issues"],
+  ["Issues", "github.com/vectolith/pluco-network/issues", "https://github.com/vectolith/pluco-network/issues"],
 ];
 
 export default function ContactPage() {
