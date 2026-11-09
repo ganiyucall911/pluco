@@ -1,7 +1,7 @@
 # PLUCO — The NFT Ownership Network
 
-[![Build check](https://github.com/ganiyucall911/pluco/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/ganiyucall911/pluco/actions/workflows/build.yml)
-[![Deploy](https://github.com/ganiyucall911/pluco/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/ganiyucall911/pluco/actions/workflows/deploy.yml)
+[![Build check](https://github.com/pluco-dev/pluco/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/pluco-dev/pluco/actions/workflows/build.yml)
+[![Deploy](https://github.com/pluco-dev/pluco/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/pluco-dev/pluco/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 **Live:** https://pluco-dev.github.io/pluco/
@@ -70,7 +70,7 @@ Wallet connection is read-only: it reports the address, network and balance. No 
 ## Local development
 
 ```sh
-git clone https://github.com/ganiyucall911/pluco.git
+git clone https://github.com/pluco-dev/pluco.git
 cd pluco
 npm ci        # exact versions from package-lock.json
 npm run dev   # http://localhost:3000

@@ -5,8 +5,8 @@ import { Button } from "@/components/button";
 export const metadata: Metadata = { title: "Contact" };
 
 const channels = [
-  ["Repository", "github.com/ganiyucall911/pluco", "https://github.com/ganiyucall911/pluco"],
-  ["Issues", "github.com/ganiyucall911/pluco/issues", "https://github.com/ganiyucall911/pluco/issues"],
+  ["Repository", "github.com/pluco-dev/pluco", "https://github.com/pluco-dev/pluco"],
+  ["Issues", "github.com/pluco-dev/pluco/issues", "https://github.com/pluco-dev/pluco/issues"],
 ];
 
 export default function ContactPage() {

@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "Creator" };
 
 const LINKS = [
   { label: "OpenSea", href: "https://opensea.io/pluco" },
-  { label: "GitHub", href: "https://github.com/ganiyucall911/pluco" },
+  { label: "GitHub", href: "https://github.com/pluco-dev/pluco" },
 ];
 
 export default function CreatorsPage() {

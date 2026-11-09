@@ -37,11 +37,11 @@ export function reownConfigured() {
 }
 
 function metadata() {
-  const origin = typeof window !== "undefined" ? window.location.origin : "https://ganiyucall911.github.io";
+  const origin = typeof window !== "undefined" ? window.location.origin : "https://pluco-dev.github.io";
   return {
     name: "PLUCO",
     description: "PLUCO — register, mint and trade digital assets on Base.",
-    url: typeof window !== "undefined" ? window.location.href : "https://ganiyucall911.github.io/pluco/",
+    url: typeof window !== "undefined" ? window.location.href : "https://pluco-dev.github.io/pluco/",
     icons: [`${origin}${BASE_PATH}/brand/pluco-mark.png`],
   };
 }

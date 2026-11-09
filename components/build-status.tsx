@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const REPO = "ganiyucall911/pluco";
+const REPO = "pluco-dev/pluco";
 const WORKFLOW = "build.yml";
 const POLL_MS = 30_000;
 const STALE_MS = 45 * 60_000;
