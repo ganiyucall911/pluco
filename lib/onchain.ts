@@ -239,3 +239,67 @@ export function basescanAddress(address: string) {
 export function shortAddress(address: string) {
   return `${address.slice(0, 6)}…${address.slice(-4)}`;
 }
+
+export const WRITE_ABIS = {
+  mint: ["function mint(string calldata uri) external payable returns (uint256)"],
+  buy: ["function buy(uint256 listingId) external payable"],
+  list: ["function list(address collection, uint256 tokenId, uint256 price) external returns (uint256)"],
+  approve: ["function approve(address to, uint256 tokenId) external"],
+  setApprovalForAll: ["function setApprovalForAll(address operator, bool approved) external"],
+};
+
+export type Eip1193Provider = {
+  request: (args: { method: string; params?: unknown[] | object }) => Promise<unknown>;
+};
+
+/** Broadcast an onchain mint call to Base mainnet. */
+export async function broadcastMint(
+  provider: Eip1193Provider,
+  from: string,
+  contractAddress: string,
+  metadataURI: string,
+  priceWei: bigint
+): Promise<string> {
+  const bytes = new TextEncoder().encode(metadataURI);
+  const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+  const padded = hex.padEnd(Math.max(64, Math.ceil(hex.length / 64) * 64), "0");
+  const data = "0xd85d3d27" + BigInt(32).toString(16).padStart(64, "0") + BigInt(bytes.length).toString(16).padStart(64, "0") + padded;
+
+  const txHash = await provider.request({
+    method: "eth_sendTransaction",
+    params: [
+      {
+        from,
+        to: contractAddress,
+        data,
+        value: "0x" + priceWei.toString(16),
+      },
+    ],
+  });
+  return String(txHash);
+}
+
+/** Broadcast an onchain buy transaction on VectolithMarketplace. */
+export async function broadcastBuy(
+  provider: Eip1193Provider,
+  from: string,
+  marketplaceAddress: string,
+  listingId: number,
+  priceWei: bigint
+): Promise<string> {
+  // buy(uint256) selector: 0xd96a094a
+  const data = "0xd96a094a" + BigInt(listingId).toString(16).padStart(64, "0");
+  const txHash = await provider.request({
+    method: "eth_sendTransaction",
+    params: [
+      {
+        from,
+        to: marketplaceAddress,
+        data,
+        value: "0x" + priceWei.toString(16),
+      },
+    ],
+  });
+  return String(txHash);
+}
+

@@ -29,10 +29,13 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: /vectolith
-          # Optional: set these as repo secrets/variables to enable them at build time.
+          NEXT_PUBLIC_BASE_PATH: /pluco-network
+          NEXT_PUBLIC_VECTOLITH_CHAIN_ID: "8453"
+          NEXT_PUBLIC_VECTOLITH_ART_CONTRACT: "0x1f49c091da217f73493a5b517f490865dbabe15d"
+          NEXT_PUBLIC_VECTOLITH_REGISTRY: "0x9218b355bb2e69a0f53e072c697e74e1ad63f9ff"
+          NEXT_PUBLIC_VECTOLITH_MARKETPLACE: "0x0bbdc74bd7144a32f29196753fd7727995df8e3c"
+          NEXT_PUBLIC_REOWN_PROJECT_ID: ${{ vars.NEXT_PUBLIC_REOWN_PROJECT_ID || '399fb0ee03b4e2afa8d1682f56a11788' }}
           NEXT_PUBLIC_INFURA_API_KEY: ${{ secrets.NEXT_PUBLIC_INFURA_API_KEY }}
-          NEXT_PUBLIC_REOWN_PROJECT_ID: ${{ vars.NEXT_PUBLIC_REOWN_PROJECT_ID }}
 
       - name: Disable Jekyll
         run: touch out/.nojekyll

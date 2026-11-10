@@ -29,10 +29,10 @@ export function networkFor(_chainId?: number): Network {
 
 const FALLBACK: ChainConfig = {
   chainId: Number(process.env.NEXT_PUBLIC_VECTOLITH_CHAIN_ID || BASE_MAINNET),
-  reownProjectId: process.env.NEXT_PUBLIC_REOWN_PROJECT_ID || "",
-  originals: process.env.NEXT_PUBLIC_VECTOLITH_ART_CONTRACT || "",
-  registry: process.env.NEXT_PUBLIC_VECTOLITH_REGISTRY || "",
-  marketplace: process.env.NEXT_PUBLIC_VECTOLITH_MARKETPLACE || "",
+  reownProjectId: process.env.NEXT_PUBLIC_REOWN_PROJECT_ID || "399fb0ee03b4e2afa8d1682f56a11788",
+  originals: process.env.NEXT_PUBLIC_VECTOLITH_ART_CONTRACT || "0x1f49c091da217f73493a5b517f490865dbabe15d",
+  registry: process.env.NEXT_PUBLIC_VECTOLITH_REGISTRY || "0x9218b355bb2e69a0f53e072c697e74e1ad63f9ff",
+  marketplace: process.env.NEXT_PUBLIC_VECTOLITH_MARKETPLACE || "0x0bbdc74bd7144a32f29196753fd7727995df8e3c",
 };
 
 let cached: Promise<ChainConfig> | null = null;
