@@ -89,7 +89,7 @@ NEXT_PUBLIC_BASE_PATH=/vectolith npm run build   # prerenders every route into .
 npx serve out                                # serve the export locally
 ```
 
-The site uses `output: "export"` in `next.config.ts`, so there is no Node server in production and `npm start` is not part of the deploy path. Any static host works: Netlify, Cloudflare Pages, Vercel static, S3, or GitHub Pages.
+The site uses `output: "export"` in `next.config.ts`, so there is no Node server in production and `npm start` is not part of the deploy path. Any static host works: GitHub Pages, Cloudflare Pages, Netlify, or S3.
 
 ## Scripts
 

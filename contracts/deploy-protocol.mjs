@@ -57,7 +57,7 @@ console.log("VectolithMarketplace:", marketAddress);
 console.log("treasury:", treasury, "protocol fee bps:", feeBps);
 
 console.log("");
-console.log("Set these on the site (Vercel/hosting env):");
+console.log("Set these on the site (Hosting env):");
 console.log("NEXT_PUBLIC_VECTOLITH_REGISTRY=" + registryAddress);
 console.log("NEXT_PUBLIC_VECTOLITH_MARKETPLACE=" + marketAddress);
 console.log("Explorer:", net.explorer + "/address/" + registryAddress);
